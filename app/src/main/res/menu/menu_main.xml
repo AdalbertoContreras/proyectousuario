@@ -5,25 +5,25 @@
 
 
     <item
-        android:id="@+id/alertas"
+        android:id="@+id/historialAlertasMenu"
         android:orderInCategory="100"
         android:title="Historial Alertas"
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/asesorias"
+        android:id="@+id/historialAsesoriasMenu"
         android:orderInCategory="100"
         android:title="Historial Asesorias"
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/sesion"
+        android:id="@+id/iniciarSesionMenu"
         android:orderInCategory="100"
         android:title="Inicio de Sesión"
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/acercade"
+        android:id="@+id/acercaDeMenu"
         android:orderInCategory="100"
         android:title="Acerca de..."
         app:showAsAction="never"

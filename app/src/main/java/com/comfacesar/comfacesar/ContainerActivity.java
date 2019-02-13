@@ -149,14 +149,18 @@ public class ContainerActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId())
         {
-            case R.id.alertas:
+            case R.id.historialAlertasMenu:
                 Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
                 break;
+            case  R.id.historialAsesoriasMenu:
+                Toast.makeText(this, "buscar", Toast.LENGTH_SHORT).show();
+                break;
 
-            case  R.id.action_buscar:
+            case  R.id.iniciarSesionMenu:
                 Toast.makeText(this, "buscar", Toast.LENGTH_SHORT).show();
                 break;
         }
+        transaction3.replace(R.id.container, new UbicacionFragment()) ;
         return true;
     }
 }

@@ -23,6 +23,12 @@ public class Gestion_usuario {
     {
         aux = new Usuario();
     }
+
+    public HashMap<String, String> validar_usuario(Usuario usuario)
+    {
+        tipo_consulta = "validar_cuenta";
+        return construir_parametros(usuario);
+    }
     private ArrayList<Usuario> generar_json(String respuesta)
     {
         ArrayList<Usuario> lista_elementos = new ArrayList<>();

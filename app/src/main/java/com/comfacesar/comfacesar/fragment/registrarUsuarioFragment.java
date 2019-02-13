@@ -65,7 +65,7 @@ public class registrarUsuarioFragment extends Fragment {
         }
     }
 
-    private View view_permanente;
+    private static View view_permanente;
     private EditText numeroIdentificacionEditText;
     private EditText nombreUsuarioEditText;
     private EditText apellidoEditText;
