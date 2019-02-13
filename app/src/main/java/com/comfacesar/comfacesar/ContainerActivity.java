@@ -140,22 +140,35 @@ public class ContainerActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
+        Intent intent;
         //Fragment mifragment=null;
         switch (item.getItemId())
         {
-            case R.id.registrarmeMenu:
-
-               // Toast.makeText(this, "prueba alerta", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+            case R.id.historialAlertasMenu:
+                intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
                 intent.putExtra("id",1);
                 startActivity(intent);
-
-
                 break;
 
-            case  R.id.action_buscar:
-                Toast.makeText(this, "buscar", Toast.LENGTH_SHORT).show();
+            case  R.id.historialAsesoriasMenu:
+                intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                intent.putExtra("id",2);
+                startActivity(intent);
+                break;
+            case  R.id.iniciarSesionMenu:
+                intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                intent.putExtra("id",3);
+                startActivity(intent);
+                break;
+            case  R.id.registrarmeMenu:
+                intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                intent.putExtra("id",4);
+                startActivity(intent);
+                break;
+            case  R.id.acercaDeMenu:
+                intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                intent.putExtra("id",5);
+                startActivity(intent);
                 break;
         }
         return true;

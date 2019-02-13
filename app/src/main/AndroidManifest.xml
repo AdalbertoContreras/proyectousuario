@@ -16,6 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <activity android:name=".ContainertwoActivity"
+            android:parentActivityName=".ContainerActivity">
+            <meta-data
+                android:name="android.support.PARRENY_ACTIVITY"
+                android:value=".ContainerActivity"/>
+        </activity>
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

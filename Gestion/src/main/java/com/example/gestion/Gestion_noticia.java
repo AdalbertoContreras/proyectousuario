@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_noticia {
-    private static Noticia aux;
-    private static String llave_ws = "accion";
+    private static Noticia aux = new Noticia();
+    private static String llave_ws = "noticia";
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
@@ -22,7 +22,20 @@ public class Gestion_noticia {
     {
         aux = new Noticia();
     }
-    private ArrayList<Noticia> generar_json(String respuesta)
+
+    public HashMap<String, String> consultar_num_noticia()
+    {
+        tipo_consulta = "consultar_num_noticias";
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String,String> consultar_con_imagenes_y_m_primero()
+    {
+        tipo_consulta = "consultar_con_imagenes_y_m_primero";
+        return  construir_parametros(aux);
+    }
+
+    public ArrayList<Noticia> generar_json(String respuesta)
     {
         ArrayList<Noticia> lista_elementos = new ArrayList<>();
         try {
@@ -54,6 +67,7 @@ public class Gestion_noticia {
                 numero_visistas_noticia = jsonObject.get("tipo_registro_movil_registro").getAsInt();
                 administrador_noticia = jsonObject.get("tipo_registro_movil_registro").getAsInt();
                 categoria_noticia_manual_noticia = jsonObject.get("tipo_registro_movil_registro").getAsInt();
+                json_imagenes = jsonObject.get("json_imagenes").getAsString();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }

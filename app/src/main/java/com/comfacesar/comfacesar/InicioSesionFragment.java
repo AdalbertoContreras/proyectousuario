@@ -15,7 +15,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton;
+import com.example.extra.MySocialMediaSingleton;
+import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
 
@@ -132,7 +133,7 @@ public class InicioSesionFragment extends Fragment {
                             Log.d("Reponse.Error",error.toString());
                         }
                     };
-                    StringRequest stringRequest = com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton.volley_consulta(com.comfacesar.ServiAmigo.Extra.WebService.getUrl(),params,stringListener, errorListener);
+                    StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
                     MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
                 }
             });

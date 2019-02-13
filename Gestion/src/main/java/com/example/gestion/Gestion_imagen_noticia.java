@@ -22,7 +22,8 @@ public class Gestion_imagen_noticia {
     {
         aux = new Imagen_noticia();
     }
-    private ArrayList<Imagen_noticia> generar_json(String respuesta)
+
+    public ArrayList<Imagen_noticia> generar_json(String respuesta)
     {
         ArrayList<Imagen_noticia> lista_elementos = new ArrayList<>();
         try {
