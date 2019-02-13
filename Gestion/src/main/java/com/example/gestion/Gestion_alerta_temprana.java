@@ -1,6 +1,5 @@
 package com.example.gestion;
 
-import com.example.modelo.Administrador;
 import com.example.modelo.Alerta_temprana;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -88,7 +87,7 @@ public class Gestion_alerta_temprana {
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
             obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-            obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contraseña_usuario);
+            obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

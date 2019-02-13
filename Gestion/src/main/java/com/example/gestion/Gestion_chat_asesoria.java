@@ -1,6 +1,5 @@
 package com.example.gestion;
 
-import com.example.modelo.Accion;
 import com.example.modelo.Chat_asesoria;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -76,7 +75,7 @@ public class Gestion_chat_asesoria {
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
             obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-            obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contraseña_usuario);
+            obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

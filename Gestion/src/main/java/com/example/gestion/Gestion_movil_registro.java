@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class Gestion_movil_registro {
     private static Movil_registro aux;
-    private static String llave_ws = "accion";
+    private static String llave_ws = "movil_registro";
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
@@ -22,6 +22,13 @@ public class Gestion_movil_registro {
     {
         aux = new Movil_registro();
     }
+
+    public HashMap<String, String> registrar_movil_registro(Movil_registro movil_registro)
+    {
+        tipo_consulta = "insert";
+        return  construir_parametros(movil_registro);
+    }
+
     private ArrayList<Movil_registro> generar_json(String respuesta)
     {
         ArrayList<Movil_registro> lista_elementos = new ArrayList<>();

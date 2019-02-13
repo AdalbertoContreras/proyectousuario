@@ -1,7 +1,8 @@
-package com.comfacesar.ServiAmigo.Extra;
+package com.example.extra;
+
 
 public class WebService {
-    private static final String HOSTING = "172.20.10.2";
+    private static final String HOSTING = "192.168.0.8";
     private static final String RAIZ = "http://"+ HOSTING;
     private static final String url = RAIZ + "/WScomfacesar/index.php";
 

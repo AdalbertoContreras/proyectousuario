@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
 
@@ -80,10 +83,11 @@ public class InicioSesionFragment extends Fragment {
         // Inflate the layout for this fragment
         if(view_permanente == null)
         {
-            nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditText);
-            contraseñaEditText = view_permanente.findViewById(R.id.contraseñaCuentaEditText);
+            view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+            nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
+            contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
             iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
-            registrarmeButton = view_permanente.findViewById(R.id.registrarmeButton);
+
             iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,31 +101,49 @@ public class InicioSesionFragment extends Fragment {
                         Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de su cuenta de usuario", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    Usuario usuario = new Usuario();
+                    final Usuario usuario = new Usuario(){{
+                        nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+                        contrasena_usuario = contraseñaEditText.getText().toString();
+                    }};
                     usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
-                    usuario.contraseña_usuario = contraseñaEditText.getText().toString();
+                    usuario.contrasena_usuario = contraseñaEditText.getText().toString();
                     HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
+                    Log.d("Parametros",params.toString());
                     Response.Listener<String> stringListener = new Response.Listener<String>()
                     {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(view_permanente.getContext(), "usuario : " + response, Toast.LENGTH_LONG).show();
+                            if(response.equals("1"))
+                            {
+                                Toast.makeText(view_permanente.getContext(), "Logueado",
+                                        Toast.LENGTH_LONG).show();
+                                Gestion_usuario.setUsuario_online(usuario);
+                            }
+                            else
+                            {
+                                Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
+                                        "incorrecto", Toast.LENGTH_LONG).show();
+                            }
                         }
                     };
-                    StringRequest stringRequest = com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton.volley_consulta(com.comfacesar.ServiAmigo.Extra.WebService.getUrl(),params,stringListener, com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton.errorListener());
+                    Response.ErrorListener errorListener = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Reponse.Error",error.toString());
+                        }
+                    };
+                    StringRequest stringRequest = com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton.volley_consulta(com.comfacesar.ServiAmigo.Extra.WebService.getUrl(),params,stringListener, errorListener);
+                    MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
                 }
             });
-            registrarmeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-            view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
         }
         return view_permanente;
     }
 
+    private void conect()
+    {
+        Toast.makeText(getContext(), "conectado", Toast.LENGTH_LONG).show();
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

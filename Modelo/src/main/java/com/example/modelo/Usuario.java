@@ -11,5 +11,5 @@ public class Usuario {
     public String fecha_nacimiento;
     public String correo_usuario;
     public String nombre_cuenta_usuario;
-    public String contraseña_usuario;
+    public String contrasena_usuario;
 }

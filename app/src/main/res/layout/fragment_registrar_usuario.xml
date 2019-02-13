@@ -81,7 +81,7 @@
                         android:paddingBottom="5dp">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/nombreEditText"
+                            android:id="@+id/nombresEditTextRegistrarUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Nombre:"
@@ -104,7 +104,7 @@
                         android:paddingBottom="5dp">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/Apellido"
+                            android:id="@+id/apellidosEditTextRegistrarUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="apellido:"
@@ -186,7 +186,7 @@
                         android:paddingBottom="5dp">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/nombreCuentaEditText"
+                            android:id="@+id/nombreCuentaEditTextRegistrarUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="nombre cuenta:"
@@ -209,7 +209,7 @@
                         android:paddingBottom="5dp">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/contraseñaCuentaEditText"
+                            android:id="@+id/contraseñaCuentaEditTextRegistrarUsuario"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="contraseña:"
@@ -232,10 +232,10 @@
                 android:paddingBottom="20dp"
                 >
                 <Button
-                    android:id="@+id/Login"
+                    android:id="@+id/registrarmeButtonRegistrarUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ENVIAR ALERTA"
+                    android:text="REGISTRAR USUARIO"
                     android:theme="@style/Button"
 
                     />

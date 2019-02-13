@@ -23,6 +23,12 @@
         app:showAsAction="never"
         />
     <item
+        android:id="@+id/registrarmeMenu"
+        android:orderInCategory="100"
+        android:title="Registrarme"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/acercaDeMenu"
         android:orderInCategory="100"
         android:title="Acerca de..."

@@ -1,8 +1,15 @@
 package com.example.extra;
 
-import java.util.jar.Manifest;
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
-import sun.rmi.runtime.Log;
 
 public class Config {
     private static int version_android = 0;

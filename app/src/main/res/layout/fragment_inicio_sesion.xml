@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +33,6 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="350dp"
                     android:layout_height="70dp"
-                    android:cardCornerRadius="8dp"
                     >
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                         android:layout_gravity="bottom"
                         >
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/nombreCuentaEditText"
+                            android:id="@+id/nombreCuentaEditTextInicioSesion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Nombre:"
@@ -57,25 +57,24 @@
             <android.support.v7.widget.CardView
                 android:layout_width="350dp"
                 android:layout_height="70dp"
-                android:cardCornerRadius="8dp"
-                >
+                app:cardCornerRadius="10dp">
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
                     android:layout_gravity="bottom"
-                    >
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
                     <android.support.design.widget.TextInputEditText
-                        android:id="@+id/contraseñaEditText"
+                        android:id="@+id/contraseñaEditTextInicioSesion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nombre:"
-                        android:textSize="14sp"
-                        />
-                </android.support.design.widget.TextInputLayout >
+                        android:textSize="14sp" />
+                </android.support.design.widget.TextInputLayout>
             </android.support.v7.widget.CardView>
 
             <Button
@@ -83,12 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Iniciar sesion" />
-s
-            <Button
-                android:id="@+id/registrarmeButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Registrarme" />
+
+
         </LinearLayout>
     </RelativeLayout>
 

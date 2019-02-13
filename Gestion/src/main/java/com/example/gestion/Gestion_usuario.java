@@ -1,6 +1,5 @@
 package com.example.gestion;
 
-import com.example.modelo.Tipo_registro;
 import com.example.modelo.Usuario;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 
 public class Gestion_usuario {
     private static Usuario aux;
-    private static String llave_ws = "accion";
+    private static String llave_ws = "usuario";
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
@@ -24,11 +23,18 @@ public class Gestion_usuario {
         aux = new Usuario();
     }
 
+    public HashMap<String, String> registrar_usuario(Usuario usuario)
+    {
+        tipo_consulta = "insert";
+        return construir_parametros(usuario);
+    }
+
     public HashMap<String, String> validar_usuario(Usuario usuario)
     {
         tipo_consulta = "validar_cuenta";
         return construir_parametros(usuario);
     }
+
     private ArrayList<Usuario> generar_json(String respuesta)
     {
         ArrayList<Usuario> lista_elementos = new ArrayList<>();
@@ -60,7 +66,7 @@ public class Gestion_usuario {
                 fecha_nacimiento = jsonObject.get("fecha_nacimiento").getAsString();
                 correo_usuario = jsonObject.get("correo_usuario").getAsString();
                 nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
-                contraseña_usuario = jsonObject.get("contraseña_usuario").getAsString();
+                contrasena_usuario = jsonObject.get("contrasena_usuario").getAsString();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }
@@ -81,13 +87,13 @@ public class Gestion_usuario {
             obj.addProperty("fecha_nacimiento", elemento.fecha_nacimiento);
             obj.addProperty("correo_usuario", elemento.correo_usuario);
             obj.addProperty("nombre_cuenta_usuario", elemento.nombre_cuenta_usuario);
-            obj.addProperty("contraseña_usuario", elemento.contraseña_usuario);
+            obj.addProperty("contrasena_usuario", elemento.contrasena_usuario);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
             obj.addProperty("usuario_ol",usuario_online.nombre_cuenta_usuario);
-            obj.addProperty("contrasena_ol",usuario_online.contraseña_usuario);
+            obj.addProperty("contrasena_ol",usuario_online.contrasena_usuario);
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
@@ -98,5 +104,9 @@ public class Gestion_usuario {
 
     public static Usuario getUsuario_online() {
         return usuario_online;
+    }
+
+    public static void setUsuario_online(Usuario usuario_online) {
+        Gestion_usuario.usuario_online = usuario_online;
     }
 }
