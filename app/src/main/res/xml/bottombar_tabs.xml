@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <tabs>
+        <tab
+            id="@+id/id_AlerTemprana"
+            icon="@drawable/alert2"
+            title="@string/title_AlertTemprana"
+
+            barColorWhenSelected="@Color/colorPrimaryDark" />
+        <tab
+            id="@+id/id_Home"
+            icon="@drawable/home2"
+            title="@string/title_Home"
+            barColorWhenSelected="@Color/colorPrimaryDark"/>
+        <tab
+            id="@+id/id_Ubicacion"
+            icon="@drawable/sedes"
+            title="@string/title_Ubicacion"
+            barColorWhenSelected="@Color/colorPrimaryDark"/>
+    </tabs>
+

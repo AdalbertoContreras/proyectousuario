@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContainerActivity">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:fillViewport="true"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+
+            >
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                app:cardCornerRadius="6dp"
+                android:elevation="20dp"
+                app:cardUseCompatPadding="true"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="6dp"
+                        android:elevation="20dp"
+                        app:cardUseCompatPadding="true"
+
+                        >
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/ImagenSedes"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_cardview"
+                                android:background="@drawable/sede"
+                                android:scaleType="centerCrop"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:paddingLeft="@dimen/left"
+                                android:paddingRight="@dimen/left"
+                                android:background="@color/Black_opaco"
+                                >
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="20dp"
+                                    android:text="SEDE ADMINISTRATIVA"
+                                    android:textColor="@color/White"
+                                    android:textSize="@dimen/tamañoTexto"
+                                    android:textStyle="bold"
+                                    android:typeface="serif" />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gris3"
+                        android:orientation="horizontal"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:background="@color/White"
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dirección"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefono"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:layout_marginBottom="8dp"
+                        android:weightSum="2"
+                        >
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Carrera 9 # 16 A 48 / Valledupar, Cesar"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="5-857777"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+
+            >
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                app:cardCornerRadius="6dp"
+                android:elevation="20dp"
+                app:cardUseCompatPadding="true"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="6dp"
+                        android:elevation="20dp"
+                        app:cardUseCompatPadding="true"
+
+                        >
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/CentroServicios"
+                                android:layout_width="362dp"
+                                android:layout_height="@dimen/height_cardview"
+                                android:background="@drawable/servicio"
+                                android:scaleType="centerCrop" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:paddingLeft="@dimen/left"
+                                android:paddingRight="@dimen/left"
+                                android:background="@color/Black_opaco"
+                                >
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/tamañoTexto"
+                                    android:textColor="@color/White"
+                                    android:textStyle="bold"
+                                    android:typeface="serif"
+                                    android:gravity="center"
+                                    android:text="CENTRO INTEGRAL DE SERVICIOS"
+                                    android:paddingRight="20dp"
+                                    android:paddingLeft="20dp"
+                                    />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gris3"
+                        android:orientation="horizontal"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:background="@color/White"
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dirección"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefono"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:layout_marginBottom="8dp"
+                        android:weightSum="2"
+                        >
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cll. 14 #14-66 / Valledupar, Cesar"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="5-851646"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+
+            >
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                app:cardCornerRadius="6dp"
+                android:elevation="20dp"
+                app:cardUseCompatPadding="true"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="6dp"
+                        android:elevation="20dp"
+                        app:cardUseCompatPadding="true"
+
+                        >
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/CrispinVillazon"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_cardview"
+                                android:background="@drawable/agustindearmas"
+                                android:scaleType="centerCrop"
+
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:paddingLeft="@dimen/left"
+                                android:paddingRight="@dimen/left"
+                                android:background="@color/Black_opaco"
+                                >
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/tamañoTexto"
+                                    android:textColor="@color/White"
+                                    android:textStyle="bold"
+                                    android:typeface="serif"
+                                    android:gravity="center"
+                                    android:text="CENTRO DE CONVENCIONES CRISPÍN VILLAZÓN DE ARMAS"
+                                    android:paddingRight="20dp"
+                                    android:paddingLeft="20dp"
+                                    />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gris3"
+                        android:orientation="horizontal"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:background="@color/White"
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dirección"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefono"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:layout_marginBottom="8dp"
+                        android:weightSum="2"
+                        >
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kilómetro 2 vía al Rincón / Valledupar, Cesar"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="3187441482 - 3174393578"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+
+            >
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                app:cardCornerRadius="6dp"
+                android:elevation="20dp"
+                app:cardUseCompatPadding="true"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="6dp"
+                        android:elevation="20dp"
+                        app:cardUseCompatPadding="true"
+
+                        >
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/FondoVivienda"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_cardview"
+                                android:background="@drawable/sede"
+                                android:scaleType="centerCrop"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:paddingLeft="@dimen/left"
+                                android:paddingRight="@dimen/left"
+                                android:background="@color/Black_opaco"
+                                >
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/tamañoTexto"
+                                    android:textColor="@color/White"
+                                    android:textStyle="bold"
+                                    android:typeface="serif"
+                                    android:gravity="center"
+                                    android:text="FONDO ADAPTACIÓN Y VIVIENDA"
+                                    android:paddingRight="20dp"
+                                    android:paddingLeft="20dp"
+                                    />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gris3"
+                        android:orientation="horizontal"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:background="@color/White"
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dirección"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefono"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:layout_marginBottom="8dp"
+                        android:weightSum="2"
+                        >
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cll. 14 # 14 - 46 / Valledupar, Cesar"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="5-853571 - 5-846414"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+
+            >
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                app:cardCornerRadius="6dp"
+                android:elevation="20dp"
+                app:cardUseCompatPadding="true"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="6dp"
+                        android:elevation="20dp"
+                        app:cardUseCompatPadding="true"
+
+                        >
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/Instecom"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_cardview"
+                                android:background="@drawable/instecom"
+                                android:scaleType="centerCrop"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:paddingLeft="@dimen/left"
+                                android:paddingRight="@dimen/left"
+                                android:background="@color/Black_opaco"
+                                >
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/tamañoTexto"
+                                    android:textColor="@color/White"
+                                    android:textStyle="bold"
+                                    android:typeface="serif"
+                                    android:gravity="center"
+                                    android:text="INSTECOM"
+                                    android:paddingRight="20dp"
+                                    android:paddingLeft="20dp"
+                                    />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gris3"
+                        android:orientation="horizontal"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:background="@color/White"
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dirección"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefono"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:layout_marginBottom="8dp"
+                        android:weightSum="2"
+                        >
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Carrera 11 # 14 -77 / Valledupar, Cesar"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="5-843968 – 3205983578"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+
+            >
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+
+                app:cardCornerRadius="6dp"
+                android:elevation="20dp"
+                app:cardUseCompatPadding="true"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="6dp"
+                        android:elevation="20dp"
+                        app:cardUseCompatPadding="true"
+
+                        >
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/Colegio"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_cardview"
+                                android:background="@drawable/colegio"
+                                android:scaleType="centerCrop"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:paddingLeft="@dimen/left"
+                                android:paddingRight="@dimen/left"
+                                android:background="@color/Black_opaco"
+                                >
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/tamañoTexto"
+                                    android:textColor="@color/White"
+                                    android:textStyle="bold"
+                                    android:typeface="serif"
+                                    android:gravity="center"
+                                    android:text="COLEGIO COMFACESAR RODOLFO CAMPO SOTO"
+                                    android:paddingRight="20dp"
+                                    android:paddingLeft="20dp"
+                                    />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/Gris3"
+                        android:orientation="horizontal"
+
+                        />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:background="@color/White"
+                        android:weightSum="2"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dirección"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefono"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:typeface="serif"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/paddin_left"
+                        android:paddingRight="@dimen/paddin_left"
+                        android:layout_marginBottom="8dp"
+                        android:weightSum="2"
+                        >
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Calle 1 # 38 – 13 Avenida Sierra Nevada Kilómetro 4"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="5-851801 – 5-851802"
+                            android:textColor="@color/Black"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textSize="9sp"
+                            android:typeface="serif"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

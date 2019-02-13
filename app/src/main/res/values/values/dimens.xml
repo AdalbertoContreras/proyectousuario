@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_cardview">300dp</dimen>
+    <dimen name="left">14dp</dimen>
+    <dimen name="paddinginferior">10dp</dimen>
+    <dimen name="tamañoTexto">20sp</dimen>
+    <dimen name="paddin_cardview">9dp</dimen>
+    <dimen name="height_articulo3">150dp</dimen>
+    <dimen name="tamañoTexto2">12sp</dimen>
+    <dimen name="tamaño_text_fecha">8sp</dimen>
+    <dimen name="paddin_left">14dp</dimen>
+    <dimen name="linea_8dp">8dp</dimen>
+    <dimen name="bottombar_height">60dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

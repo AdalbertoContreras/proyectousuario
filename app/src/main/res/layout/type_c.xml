@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:weightSum="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddinginferior"
+            android:paddingRight="@dimen/paddinginferior"
+            android:orientation="vertical"
+            android:layout_weight="0.4"
+            >
+
+            <ImageView
+                android:id="@+id/id_imagenC"
+                android:layout_width="match_parent"
+                android:layout_height="150sp"
+                android:background="@drawable/imagen"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/id_textC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What is Lorem Ipsum?"
+                android:textStyle="bold"
+                android:textSize="@dimen/tamañoTexto2"
+                android:textColor="@color/Black"
+                android:typeface="serif"
+                android:paddingRight="@dimen/left"
+                android:paddingLeft="@dimen/left"
+                android:paddingBottom="@dimen/paddinginferior"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right"
+
+                >
+
+                <TextView
+                    android:id="@+id/id_fecha"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/tamaño_text_fecha"
+                    android:textColor="@color/White"
+                    android:typeface="normal"
+                    android:gravity="center"
+                    android:text="22/12/2018"
+                    android:background="@color/colorPrimaryDark"
+
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/Gris3"
+            android:orientation="vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddinginferior"
+            android:paddingRight="@dimen/paddinginferior"
+            android:orientation="vertical"
+            android:layout_weight="0.6"
+            >
+
+            <ImageView
+                android:id="@+id/id_imagenC2"
+                android:layout_width="match_parent"
+                android:layout_height="150sp"
+                android:background="@drawable/imagen"
+                android:scaleType="centerCrop"/>
+
+
+            <TextView
+                android:id="@+id/id_textC2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What is Lorem Ipsum?"
+                android:textStyle="bold"
+                android:textSize="@dimen/tamañoTexto2"
+                android:textColor="@color/Black"
+                android:typeface="serif"
+                android:paddingRight="@dimen/left"
+                android:paddingLeft="@dimen/left"
+                android:paddingBottom="@dimen/paddinginferior"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right"
+
+                >
+
+                <TextView
+                    android:id="@+id/id_fecha2"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/tamaño_text_fecha"
+                    android:textColor="@color/White"
+                    android:typeface="normal"
+                    android:gravity="center"
+                    android:text="22/12/2018"
+                    android:background="@color/colorPrimaryDark"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/paddinginferior"
+        android:paddingRight="@dimen/linea_8dp"
+        android:paddingLeft="@dimen/linea_8dp"
+        >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/Gris3"
+            android:layout_marginBottom="@dimen/paddinginferior"
+            android:orientation="horizontal"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

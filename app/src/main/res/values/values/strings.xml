@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ServiAmigo</string>
+    <string name="textoprueba">Lorem Ipsum is simply dummy text of the printing and \" +
+        \"typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer\" +
+        \" took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap\"
+        </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_Home">Home</string>
+    <string name="title_AlertTemprana">Alerta</string>
+    <string name="title_Ubicacion">Sedes</string>
+    <string name="Texto_alerta">PERMITENOS ORIENTARTE SI SIENTES QUE SE TE ESTA VIOLENTANDO ALGÚN DERECHO</string>
+    <string name="Texto_alerta2">Nos estaremos comunicando contigo </string>
+    <string name="Texto_alerta3">lo antes posible </string>
+    <string name="title_activity_referencia">Referencia</string>
+
+
+</resources>
