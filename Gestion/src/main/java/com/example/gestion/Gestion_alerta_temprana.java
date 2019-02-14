@@ -31,7 +31,7 @@ public class Gestion_alerta_temprana {
     public HashMap<String, String> registrar_alerta_temprana(Alerta_temprana alerta_temprana)
     {
         tipo_consulta = "insert";
-        return construir_parametros(alerta_temprana);
+        return construir_parametros(alerta_temprana); 
     }
 
     private ArrayList<Alerta_temprana> generar_json(String respuesta)
