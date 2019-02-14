@@ -208,6 +208,4 @@ public class ExampleAdapter extends RecyclerView.Adapter<ViewHolder> {
             });
         }
     }
-
-
 }
