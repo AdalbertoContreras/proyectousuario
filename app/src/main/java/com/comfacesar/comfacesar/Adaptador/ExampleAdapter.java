@@ -29,7 +29,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     List<ListItem> mItems;
     View view;
-    
+
     public ExampleAdapter(List<ListItem> items) {
 
         this.mItems = items;
