@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_asunto {
-    private static Asunto aux;
-    private static String llave_ws = "administrador";
+    private static Asunto aux = new Asunto();
+    private static String llave_ws = "asunto";
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
@@ -21,7 +21,14 @@ public class Gestion_asunto {
     {
         aux = new Asunto();
     }
-    private ArrayList<Asunto> generar_json(String respuesta)
+
+    public HashMap<String, String> consultar_asuntos()
+    {
+        tipo_consulta = "consultar_asuntos";
+        return construir_parametros(aux);
+    }
+
+    public ArrayList<Asunto> generar_json(String respuesta)
     {
         ArrayList<Asunto> lista_elementos = new ArrayList<>();
         try {
@@ -75,7 +82,7 @@ public class Gestion_asunto {
     {
         JsonObject obj = new JsonObject();
         try {
-            obj.addProperty("id_alerta_temprana", elemento.id_asunto);
+            obj.addProperty("id_asunto", elemento.id_asunto);
             obj.addProperty("nombre_asunto", elemento.nombre_asunto);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);

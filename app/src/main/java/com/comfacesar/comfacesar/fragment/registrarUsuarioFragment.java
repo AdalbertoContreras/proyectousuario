@@ -16,9 +16,10 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.comfacesar.ServiAmigo.Extra.Config;
-import com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton;
 import com.comfacesar.comfacesar.R;
+import com.example.extra.Config;
+import com.example.extra.MySocialMediaSingleton;
+import com.example.extra.WebService;
 import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Movil_registro;
@@ -174,7 +175,7 @@ public class registrarUsuarioFragment extends Fragment {
                         Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
                     }
                 };
-                StringRequest stringRequest = com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton.volley_consulta(com.comfacesar.ServiAmigo.Extra.WebService.getUrl(),hashMap,stringListener, errorListener);
+                StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
                 MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
             }
         });
@@ -200,7 +201,7 @@ public class registrarUsuarioFragment extends Fragment {
                 Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
             }
         };
-        StringRequest stringRequest = com.comfacesar.ServiAmigo.Extra.MySocialMediaSingleton.volley_consulta(com.comfacesar.ServiAmigo.Extra.WebService.getUrl(),hashMap,stringListener, errorListener);
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 

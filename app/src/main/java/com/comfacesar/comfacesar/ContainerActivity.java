@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AlertTempranaFragment;
 import com.comfacesar.comfacesar.fragment.UbicacionFragment;
+import com.example.extra.Config;
 import com.roughike.bottombar.BottomBar;
 
 public class ContainerActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class ContainerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container2);
-
+        new Config().iniciar_config(this);
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -43,7 +44,7 @@ public class ContainerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
 
@@ -51,7 +52,6 @@ public class ContainerActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(viewPager);
-
 
        /* bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override

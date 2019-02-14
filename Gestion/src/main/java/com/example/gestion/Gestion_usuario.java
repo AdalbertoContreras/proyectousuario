@@ -16,7 +16,7 @@ public class Gestion_usuario {
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
-    private static Usuario usuario_online = new Usuario();
+    private static Usuario usuario_online = null;
 
     private static void iniciar_axu()
     {
@@ -92,8 +92,16 @@ public class Gestion_usuario {
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
-            obj.addProperty("usuario_ol",usuario_online.nombre_cuenta_usuario);
-            obj.addProperty("contrasena_ol",usuario_online.contrasena_usuario);
+            if(usuario_online != null)
+            {
+                obj.addProperty("usuario_ol",usuario_online.nombre_cuenta_usuario);
+                obj.addProperty("contrasena_ol",usuario_online.contrasena_usuario);
+            }
+            else
+            {
+                obj.addProperty("usuario_ol","");
+                obj.addProperty("contrasena_ol","");
+            }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class Gestion_alerta_temprana {
     private static Alerta_temprana aux;
-    private static String llave_ws = "administrador";
+    private static String llave_ws = "alerta_temprana";
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
@@ -20,6 +20,12 @@ public class Gestion_alerta_temprana {
     private static void iniciar_axu()
     {
         aux = new Alerta_temprana();
+    }
+
+    public HashMap<String, String> registrar_alerta_temprana(Alerta_temprana alerta_temprana)
+    {
+        tipo_consulta = "insert";
+        return construir_parametros(alerta_temprana);
     }
     private ArrayList<Alerta_temprana> generar_json(String respuesta)
     {
@@ -48,7 +54,6 @@ public class Gestion_alerta_temprana {
                 fecha_alerta_temprana = jsonObject.get("fecha_alerta_temprana").getAsString();
                 hora_alerta_temprana = jsonObject.get("hora_alerta_temprana").getAsString();
                 usuario_alerta_temprana = jsonObject.get("usuario_alerta_temprana").getAsInt();
-                administrador_alerta_temprana = jsonObject.get("administrador_alerta_temprana").getAsInt();
                 estado_atendido = jsonObject.get("estado_atendido").getAsInt();
                 numero_visitas = jsonObject.get("numero_visitas").getAsInt();
                 estado_atendido = jsonObject.get("estado_atendido").getAsInt();
@@ -76,7 +81,6 @@ public class Gestion_alerta_temprana {
             obj.addProperty("fecha_alerta_temprana", elemento.fecha_alerta_temprana);
             obj.addProperty("hora_alerta_temprana", elemento.hora_alerta_temprana);
             obj.addProperty("usuario_alerta_temprana", elemento.usuario_alerta_temprana);
-            obj.addProperty("administrador_alerta_temprana", elemento.administrador_alerta_temprana);
             obj.addProperty("estado_visto", elemento.estado_visto);
             obj.addProperty("numero_visitas", elemento.numero_visitas);
             obj.addProperty("estado_atendido", elemento.estado_atendido);
