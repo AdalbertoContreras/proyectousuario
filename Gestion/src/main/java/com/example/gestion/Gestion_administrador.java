@@ -23,6 +23,19 @@ public class Gestion_administrador{
         aux = new Administrador();
     }
 
+    public HashMap<String, String> consultar_administrador_por_nombre(String nombre)
+    {
+        tipo_consulta = "consultar_por_nombre_cuenta";
+        aux.nombre_cuenta_administrador = "consultar_administrador_por_nombre";
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String, String> validar_administrador(Administrador administrador)
+    {
+        tipo_consulta = "validar_administrador";
+        return construir_parametros(administrador);
+    }
+
     public HashMap<String, String> activar_administrador(Administrador administrador)
     {
         tipo_consulta = "activar_administrador";

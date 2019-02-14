@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -24,18 +23,8 @@ import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
-
 import java.util.HashMap;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link registrarUsuarioFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link registrarUsuarioFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class registrarUsuarioFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

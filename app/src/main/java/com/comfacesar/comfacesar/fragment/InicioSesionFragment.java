@@ -1,4 +1,4 @@
-package com.comfacesar.comfacesar;
+package com.comfacesar.comfacesar.fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.R;
+import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
@@ -77,67 +80,69 @@ public class InicioSesionFragment extends Fragment {
     private EditText nombreCuentaEditText;
     private EditText contraseñaEditText;
     private Button iniciarSesionButton;
-    private Button registrarmeButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(view_permanente == null)
-        {
-            view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
-            nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
-            contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
-            iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
-
-            iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(nombreCuentaEditText.getText().toString().isEmpty())
-                    {
-                        Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de su cuenta de usuario", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if(contraseñaEditText.getText().toString().isEmpty())
-                    {
-                        Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de su cuenta de usuario", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    final Usuario usuario = new Usuario(){{
-                        nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
-                        contrasena_usuario = contraseñaEditText.getText().toString();
-                    }};
-                    usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
-                    usuario.contrasena_usuario = contraseñaEditText.getText().toString();
-                    HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
-                    Log.d("Parametros",params.toString());
-                    Response.Listener<String> stringListener = new Response.Listener<String>()
-                    {
-                        @Override
-                        public void onResponse(String response) {
-                            if(response.equals("1"))
-                            {
-                                Toast.makeText(view_permanente.getContext(), "Logueado",
-                                        Toast.LENGTH_LONG).show();
-                                Gestion_usuario.setUsuario_online(usuario);
-                            }
-                            else
-                            {
-                                Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
-                                        "incorrecto", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    };
-                    Response.ErrorListener errorListener = new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Reponse.Error",error.toString());
-                        }
-                    };
-                    StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-                    MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+        view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+        nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
+        contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
+        iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
+        iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if(Config.getImei() != null)
+            {
+                if(nombreCuentaEditText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de su cuenta de usuario", Toast.LENGTH_LONG).show();
+                    return;
                 }
-            });
-        }
+                if(contraseñaEditText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de su cuenta de usuario", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                final Usuario usuario = new Usuario(){{
+                    nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+                    contrasena_usuario = contraseñaEditText.getText().toString();
+                }};
+                usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+                usuario.contrasena_usuario = contraseñaEditText.getText().toString();
+                HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
+                Log.d("Parametros",params.toString());
+                Response.Listener<String> stringListener = new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        if(response.equals("1"))
+                        {
+                            Toast.makeText(view_permanente.getContext(), "Logueado",
+                                    Toast.LENGTH_LONG).show();
+                            Gestion_usuario.setUsuario_online(usuario);
+                        }
+                        else
+                        {
+                            Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
+                                    "incorrecto", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                };
+                Response.ErrorListener errorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Reponse.Error",error.toString());
+                    }
+                };
+                StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+                MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+            }
+            else
+            {
+                Toast.makeText(view_permanente.getContext(), "Acepte los permisos para poder iniciar sesion en este dispositivo", Toast.LENGTH_LONG).show();
+            }
+            }
+        });
         return view_permanente;
     }
 

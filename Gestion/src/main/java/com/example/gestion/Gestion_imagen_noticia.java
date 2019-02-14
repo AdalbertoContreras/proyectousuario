@@ -23,6 +23,12 @@ public class Gestion_imagen_noticia {
         aux = new Imagen_noticia();
     }
 
+    public HashMap<String, String> registrar_imagen_con_archivo(Imagen_noticia imagen_noticia)
+    {
+        tipo_consulta = "registrar_imagen_con_archivo";
+        return construir_parametros(imagen_noticia);
+    }
+
     public ArrayList<Imagen_noticia> generar_json(String respuesta)
     {
         ArrayList<Imagen_noticia> lista_elementos = new ArrayList<>();

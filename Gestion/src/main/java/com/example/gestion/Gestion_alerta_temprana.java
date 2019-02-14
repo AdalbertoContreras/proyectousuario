@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_alerta_temprana {
-    private static Alerta_temprana aux;
+    private static Alerta_temprana aux = new Alerta_temprana();
     private static String llave_ws = "alerta_temprana";
     private static String fecha1;
     private static String fecha2;
@@ -22,11 +22,18 @@ public class Gestion_alerta_temprana {
         aux = new Alerta_temprana();
     }
 
+    public HashMap<String, String> consultar_alerta_temprana()
+    {
+        tipo_consulta = "consultar_alerta_temprana";
+        return construir_parametros(aux);
+    }
+
     public HashMap<String, String> registrar_alerta_temprana(Alerta_temprana alerta_temprana)
     {
         tipo_consulta = "insert";
         return construir_parametros(alerta_temprana);
     }
+
     private ArrayList<Alerta_temprana> generar_json(String respuesta)
     {
         ArrayList<Alerta_temprana> lista_elementos = new ArrayList<>();

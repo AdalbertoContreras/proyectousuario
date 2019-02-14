@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class Config {
     private static String imei = null;
+    private static int permiso_pedido = 0;
     public void iniciar_config(Activity activity)
     {
         TelephonyManager mngr = (TelephonyManager) activity.getBaseContext().getSystemService(activity.getBaseContext().TELEPHONY_SERVICE);
@@ -22,7 +23,12 @@ public class Config {
                     activity, android.Manifest.permission.READ_PHONE_STATE );
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 Log.i("Mensaje", "No se tiene permiso.");
-                ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_PHONE_STATE }, 225);
+                if(permiso_pedido == 0)
+                {
+                    ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_PHONE_STATE }, 225);
+                    permiso_pedido = 1;
+                }
+
             } else {
                 Log.i("Mensaje", "Se tiene permiso!");
                 imei = Settings.Secure.getString(activity.getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);

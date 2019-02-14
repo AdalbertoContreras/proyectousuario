@@ -9,7 +9,6 @@ public class WebService {
     public static String getUrl() {
         return url;
     }
-
     public static String getHOSTING() {
         return HOSTING;
     }

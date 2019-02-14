@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import com.comfacesar.comfacesar.fragment.HistorialAlertasFragment;
+import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
+import com.comfacesar.comfacesar.fragment.InicioSesionFragment;
 import com.comfacesar.comfacesar.fragment.registrarUsuarioFragment;
 
 

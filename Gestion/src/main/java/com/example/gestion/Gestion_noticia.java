@@ -23,6 +23,11 @@ public class Gestion_noticia {
         aux = new Noticia();
     }
 
+    public HashMap<String, String> registrar_noticia_manual(Noticia noticia)
+    {
+        tipo_consulta = "registrar_noticia_manual";
+        return construir_parametros(noticia);
+    }
     public HashMap<String, String> consultar_num_noticia()
     {
         tipo_consulta = "consultar_num_noticias";

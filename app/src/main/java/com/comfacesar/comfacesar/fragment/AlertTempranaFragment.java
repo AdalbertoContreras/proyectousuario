@@ -56,16 +56,17 @@ public class AlertTempranaFragment extends Fragment {
         enviar_alerta_tempranaButton = view.findViewById(R.id.enviarButtonRegistrarAlertatemprana);
         asuntoSpinner = view.findViewById(R.id.asuntoSpinnerRegistrarAlertaTemprana);
         consultar_asuntos();
-        if(Gestion_usuario.getUsuario_online() == null)
-        {
-            descripcionTextView.setEnabled(false);
-            asuntoSpinner.setEnabled(false);
-            enviar_alerta_tempranaButton.setEnabled(false);
-        }
         enviar_alerta_tempranaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            if(Config.getImei() != null)
+            {
                 registrar_alerta_temprana(validar_alerta_temprana());
+            }
+            else
+            {
+                Toast.makeText(view.getContext(),"Acepte los permisos primero", Toast.LENGTH_LONG).show();
+            }
             }
         });
         asuntoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

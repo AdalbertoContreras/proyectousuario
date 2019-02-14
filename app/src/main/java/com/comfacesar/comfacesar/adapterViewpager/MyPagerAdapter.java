@@ -31,17 +31,11 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
                 fragment = new HomeFragment();
                 break;
             case 2:
-                if(Config.getImei() == null)
-                {
-                    Toast.makeText(context, "No tiene permisos suficiente para registrar una alerta", Toast.LENGTH_LONG).show();
-                }
                 fragment = new AlertTempranaFragment();
-
                 break;
             case 3:
                 fragment = new UbicacionFragment();
                 break;
-
             default:
                 fragment = null;
         }

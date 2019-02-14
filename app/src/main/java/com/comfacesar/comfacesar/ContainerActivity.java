@@ -29,13 +29,11 @@ public class ContainerActivity extends AppCompatActivity {
 
     public ViewPager viewpager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container2);
         new Config().iniciar_config(this);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("ServiAmigo");

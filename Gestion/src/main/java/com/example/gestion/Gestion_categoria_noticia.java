@@ -22,7 +22,14 @@ public class Gestion_categoria_noticia {
     {
         aux = new Categoria_noticia_manual();
     }
-    private ArrayList<Categoria_noticia_manual> generar_json(String respuesta)
+
+    public HashMap<String, String> consultar_categorias()
+    {
+        tipo_consulta = "consultar_categorias";
+        return construir_parametros(aux);
+    }
+
+    public ArrayList<Categoria_noticia_manual> generar_json(String respuesta)
     {
         ArrayList<Categoria_noticia_manual> lista_elementos = new ArrayList<>();
         try {
