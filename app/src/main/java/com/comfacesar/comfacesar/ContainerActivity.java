@@ -1,7 +1,6 @@
 package com.comfacesar.comfacesar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 
@@ -17,14 +16,13 @@ import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.example.extra.Config;
 
 public class ContainerActivity extends AppCompatActivity {
-
-    public static  Bundle bundle;
+    private Menu menu;
+    private int menuTipo = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container2);
-        bundle = savedInstanceState;
         new Config().iniciar_config(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("ServiAmigo");
@@ -49,7 +47,17 @@ public class ContainerActivity extends AppCompatActivity {
             spanString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.Gris)), 0,     spanString.length(), 0); //fix the color to white
             item.setTitle(spanString);
         }
+        this.menu = menu;
         return true;
+    }
+
+    private void cambiar_menu()
+    {
+        menu.clear();
+        menu.add(10, 11, 0, "Crear anuncio");
+        menu.add(10, 12, 1, "Modificar anuncio");
+        menu.add(10, 13, 2, "Eliminar anuncio");
+        menu.add(10, 14, 3, "Actualizar");
     }
 
     @Override
@@ -63,6 +71,7 @@ public class ContainerActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.historialAlertasMenu:
+                cambiar_menu();
                 intent.putExtra("id",1);
                 selecionado = true;
                 break;

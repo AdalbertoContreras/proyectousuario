@@ -47,7 +47,7 @@ public class HistorialAlertasFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
 
     private OnFragmentInteractionListener mListener;
 
@@ -133,14 +133,12 @@ public class HistorialAlertasFragment extends Fragment {
                 consultar_alertas_tempranas();
             }
         }
-
         return view_permanente;
     }
 
     private void comparar_num_alertas()
     {
         HashMap<String, String> hashMap = new Gestion_alerta_temprana().num_alertas();
-        Log.d("Thread", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -179,13 +177,11 @@ public class HistorialAlertasFragment extends Fragment {
             final Gestion_noticia gestion_noticia = new Gestion_noticia();
             //tomo los parametros del controlador
             HashMap<String,String> params = new Gestion_alerta_temprana().consultar_alertas_tempranas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
-            Log.d("parametros", params.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
                 public void onResponse(String response) {
                     //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
-                    Log.d("respuesta", response);
                     llenar_alertas_tempranas(response);
                 }
             };
@@ -242,9 +238,5 @@ public class HistorialAlertasFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void setFragmentManager(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
     }
 }
