@@ -19,13 +19,9 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_containertwo);
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundResource(R.color.Gris3);
         setSupportActionBar(toolbar);
-        ShowToolbar("Historial Alertas",true);
-
 
         int cadena = getIntent().getExtras().getInt("id");
         String aux = Integer.toString(cadena);
@@ -37,22 +33,27 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
             case "1":
                 mifragment= new HistorialAlertasFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("Historial Alertas",true);
                 break;
             case "2":
                 mifragment= new HistorialAsesoriasFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("Historial Asesorias",true);
                 break;
             case "3":
                 mifragment= new InicioSesionFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("Inicio Sesion",true);
                 break;
             case "4":
                 mifragment= new registrarUsuarioFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("Registro Usuario",true);
                 break;
             case "5":
                 mifragment= new AcercaDeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("",true);
                 break;
         }
     }
