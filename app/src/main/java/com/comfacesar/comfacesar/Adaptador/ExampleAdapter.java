@@ -154,7 +154,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ViewHolder> {
         }
     }
 
-
     public class ViewHolderC extends ViewHolder {
         private View view;
         private final TextView mText;

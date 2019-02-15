@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_usuario {
-    private static Usuario aux;
+    private static Usuario aux = new Usuario();
     private static String llave_ws = "usuario";
     private static String fecha1;
     private static String fecha2;
@@ -35,7 +35,14 @@ public class Gestion_usuario {
         return construir_parametros(usuario);
     }
 
-    private ArrayList<Usuario> generar_json(String respuesta)
+    public HashMap<String, String> consultar_usuario_por_id(int id)
+    {
+        tipo_consulta = "consultar_usuario_por_id";
+        aux.id_usuario = id;
+        return construir_parametros(aux);
+    }
+
+    public ArrayList<Usuario> generar_json(String respuesta)
     {
         ArrayList<Usuario> lista_elementos = new ArrayList<>();
         try {
@@ -66,7 +73,7 @@ public class Gestion_usuario {
                 fecha_nacimiento = jsonObject.get("fecha_nacimiento").getAsString();
                 correo_usuario = jsonObject.get("correo_usuario").getAsString();
                 nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
-                contrasena_usuario = jsonObject.get("contrasena_usuario").getAsString();
+                contrasena_usuario = jsonObject.get("contraseña_usuario").getAsString();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }

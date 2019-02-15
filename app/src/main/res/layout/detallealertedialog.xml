@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp">
+    <TextView
+        android:id="@+id/asuntoTextViewAlertaTempranaDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" ASUNTO"
+        android:gravity="center"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/descripcionTextViewAlertaTempranaDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text=" 10/08/09"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:id="@+id/fechaTextViewAlertaTempranaDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text=" 10/08/09" />
+</LinearLayout >

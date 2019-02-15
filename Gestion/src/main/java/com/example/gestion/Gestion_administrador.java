@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class Gestion_administrador{
     private static Administrador aux = new Administrador();
+    private static Administrador administrador_actual = null;
     private static String llave_ws = "administrador";
     private static String fecha1;
     private static String fecha2;
@@ -26,7 +27,14 @@ public class Gestion_administrador{
     public HashMap<String, String> consultar_administrador_por_nombre(String nombre)
     {
         tipo_consulta = "consultar_por_nombre_cuenta";
-        aux.nombre_cuenta_administrador = "consultar_administrador_por_nombre";
+        aux.nombre_cuenta_administrador = nombre;
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String, String> consultar_administrador_por_id(int id_administrador)
+    {
+        tipo_consulta = "consultar_por_nombre_cuenta";
+        aux.id_administrador = id_administrador;
         return construir_parametros(aux);
     }
 
@@ -35,11 +43,10 @@ public class Gestion_administrador{
         tipo_consulta = "validar_administrador";
         return construir_parametros(administrador);
     }
-
     public HashMap<String, String> activar_administrador(Administrador administrador)
     {
         tipo_consulta = "activar_administrador";
-        return construir_parametros(administrador);
+        return construir_parametros();
     }
 
     public HashMap<String, String> bloquear_administrador(int id_administrador)
@@ -54,13 +61,13 @@ public class Gestion_administrador{
     public HashMap<String, String> consultar_activos()
     {
         tipo_consulta = "consultar_activos";
-        return construir_parametros(aux);
+        return construir_parametros();
     }
 
     public HashMap<String, String> consultar_bloqueados()
     {
         tipo_consulta = "consultar_bloqueados";
-        return construir_parametros(aux);
+        return construir_parametros();
     }
 
     public HashMap<String, String> consultar_por_nombre_cuenta(String nombre)
@@ -74,10 +81,10 @@ public class Gestion_administrador{
     public HashMap<String, String> registrar_administrador(Administrador administrador)
     {
         tipo_consulta = "insert";
-        return construir_parametros(administrador);
+        return construir_parametros();
     }
 
-    private ArrayList<Administrador> generar_json(String respuesta)
+    public ArrayList<Administrador> generar_json(String respuesta)
     {
         ArrayList<Administrador> lista_elementos = new ArrayList<>();
         try {
@@ -146,6 +153,7 @@ public class Gestion_administrador{
             obj.addProperty("estado_administrador",elemento.estado_administrador);
             obj.addProperty("fecha_registro_administrador",elemento.fecha_registro_administrador);
             obj.addProperty("hora_registro_administrador",elemento.hora_registro_administrador);
+            /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
@@ -156,5 +164,30 @@ public class Gestion_administrador{
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("json",obj.toString());
         return hashMap;
+    }
+
+    private HashMap<String,String> construir_parametros()
+    {
+        JsonObject obj = new JsonObject();
+        try {
+            /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
+            obj.addProperty("fecha1",fecha1);
+            obj.addProperty("fecha2",fecha2);
+            obj.addProperty("tipo_consulta",tipo_consulta);
+            obj.addProperty("llave_ws",llave_ws);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        }
+        HashMap<String,String> hashMap = new HashMap<>();
+        hashMap.put("json",obj.toString());
+        return hashMap;
+    }
+
+    public static Administrador getAdministrador_actual() {
+        return administrador_actual;
+    }
+
+    public static void setAdministrador_actual(Administrador administrador_actual) {
+        Gestion_administrador.administrador_actual = administrador_actual;
     }
 }

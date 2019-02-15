@@ -61,7 +61,15 @@ public class AlertTempranaFragment extends Fragment {
             public void onClick(View v) {
             if(Config.getImei() != null)
             {
-                registrar_alerta_temprana(validar_alerta_temprana());
+                if(Gestion_usuario.getUsuario_online() != null)
+                {
+                    registrar_alerta_temprana(validar_alerta_temprana());
+                }
+                else
+                {
+                    Toast.makeText(view.getContext(),"Inicie sesion antes de realizar una alerta temprana", Toast.LENGTH_LONG).show();
+                }
+
             }
             else
             {
@@ -170,7 +178,7 @@ public class AlertTempranaFragment extends Fragment {
         {
             alerta_temprana.descripcion_alerta_temprana = descripcionTextView.getText().toString();
         }
-        alerta_temprana.usuario_alerta_temprana = 1;
+        alerta_temprana.usuario_alerta_temprana = Gestion_usuario.getUsuario_online().id_usuario;
         return alerta_temprana;
     }
 

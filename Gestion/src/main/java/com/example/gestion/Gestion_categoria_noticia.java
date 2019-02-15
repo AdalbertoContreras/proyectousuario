@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_categoria_noticia {
-    private static Categoria_noticia_manual aux;
+    private static Categoria_noticia_manual aux = new Categoria_noticia_manual();
     private static String llave_ws = "administrador";
     private static String fecha1;
     private static String fecha2;

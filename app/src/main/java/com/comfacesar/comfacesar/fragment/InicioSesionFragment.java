@@ -23,6 +23,7 @@ import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -115,13 +116,13 @@ public class InicioSesionFragment extends Fragment {
                 {
                     @Override
                     public void onResponse(String response) {
-                        if(response.equals("1"))
+                        int val = 0;
+                        try
                         {
-                            Toast.makeText(view_permanente.getContext(), "Logueado",
-                                    Toast.LENGTH_LONG).show();
-                            Gestion_usuario.setUsuario_online(usuario);
+                            val = Integer.parseInt(response);
+                            consultar_usuario_y_agregar_online(val);
                         }
-                        else
+                        catch(NumberFormatException exc)
                         {
                             Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                                     "incorrecto", Toast.LENGTH_LONG).show();
@@ -144,6 +145,38 @@ public class InicioSesionFragment extends Fragment {
             }
         });
         return view_permanente;
+    }
+
+    private void consultar_usuario_y_agregar_online(int id_usuario)
+    {
+        HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(id_usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                if(usuarios.isEmpty())
+                {
+                    Toast.makeText(view_permanente.getContext(), "Error en el sistema",
+                            Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Gestion_usuario.setUsuario_online(usuarios.get(0));
+                    Toast.makeText(view_permanente.getContext(), "Logueado",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Reponse.Error",error.toString());
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+
     }
 
     private void conect()

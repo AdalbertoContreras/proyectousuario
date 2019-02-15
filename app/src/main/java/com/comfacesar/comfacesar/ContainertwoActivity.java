@@ -2,6 +2,7 @@ package com.comfacesar.comfacesar;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +15,13 @@ import com.comfacesar.comfacesar.fragment.registrarUsuarioFragment;
 
 public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, registrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener {
 
+    public static Bundle bundle;
+    public static FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_containertwo);
-
+        bundle = savedInstanceState;
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundResource(R.color.Gris3);
         setSupportActionBar(toolbar);
@@ -32,6 +35,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
         {
             case "1":
                 mifragment= new HistorialAlertasFragment();
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
                 ShowToolbar("Historial Alertas",true);
                 break;
