@@ -107,7 +107,6 @@ public class HomeFragment extends Fragment {
             final Gestion_noticia gestion_noticia = new Gestion_noticia();
             //tomo los parametros del controlador
             HashMap<String,String> params = gestion_noticia.consultar_con_imagenes_y_m_primero();
-            Log.d("parametros", params.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
@@ -127,7 +126,6 @@ public class HomeFragment extends Fragment {
         final Gestion_noticia gestion_noticia = new Gestion_noticia();
         //tomo los parametros del controlador
         HashMap<String,String> params = gestion_noticia.consultar_num_noticia();
-        Log.d("parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -197,7 +195,6 @@ public class HomeFragment extends Fragment {
         //
         //
         int num_items = noticias.size();
-        Log.d("num_items", num_items + "");
         for(int i = 0; i < num_items; i ++){
             //cargar imagen por noticia
             //
@@ -236,7 +233,6 @@ public class HomeFragment extends Fragment {
                 case 3:
                     if((i + 1) < num_items)
                     {
-                        Log.d("i + 1 =",(i + 1) + "");
                         ArrayList<Imagen_noticia> imagen_noticias_2 = gestion_imagen_noticia.generar_json(noticias.get(i + 1).json_imagenes);
                         Imagen_noticia  imagen_noticia_2 = null;
                         if(!imagen_noticias_2.isEmpty())

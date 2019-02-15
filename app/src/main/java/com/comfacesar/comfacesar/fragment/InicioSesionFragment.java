@@ -111,7 +111,6 @@ public class InicioSesionFragment extends Fragment {
                 usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
                 usuario.contrasena_usuario = contraseñaEditText.getText().toString();
                 HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
-                Log.d("Parametros",params.toString());
                 Response.Listener<String> stringListener = new Response.Listener<String>()
                 {
                     @Override

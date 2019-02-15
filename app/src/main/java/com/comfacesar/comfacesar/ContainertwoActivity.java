@@ -34,6 +34,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
         switch (aux)
         {
             case "1":
+                HistorialAlertasFragment.fragmentManager =  getSupportFragmentManager();
                 mifragment= new HistorialAlertasFragment();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();

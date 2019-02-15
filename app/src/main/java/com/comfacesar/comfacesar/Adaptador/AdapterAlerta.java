@@ -78,7 +78,12 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
                 public void onClick(View v) {
 
                     Bundle args = new Bundle();
-                    AlertaTempranaDialog.newInstance(alerta_temprana, asunto).show(fragmentManager, "missiles");
+                    AlertaTempranaDialog.alerta_temprana = Alerta_temprana;
+                    AlertaTempranaDialog.asunto = asunto;
+                    AlertaTempranaDialog alertaTempranaDialog = new AlertaTempranaDialog();
+                    alertaTempranaDialog.setCancelable(false);
+                    alertaTempranaDialog.show(fragmentManager, "missiles");
+
                 }
             });
         }
@@ -86,7 +91,6 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
         private void consultar_asunto(final Alerta_temprana alerta_temprana) {
 
             HashMap<String, String> hashMap = new Gestion_asunto().consultar_asuntos();
-            Log.d("parametros", hashMap.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

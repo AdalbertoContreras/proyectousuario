@@ -14,21 +14,11 @@ import com.example.modelo.Alerta_temprana;
 import com.example.modelo.Asunto;
 
 public class AlertaTempranaDialog extends DialogFragment {
-    private static Alerta_temprana alerta_temprana;
-    private static Asunto asunto;
+    public static Alerta_temprana alerta_temprana;
+    public static Asunto asunto;
     public AlertaTempranaDialog()
     {
 
-    }
-
-    public static AlertaTempranaDialog newInstance(Alerta_temprana _alerta_temprana, Asunto _asunto)
-    {
-        alerta_temprana =  _alerta_temprana;
-        asunto = _asunto;
-        AlertaTempranaDialog fragment = new AlertaTempranaDialog();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -48,15 +38,11 @@ public class AlertaTempranaDialog extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.detallealertedialog, null))
                 // Add action buttons
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // sign in the user ...
-                    }
-                })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        AlertaTempranaDialog.this.getDialog().cancel();
+                        dismiss();
                     }
                 });
         builder.setView(v);

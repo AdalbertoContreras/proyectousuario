@@ -108,7 +108,6 @@ public class AlertTempranaFragment extends Fragment {
         asuntoArrayList = new ArrayList<>();
         Gestion_asunto gestion_asunto = new Gestion_asunto();
         HashMap<String, String> hashMap = gestion_asunto.consultar_asuntos();
-        Log.d("Parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -188,7 +187,6 @@ public class AlertTempranaFragment extends Fragment {
         {
             Gestion_alerta_temprana gestion_alerta_temprana = new Gestion_alerta_temprana();
             HashMap<String, String> hashMap = gestion_alerta_temprana.registrar_alerta_temprana(alerta_temprana);
-            Log.d("parametros",hashMap.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
