@@ -8,32 +8,32 @@
         android:id="@+id/historialAlertasMenu"
         android:orderInCategory="100"
         android:title="Historial Alertas"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/historialAsesoriasMenu"
         android:orderInCategory="100"
         android:title="Historial Asesorias"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/iniciarSesionMenu"
         android:orderInCategory="100"
         android:title="Inicio de Sesión"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/registrarmeMenu"
         android:orderInCategory="100"
         android:title="Registrarme"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/acercaDeMenu"
         android:orderInCategory="100"
         android:title="Acerca de..."
-        android:showAsAction="never" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_buscar"
         android:orderInCategory="100"
         android:title="buscar"
-        android:actionViewClass="android.widget.SearchView"
-        android:showAsAction="always|withText" />
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always|withText" />
 
 </menu>
