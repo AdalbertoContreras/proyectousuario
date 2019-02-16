@@ -22,6 +22,7 @@ import com.example.extra.WebService;
 import com.example.gestion.Gestion_asunto;
 import com.example.modelo.Alerta_temprana;
 import com.example.modelo.Asunto;
+import com.example.modelo.Mensaje_chat_asesoria;
 
 import java.util.ArrayList;
 import java.util.HashMap;

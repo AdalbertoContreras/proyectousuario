@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,12 +15,17 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
+import com.comfacesar.comfacesar.fragment.asesoriaFragment;
 import com.example.extra.Config;
+import com.example.gestion.Gestion_usuario;
 
 public class ContainerActivity extends AppCompatActivity {
     private Menu menu;
-    private int menuTipo = 1;
+    private FloatingActionButton chat_asesoriaFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,24 @@ public class ContainerActivity extends AppCompatActivity {
         viewPager.setAdapter(myPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        chat_asesoriaFloatingActionButton = findViewById(R.id.chat_asesoriasButton);
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            chat_asesoriaFloatingActionButton.setEnabled(true);
+        }
+        else
+        {
+            chat_asesoriaFloatingActionButton.setEnabled(false);
+        }
+        chat_asesoriaFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                asesoriaFragment asesoriaFragment = new asesoriaFragment();
+                Intent intent= new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                intent.putExtra("id",6);
+                startActivity(intent);
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

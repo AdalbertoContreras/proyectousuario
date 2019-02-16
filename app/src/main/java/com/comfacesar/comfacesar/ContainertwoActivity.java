@@ -10,10 +10,11 @@ import android.support.v7.widget.Toolbar;
 import com.comfacesar.comfacesar.fragment.HistorialAlertasFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
 import com.comfacesar.comfacesar.fragment.InicioSesionFragment;
+import com.comfacesar.comfacesar.fragment.asesoriaFragment;
 import com.comfacesar.comfacesar.fragment.registrarUsuarioFragment;
 
 
-public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, registrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener {
+public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, registrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, asesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener {
 
     public static Bundle bundle;
     public static FragmentManager fragmentManager;
@@ -36,7 +37,6 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
             case "1":
                 HistorialAlertasFragment.fragmentManager =  getSupportFragmentManager();
                 mifragment= new HistorialAlertasFragment();
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
                 ShowToolbar("Historial Alertas",true);
                 break;
@@ -58,7 +58,18 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
             case "5":
                 mifragment= new AcercaDeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("Acerca de",true);
                 ShowToolbar("",true);
+                break;
+            case "6":
+                mifragment= new Chat_asesoriaFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("",true);
+                break;
+            case "7":
+                mifragment= new Chat_asesoriaFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
+                ShowToolbar("Asesorias",true);
                 break;
         }
     }
