@@ -50,7 +50,7 @@ public class TypeC implements ListItem {
         this.imagen_noticia2 = null;
     }
 
-    public TypeC(Noticia noticia1, Imagen_noticia imagen_noticia1) {
+    public TypeC(Noticia noticia1, Noticia noticia2) {
         this.imagen = "";
         this.text = noticia1.titulo_noticia;
         this.imagen2 = "";
@@ -112,6 +112,6 @@ public class TypeC implements ListItem {
 
     @Override
     public int getListItemType() {
-        return ListItem.TYPE_C;
+        return ListItem.VIOLENCIA_DE_GENERO;
     }
 }

@@ -10,4 +10,5 @@ public class Chat_asesoria {
     public int usuario_chat_asesoria;
     public int estado_cerrado;
     public String tiempo_sesion_chat_asesoria;
+    public int especializacion_chat_asesoria;
 }

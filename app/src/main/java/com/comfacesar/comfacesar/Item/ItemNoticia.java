@@ -1,32 +1,29 @@
-package com.comfacesar.comfacesar.Pojo;
+package com.comfacesar.comfacesar.Item;
 
+import com.comfacesar.comfacesar.Interface.ListItem;
 import com.example.modelo.Imagen_noticia;
 import com.example.modelo.Noticia;
 
-
-public class TypeA{
+public class ItemNoticia implements ListItem {
     private String imagen;
     private Noticia noticia;
-    private Imagen_noticia imagen_noticia;
 
-    public TypeA(Noticia noticia, Imagen_noticia imagen_noticia) {
+    public ItemNoticia(Noticia noticia, Imagen_noticia imagen_noticia) {
         this.imagen=imagen_noticia.url_imagen_noticia;
         this.noticia = noticia;
-        this.imagen_noticia = imagen_noticia;
     }
 
-    public TypeA(Noticia noticia) {
+    public ItemNoticia(Noticia noticia) {
         this.imagen="";
         this.noticia = noticia;
-        imagen_noticia = null;
     }
 
     public Noticia getNoticia() {
         return noticia;
     }
 
-    public Imagen_noticia getImagen_noticia() {
-        return imagen_noticia;
+    public void setNoticia(Noticia noticia) {
+        this.noticia = noticia;
     }
 
     public String getImagen() {

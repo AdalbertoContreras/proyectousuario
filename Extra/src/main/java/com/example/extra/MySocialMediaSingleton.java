@@ -2,6 +2,7 @@ package com.example.extra;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,22 +41,7 @@ public class MySocialMediaSingleton
     }
 
     public  void addToRequestQueue(Request req) {
-        req.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 50000;
-            }
 
-            @Override
-            public int getCurrentRetryCount() {
-                return 50000;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
         getRequestQueue().add(req);
 
     }
@@ -79,7 +65,9 @@ public class MySocialMediaSingleton
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Reponse.Error",error.toString());
+                //Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
             }
         };
     }
+
 }

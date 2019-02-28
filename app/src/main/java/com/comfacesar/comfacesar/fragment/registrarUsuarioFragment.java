@@ -1,20 +1,24 @@
 package com.comfacesar.comfacesar.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
@@ -76,7 +80,10 @@ public class registrarUsuarioFragment extends Fragment {
     private EditText contraseñaCuentaEditText;
     private RadioButton masculinoRadioButton;
     private RadioButton femeninoRadioButton;
+    private EditText telefonoEditText;
+    private EditText direccionEditText;
     private Button registrar_usuario;
+    private EditText fecha_nacimientoEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +93,29 @@ public class registrarUsuarioFragment extends Fragment {
         nombreUsuarioEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextRegistrarUsuario);
         apellidoEditText = view_permanente.findViewById(R.id.apellidosEditTextRegistrarUsuario);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextRegistrarUsuario);
+        masculinoRadioButton = view_permanente.findViewById(R.id.masculinoRadioButton);
+        femeninoRadioButton = view_permanente.findViewById(R.id.femeninoRadioButton);
         contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaEditTextRegistrarUsuario);
         registrar_usuario = view_permanente.findViewById(R.id.registrarmeButtonRegistrarUsuario);
+        direccionEditText = view_permanente.findViewById(R.id.direccionEditText);
+        telefonoEditText = view_permanente.findViewById(R.id.telefonoEditText);
+        fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadEditText);
+        fecha_nacimientoEditText.setFocusable(false);
+        fecha_nacimientoEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+        fecha_nacimientoEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    showDatePickerDialog();
+                }
+            }
+        });
         registrar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,14 +153,22 @@ public class registrarUsuarioFragment extends Fragment {
                     Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de la cuenta", Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 Usuario usuario = new Usuario();
                 usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
                 usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
                 usuario.apellidos_usuario = apellidoEditText.getText().toString();
-                usuario.fecha_nacimiento = "2000-1-1";
-                usuario.telefono_usuario = "12333";
-                usuario.direccion_usuario = "mnasbhd";
-                usuario.sexo_usuario = 0;
+                usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
+                usuario.telefono_usuario = telefonoEditText.getText().toString();
+                usuario.direccion_usuario = direccionEditText.getText().toString();
+                if(masculinoRadioButton.isChecked())
+                {
+                    usuario.sexo_usuario = 0;
+                }
+                else
+                {
+                    usuario.sexo_usuario = 1;
+                }
                 usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
                 usuario.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
                 HashMap<String, String> hashMap = new Gestion_usuario().registrar_usuario(usuario);
@@ -169,6 +205,19 @@ public class registrarUsuarioFragment extends Fragment {
             }
         });
         return view_permanente;
+    }
+
+    private void showDatePickerDialog()
+    {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because january is zero
+                final String selectedDate = year + "-" + (month+1)  + "-" + day ;
+                fecha_nacimientoEditText.setText(selectedDate);
+            }
+        });
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     private void registrar_movil_registro(int id_registrado)

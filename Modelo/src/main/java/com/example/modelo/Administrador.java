@@ -3,6 +3,7 @@ package com.example.modelo;
 public class Administrador
 {
     public int id_administrador;
+    public int tipo_administrador;
     public String nombre_cuenta_administrador;
     public String contrasena_administrador;
     public String nombres_administrador;

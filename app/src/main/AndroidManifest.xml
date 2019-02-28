@@ -18,6 +18,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity android:name=".ContainertwoActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ContainerActivity">
             <meta-data
                 android:name="android.support.PARRENY_ACTIVITY"
@@ -45,7 +46,9 @@
         <activity
             android:name=".MapsActivity"
             android:label="Mao" />
-        <activity android:name=".ContainerActivity">
+        <activity android:name=".ContainerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
 
         </activity>
     </application>

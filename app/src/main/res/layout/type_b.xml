@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_articulo3"
         android:scaleType="centerCrop"
-        android:background="@drawable/imagen"
+        android:background="@drawable/imagen_nueva"
         />
 
         <TextView

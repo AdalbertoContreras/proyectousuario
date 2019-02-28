@@ -1,35 +1,45 @@
-package com.comfacesar.comfacesar;
+package com.comfacesar.comfacesar.fragment;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.comfacesar.comfacesar.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AcercaDeFragment.OnFragmentInteractionListener} interface
+ * {@link AsesoriaFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AcercaDeFragment#newInstance} factory method to
+ * Use the {@link AsesoriaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AcercaDeFragment extends Fragment {
+public class AsesoriaFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private ImageView salud_sexual_y_reproductiva_ImageView;
+    private ImageView identidad_ImageView;
+    private ImageView nutricion_ImageView;
+    private ImageView embarazo_ImageView;
+    public static FragmentManager fragmentManager;
+    private String especialidad;
+    private View view;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public AcercaDeFragment() {
+    public AsesoriaFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +49,11 @@ public class AcercaDeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AcercaDeFragment.
+     * @return A new instance of fragment AsesoriaFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AcercaDeFragment newInstance(String param1, String param2) {
-        AcercaDeFragment fragment = new AcercaDeFragment();
+    public static AsesoriaFragment newInstance(String param1, String param2) {
+        AsesoriaFragment fragment = new AsesoriaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +74,48 @@ public class AcercaDeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_acerca_de, container, false);
+        view =  inflater.inflate(R.layout.fragment_asesoria, container, false);
+        nutricion_ImageView = view.findViewById(R.id.nutricion_imageview_asesoria);
+        salud_sexual_y_reproductiva_ImageView = view.findViewById(R.id.salud_sexual_reproductiva_imageview_asesoria);
+        embarazo_ImageView = view.findViewById(R.id.embarazo_imageview_asesoria);
+        identidad_ImageView = view.findViewById(R.id.identidad_imageview_asesoria);
+        final Fragment fragment = null;
+        nutricion_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatActivosFragment.tipoAsesoria = 3;
+                abrir_ventana_administradores();
+            }
+        });
+        salud_sexual_y_reproductiva_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatActivosFragment.tipoAsesoria = 1;
+                abrir_ventana_administradores();
+            }
+        });
+        embarazo_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatActivosFragment.tipoAsesoria = 4;
+                abrir_ventana_administradores();
+            }
+        });
+        identidad_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatActivosFragment.tipoAsesoria = 2;
+                abrir_ventana_administradores();
+            }
+        });
+        return view;
+    }
+
+    public void abrir_ventana_administradores()
+    {
+        Fragment fragment = new ChatActivosFragment();
+        ChatActivosFragment.fragmentManager = fragmentManager;
+        fragmentManager.beginTransaction().replace(R.id.container2,fragment).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -5,19 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Pojo.TypeC">
-
     <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
-        android:weightSum="1"
-        >
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,14 +21,13 @@
             android:paddingLeft="@dimen/paddinginferior"
             android:paddingRight="@dimen/paddinginferior"
             android:orientation="vertical"
-            android:layout_weight="0.4"
-            >
+            android:layout_weight="0.4">
 
             <ImageView
                 android:id="@+id/id_imagenC"
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
-                android:background="@drawable/imagen"
+                android:background="@drawable/imagen_nueva"
                 android:scaleType="centerCrop"/>
 
             <TextView
@@ -46,17 +41,13 @@
                 android:typeface="serif"
                 android:paddingRight="@dimen/left"
                 android:paddingLeft="@dimen/left"
-                android:paddingBottom="@dimen/paddinginferior"
-                />
+                android:paddingBottom="@dimen/paddinginferior"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="right"
-
-                >
-
+                android:gravity="right">
                 <TextView
                     android:id="@+id/id_fecha"
                     android:layout_width="70dp"
@@ -67,21 +58,15 @@
                     android:gravity="center"
                     android:text="22/12/2018"
                     android:background="@color/colorPrimaryDark"
-
                     />
-
             </LinearLayout>
-
-
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="1dp"
             android:layout_height="fill_parent"
             android:background="@color/Gris3"
             android:orientation="vertical"
             />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,15 +75,12 @@
             android:orientation="vertical"
             android:layout_weight="0.6"
             >
-
             <ImageView
                 android:id="@+id/id_imagenC2"
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
-                android:background="@drawable/imagen"
+                android:background="@drawable/imagen_nueva"
                 android:scaleType="centerCrop"/>
-
-
             <TextView
                 android:id="@+id/id_textC2"
                 android:layout_width="match_parent"
@@ -112,15 +94,12 @@
                 android:paddingLeft="@dimen/left"
                 android:paddingBottom="@dimen/paddinginferior"
                 />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="right"
-
                 >
-
                 <TextView
                     android:id="@+id/id_fecha2"
                     android:layout_width="70dp"
@@ -131,16 +110,10 @@
                     android:gravity="center"
                     android:text="22/12/2018"
                     android:background="@color/colorPrimaryDark"
-
                     />
-
             </LinearLayout>
-
         </LinearLayout>
-
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,10 +129,6 @@
             android:layout_marginBottom="@dimen/paddinginferior"
             android:orientation="horizontal"
             />
-
-
     </LinearLayout>
-
 </LinearLayout>
-
 </android.support.design.widget.CoordinatorLayout>

@@ -28,7 +28,7 @@
                     android:id="@+id/id_imagenA"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_cardview"
-                    android:background="@drawable/ic_launcher_background"
+                    android:background="@drawable/imagen_nueva"
                     android:scaleType="centerCrop" />
 
                 <LinearLayout

@@ -176,17 +176,20 @@ public class HistorialAlertasFragment extends Fragment {
         {
             final Gestion_noticia gestion_noticia = new Gestion_noticia();
             //tomo los parametros del controlador
-            HashMap<String,String> params = new Gestion_alerta_temprana().consultar_alertas_tempranas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
-            Response.Listener<String> stringListener = new Response.Listener<String>()
+            if(Gestion_usuario.getUsuario_online() != null)
             {
-                @Override
-                public void onResponse(String response) {
-                    //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
-                    llenar_alertas_tempranas(response);
-                }
-            };
-            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
-            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+                HashMap<String,String> params = new Gestion_alerta_temprana().consultar_alertas_tempranas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
+                Response.Listener<String> stringListener = new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
+                        llenar_alertas_tempranas(response);
+                    }
+                };
+                StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
+                MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 package com.comfacesar.comfacesar.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
@@ -44,7 +45,7 @@ public class InicioSesionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private ProgressDialog dialog;
     private OnFragmentInteractionListener mListener;
 
     public InicioSesionFragment() {
@@ -92,16 +93,21 @@ public class InicioSesionFragment extends Fragment {
         iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog = new ProgressDialog(view_permanente.getContext());
+                dialog.show();
+                dialog.setCancelable(false);
             if(Config.getImei() != null)
             {
                 if(nombreCuentaEditText.getText().toString().isEmpty())
                 {
                     Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de su cuenta de usuario", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
                     return;
                 }
                 if(contraseñaEditText.getText().toString().isEmpty())
                 {
                     Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de su cuenta de usuario", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
                     return;
                 }
                 final Usuario usuario = new Usuario(){{
@@ -123,6 +129,7 @@ public class InicioSesionFragment extends Fragment {
                         }
                         catch(NumberFormatException exc)
                         {
+                            dialog.dismiss();
                             Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                                     "incorrecto", Toast.LENGTH_LONG).show();
                         }
@@ -131,6 +138,7 @@ public class InicioSesionFragment extends Fragment {
                 Response.ErrorListener errorListener = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
                         Log.d("Reponse.Error",error.toString());
                     }
                 };
@@ -146,6 +154,8 @@ public class InicioSesionFragment extends Fragment {
         return view_permanente;
     }
 
+
+
     private void consultar_usuario_y_agregar_online(int id_usuario)
     {
         HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(id_usuario);
@@ -158,18 +168,23 @@ public class InicioSesionFragment extends Fragment {
                 {
                     Toast.makeText(view_permanente.getContext(), "Error en el sistema",
                             Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
                 }
                 else
                 {
                     Gestion_usuario.setUsuario_online(usuarios.get(0));
+                    dialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Logueado",
                             Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), ContainerActivity.class);
+                    startActivity(intent);
                 }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 Log.d("Reponse.Error",error.toString());
             }
         };

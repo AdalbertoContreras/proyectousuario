@@ -1,22 +1,24 @@
 package com.comfacesar.comfacesar.adapterViewpager;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.widget.Toast;
 
 import com.comfacesar.comfacesar.fragment.AlertTempranaFragment;
+import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
+import com.comfacesar.comfacesar.fragment.Chat_asesoriaFragment;
 import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.comfacesar.comfacesar.fragment.UbicacionFragment;
 import com.example.extra.Config;
 
-public class MyPagerAdapter extends FragmentStatePagerAdapter {
+public class MyPagerAdapter extends FragmentStatePagerAdapter{
     private Context context;
     private Fragment fragment_anterior;
     public MyPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        fragment_anterior = new HomeFragment();
         this.context = context;
     }
 
@@ -31,9 +33,11 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
                 fragment = new HomeFragment();
                 break;
             case 2:
+                HomeFragment.seguir = false;
                 fragment = new AlertTempranaFragment();
                 break;
             case 3:
+                HomeFragment.seguir = false;
                 fragment = new UbicacionFragment();
                 break;
             default:
@@ -61,5 +65,4 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
         }
         return null;
     }
-
 }

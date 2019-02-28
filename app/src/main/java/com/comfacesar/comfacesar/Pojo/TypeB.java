@@ -77,6 +77,6 @@ public class TypeB implements ListItem {
     @Override
     public int getListItemType() {
         // retorna 2
-        return ListItem.TYPE_B;
+        return ListItem.EMBARAZO;
     }
 }
