@@ -172,6 +172,7 @@ public class InicioSesionFragment extends Fragment {
                 }
                 else
                 {
+                    usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
                     Gestion_usuario.setUsuario_online(usuarios.get(0));
                     dialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Logueado",

@@ -95,6 +95,16 @@ public class Gestion_mensaje_chat_asesoria {
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
+            if(Gestion_usuario.getUsuario_online() != null)
+            {
+                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
+            }
+            else
+            {
+                obj.addProperty("usuario_ol","");
+                obj.addProperty("contrasena_ol","");
+            }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

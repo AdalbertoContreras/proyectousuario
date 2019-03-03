@@ -61,6 +61,7 @@ public class Gestion_usuario {
 
     private Usuario agregar_elemento(final JsonObject jsonObject)
     {
+
         return new Usuario(){{
             try {
                 id_usuario = jsonObject.get("id_usuario").getAsInt();

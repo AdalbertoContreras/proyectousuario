@@ -2,11 +2,9 @@ package com.comfacesar.comfacesar;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
 import com.comfacesar.comfacesar.fragment.AcercaDeFragment;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
@@ -14,10 +12,11 @@ import com.comfacesar.comfacesar.fragment.Chat_asesoriaFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAlertasFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
 import com.comfacesar.comfacesar.fragment.InicioSesionFragment;
-import com.comfacesar.comfacesar.fragment.registrarUsuarioFragment;
+import com.comfacesar.comfacesar.fragment.RegistrarUsuarioFragment;
+import com.comfacesar.comfacesar.fragment.ModificarUsuarioFragment;
 
 
-public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, registrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener {
+public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener {
 
     public static Bundle bundle;
     @Override
@@ -49,7 +48,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 ShowToolbar("Inicio Sesion",true);
                 break;
             case "4":
-                mifragment= new registrarUsuarioFragment();
+                mifragment= new RegistrarUsuarioFragment();
                 ShowToolbar("Registro Usuario",true);
                 break;
             case "5":
@@ -64,6 +63,10 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 break;
             case "7":
                 mifragment= new Chat_asesoriaFragment();
+                ShowToolbar("Asesorias",true);
+                break;
+            case "8":
+                mifragment= new ModificarUsuarioFragment();
                 ShowToolbar("Asesorias",true);
                 break;
         }

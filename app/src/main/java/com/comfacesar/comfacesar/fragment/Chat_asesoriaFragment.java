@@ -110,50 +110,77 @@ public class Chat_asesoriaFragment extends Fragment {
         recyclerView_chat_asesoria = view.findViewById(R.id.mensajes_chat_asesoria_recyclerview_chat_Assoria);
         recyclerView_chat_asesoria.setLayoutManager(new GridLayoutManager(view.getContext(),1));
         iniciar_conexion_chat();
+        hilo_actualizacion_mensajes();
         mensajeEditText = view.findViewById(R.id.mensajeEdittextChatAsesoria);
         enviarButton = view.findViewById(R.id.enviarButton_chatAesoria);
 
         enviarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mensajeEditText.getText().toString().isEmpty())
+            if(!mensajeEditText.getText().toString().isEmpty())
+            {
+                if(chat_asesoria != null)
                 {
-                    if(chat_asesoria != null)
+                    Mensaje_chat_asesoria mensaje_chat_asesoria = new Mensaje_chat_asesoria();
+                    mensaje_chat_asesoria.chat_mensaje_chat_asesoria = chat_asesoria.id_chat_asesoria;
+                    mensaje_chat_asesoria.id_creador_mensaje_chat_asesoria = Gestion_usuario.getUsuario_online().id_usuario;
+                    mensaje_chat_asesoria.contenido_mensaje_chat_asesoria = mensajeEditText.getText().toString();
+                    mensaje_chat_asesoria.tipo_creador_mensaje_chat_asesoria = 1;
+                    HashMap<String,String> params = new Gestion_mensaje_chat_asesoria().registrar_mensaje_chat_asesoria(mensaje_chat_asesoria);
+                    Response.Listener<String> stringListener = new Response.Listener<String>()
                     {
-                        Mensaje_chat_asesoria mensaje_chat_asesoria = new Mensaje_chat_asesoria();
-                        mensaje_chat_asesoria.chat_mensaje_chat_asesoria = chat_asesoria.id_chat_asesoria;
-                        mensaje_chat_asesoria.id_creador_mensaje_chat_asesoria = Gestion_usuario.getUsuario_online().id_usuario;
-                        mensaje_chat_asesoria.contenido_mensaje_chat_asesoria = mensajeEditText.getText().toString();
-                        mensaje_chat_asesoria.tipo_creador_mensaje_chat_asesoria = 1;
-                        HashMap<String,String> params = new Gestion_mensaje_chat_asesoria().registrar_mensaje_chat_asesoria(mensaje_chat_asesoria);
-                        Response.Listener<String> stringListener = new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                mensaje_enviado = true;
-                                consultando = true;
-                                if(!consultando)
-                                {
-                                    consultar_mensajes_nuevos();
-                                }
+                        @Override
+                        public void onResponse(String response) {
+                            mensaje_enviado = true;
+                            consultando = true;
+                            if(!consultando)
+                            {
+                                consultar_mensajes_nuevos();
                             }
-                        };
-                        Response.ErrorListener errorListener = new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                consultando = false;
-                                Log.d("Reponse.Error",error.toString());
-                            }
-                        };
-                        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-                        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-                    }
-                    mensajeEditText.setText("");
+                        }
+                    };
+                    Response.ErrorListener errorListener = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            consultando = false;
+                            Log.d("Reponse.Error",error.toString());
+                        }
+                    };
+                    StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+                    MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
                 }
+                mensajeEditText.setText("");
+            }
             }
         });
-
         return view;
+    }
+
+    public void hilo_actualizacion_mensajes()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+            while(fragment_activo)
+            {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(!consultando && getActivity() != null)
+                {
+                    consultando = true;
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                        consultar_mensajes_nuevos();
+                        }
+                    });
+                }
+            }
+            }
+        }).start();
     }
 
     private void iniciar_conexion_chat()
@@ -163,19 +190,22 @@ public class Chat_asesoriaFragment extends Fragment {
         {
             @Override
             public void onResponse(String response) {
-                ArrayList<Chat_asesoria> chat_asesorias = new Gestion_chat_asesoria().generar_json(response);
-                if(chat_asesorias.isEmpty())
-                {
-                    Toast.makeText(getContext(), "chat no iniciado", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    chat_asesoria = chat_asesorias.get(0);
-                    consultar_mensajes();
-                }
+            ArrayList<Chat_asesoria> chat_asesorias = new Gestion_chat_asesoria().generar_json(response);
+            if(!chat_asesorias.isEmpty())
+            {
+                chat_asesoria = chat_asesorias.get(0);
+                consultar_mensajes();
+            }
             }
         };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                consultando = false;
+                Log.d("Reponse.Error",error.toString());
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
     }
 
@@ -189,7 +219,14 @@ public class Chat_asesoriaFragment extends Fragment {
                 cargar_mensajes_de_inicio(response);
             }
         };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                consultando = false;
+                Log.d("Reponse.Error",error.toString());
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
     }
 
@@ -207,32 +244,7 @@ public class Chat_asesoriaFragment extends Fragment {
         recyclerView_chat_asesoria.setAdapter(adapter_mensajes_chat_asesoria);
         recyclerView_chat_asesoria.setHasFixedSize(true);
         consultando = false;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(fragment_activo)
-                {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if(!consultando)
-                    {
-                        consultando = true;
-                        if(getActivity() != null)
-                        {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    consultar_mensajes_nuevos();
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        }).start();
+
     }
 
     private void consultar_mensajes_nuevos()

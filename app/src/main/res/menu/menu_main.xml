@@ -3,17 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.festivalvallenato.swippebard.MainActivity">
 
-
-    <item
-        android:id="@+id/historialAlertasMenu"
-        android:orderInCategory="100"
-        android:title="Historial Alertas"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/historialAsesoriasMenu"
-        android:orderInCategory="100"
-        android:title="Historial Asesorias"
-        app:showAsAction="never" />
     <item
         android:id="@+id/iniciarSesionMenu"
         android:orderInCategory="100"
@@ -24,6 +13,32 @@
         android:orderInCategory="100"
         android:title="Registrarme"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/modificarMisDatos"
+        android:orderInCategory="100"
+        android:title="Modificar mis dartos"
+
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/historialAlertasMenu"
+        android:orderInCategory="100"
+        android:title="Historial Alertas"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/historialAsesoriasMenu"
+        android:orderInCategory="100"
+        android:title="Historial Asesorias"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/cerrarSesionMenu"
+        android:orderInCategory="100"
+        android:title="Cerrar sesion"
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/acercaDeMenu"
         android:orderInCategory="100"
@@ -33,7 +48,8 @@
         android:id="@+id/action_buscar"
         android:orderInCategory="100"
         android:title="buscar"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always|withText" />
+        app:actionViewClass="android.widget.EditText"
+        app:showAsAction="always|withText"
+        />
 
 </menu>

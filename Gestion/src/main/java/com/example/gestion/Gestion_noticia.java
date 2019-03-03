@@ -29,6 +29,13 @@ public class Gestion_noticia {
         return construir_parametros(noticia);
     }
 
+    public HashMap<String, String> noticia_consultar_mayores(int id_noticia)
+    {
+        tipo_consulta = "noticia_consultar_mayores";
+        aux.id_notiticia = id_noticia;
+        return construir_parametros(aux);
+    }
+
     public HashMap<String, String> noticia_por_id(int id_noticia)
     {
         tipo_consulta = "noticia_por_id";

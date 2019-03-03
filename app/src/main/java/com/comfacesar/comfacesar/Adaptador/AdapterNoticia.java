@@ -57,6 +57,7 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         return mItems.get(position).getNoticia().categoria_noticia_manual_noticia;
     }
 
+
 ///////////////////////////////////////////////////////
     @NonNull
     @Override
@@ -92,6 +93,7 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
     }
     //////////////////////
     public class ViewHolder  extends RecyclerView.ViewHolder {
+
 
         private final TextView tituto_textview;
         private final ImageView imagen_noticiaImageView;
@@ -137,25 +139,25 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                 megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
+                    if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
+                    {
+                        HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
+                        Response.Listener<String> stringListener = new Response.Listener<String>()
                         {
-                            HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
-                            Response.Listener<String> stringListener = new Response.Listener<String>()
-                            {
-                                @Override
-                                public void onResponse(String response) {
-                                    consultar_noticia();
-                                }
-                            };
-                            Response.ErrorListener errorListener = new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    tengo_me_gusta();
-                                }
-                            };
-                            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-                            MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-                        }
+                            @Override
+                            public void onResponse(String response) {
+                                consultar_noticia();
+                            }
+                        };
+                        Response.ErrorListener errorListener = new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                tengo_me_gusta();
+                            }
+                        };
+                        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+                        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
+                    }
                     }
                 });
             }
@@ -186,7 +188,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                 @Override
                 public void onResponse(String response) {
                     ArrayList<Me_gusta_noticia> me_gusta_noticiaArraYList = new Gestion_me_gusta_noticia().generar_json(response);
-                    Log.d("Tamaño",me_gusta_noticiaArraYList.size() + "");
                     cambiando_estado = true;
                     if(me_gusta_noticiaArraYList.isEmpty())
                     {
@@ -216,15 +217,15 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             {
                 @Override
                 public void onResponse(String response) {
-                    if(response != "")
+                if(response != "")
+                {
+                    ArrayList<Noticia> noticias = new Gestion_noticia().generar_json(response);
+                    if(!noticias.isEmpty())
                     {
-                        ArrayList<Noticia> noticias = new Gestion_noticia().generar_json(response);
-                        if(!noticias.isEmpty())
-                        {
-                            itemNoticia.setNoticia(noticias.get(0));
-                            numero_megusta_TextView.setText(itemNoticia.getNoticia().numero_me_gusta + " me gusta");
-                        }
+                        itemNoticia.setNoticia(noticias.get(0));
+                        numero_megusta_TextView.setText(itemNoticia.getNoticia().numero_me_gusta + " me gusta");
                     }
+                }
                 }
             };
             Response.ErrorListener errorListener = new Response.ErrorListener() {

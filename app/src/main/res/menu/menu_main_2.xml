@@ -1,9 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.festivalvallenato.swippebard.MainActivity">
+    tools:context="com.comfacesar.comfacesar.ContainerActivity">
 
-
+    <item
+        android:id="@+id/modificarMisDatos"
+        android:orderInCategory="100"
+        android:title="Modificar mis dartos"
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/historialAlertasMenu"
         android:orderInCategory="100"
@@ -28,11 +33,4 @@
         android:title="Acerca de..."
         app:showAsAction="never"
         />
-    <item
-        android:id="@+id/action_buscar"
-        android:orderInCategory="100"
-        android:title="buscar"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always|withText" />
-
 </menu>

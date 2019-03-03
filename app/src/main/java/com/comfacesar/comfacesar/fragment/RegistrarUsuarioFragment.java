@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,7 @@ import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
 import java.util.HashMap;
 
-public class registrarUsuarioFragment extends Fragment {
+public class RegistrarUsuarioFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,7 +40,7 @@ public class registrarUsuarioFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public registrarUsuarioFragment() {
+    public RegistrarUsuarioFragment() {
         // Required empty public constructor
     }
 
@@ -51,11 +50,11 @@ public class registrarUsuarioFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment registrarUsuarioFragment.
+     * @return A new instance of fragment RegistrarUsuarioFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static registrarUsuarioFragment newInstance(String param1, String param2) {
-        registrarUsuarioFragment fragment = new registrarUsuarioFragment();
+    public static RegistrarUsuarioFragment newInstance(String param1, String param2) {
+        RegistrarUsuarioFragment fragment = new RegistrarUsuarioFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

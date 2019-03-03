@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.Dialog.AlertaTempranaDialog;
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.fragment.HistorialAlertasFragment;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_asunto;
@@ -83,8 +85,11 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
                     AlertaTempranaDialog.asunto = asunto;
                     AlertaTempranaDialog alertaTempranaDialog = new AlertaTempranaDialog();
                     alertaTempranaDialog.setCancelable(false);
-                    alertaTempranaDialog.show(fragmentManager, "missiles");
-
+                    try {
+                        alertaTempranaDialog.show(HistorialAlertasFragment.getFragmentManager_(), "missiles");
+                    } catch (IllegalStateException ignored) {
+                        Toast.makeText(view.getContext(), "Dialog no se pudo abrir", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }

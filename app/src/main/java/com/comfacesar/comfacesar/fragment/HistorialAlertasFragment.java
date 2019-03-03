@@ -86,55 +86,26 @@ public class HistorialAlertasFragment extends Fragment {
     private ArrayList<Alerta_temprana> alerta_tempranaArrayList;
     private static  int num_alertas;
     private RecyclerView recyclerView_alertas_tempranas;
+    private int cont_m;
+    private boolean generando_consulta;
+    private boolean seguir;
+    private int id_max;
+    private boolean agregando_nuevas_alertas;
+    AdapterAlerta adapterItemCliente;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment{
+        alerta_tempranaArrayList = new ArrayList<>();
+        generando_consulta = false;
+        cont_m = 0;
         if(view_permanente == null)
         {
             view_permanente =  inflater.inflate(R.layout.fragment_historial_alertas, container, false);
-            consultar_alertas_tempranas();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for(;;)
-                    {
-                        try {
-                            Thread.sleep(5000);
-                            comparar_num_alertas();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
-        }
-        if(usuario_anterior == null)
-        {
-            if(Gestion_usuario.getUsuario_online() != null)
-            {
-                usuario_anterior = Gestion_usuario.getUsuario_online();
-                consultar_alertas_tempranas();
-            }
-        }
-        else
-        {
-            if(Gestion_usuario.getUsuario_online() != null)
-            {
-                if(usuario_anterior.id_usuario != Gestion_usuario.getUsuario_online().id_usuario)
-                {
-                    usuario_anterior = Gestion_usuario.getUsuario_online();
-                    consultar_alertas_tempranas();
-                }
-            }
-            else
-            {
-                usuario_anterior = null;
-                consultar_alertas_tempranas();
-            }
         }
         return view_permanente;
     }
+
 
     private void comparar_num_alertas()
     {
@@ -169,39 +140,109 @@ public class HistorialAlertasFragment extends Fragment {
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, MySocialMediaSingleton.errorListener());
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
+    public static FragmentManager getFragmentManager_()
+    {
+        return fragmentManager;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentManager = getActivity().getSupportFragmentManager();
+        seguir = true;
+        cont_m = 10000;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(seguir)
+                {
+                    while(generando_consulta)
+                    {
+                        try {
+                            Thread.sleep(100);
+                            cont_m += 100;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(cont_m >= 10000 && !generando_consulta)
+                    {
+                        comparar_num_alertas();
+                    }
+                    try {
+                        Thread.sleep(100);
+                        cont_m += 100;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        seguir = false;
+    }
 
     private void consultar_alertas_tempranas()
     {
-        if(usuario_anterior != null)
+        final Gestion_noticia gestion_noticia = new Gestion_noticia();
+        //tomo los parametros del controlador
+        if(Gestion_usuario.getUsuario_online() != null && !generando_consulta)
         {
-            final Gestion_noticia gestion_noticia = new Gestion_noticia();
-            //tomo los parametros del controlador
-            if(Gestion_usuario.getUsuario_online() != null)
+            generando_consulta = true;
+            HashMap<String,String> params;
+            if(alerta_tempranaArrayList.isEmpty())
             {
-                HashMap<String,String> params = new Gestion_alerta_temprana().consultar_alertas_tempranas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
-                Response.Listener<String> stringListener = new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
-                        llenar_alertas_tempranas(response);
-                    }
-                };
-                StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
-                MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+                params = new Gestion_alerta_temprana().consultar_alertas_tempranas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
             }
+            else
+            {
+                agregando_nuevas_alertas = true;
+                params = new Gestion_alerta_temprana().consultar_por_usuario_mayor(id_max, Gestion_usuario.getUsuario_online().id_usuario);
+            }
+            Response.Listener<String> stringListener = new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response) {
+
+                    llenar_alertas_tempranas(response);
+                }
+            };
+            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
+            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
         }
     }
 
     private void llenar_alertas_tempranas(String json)
     {
-        alerta_tempranaArrayList = new Gestion_alerta_temprana().generar_json(json);
-        //num_alertas = alerta_tempranaArrayList.size();
-        recyclerView_alertas_tempranas = view_permanente.findViewById(R.id.historialAlertasTempranasRecyclerView);
-        recyclerView_alertas_tempranas.setLayoutManager(new GridLayoutManager(view_permanente.getContext(),1));
-        AdapterAlerta adapterItemCliente = new AdapterAlerta(alerta_tempranaArrayList, fragmentManager);
-        recyclerView_alertas_tempranas.setAdapter(adapterItemCliente);
-        recyclerView_alertas_tempranas.setHasFixedSize(true);
+        if(agregando_nuevas_alertas)
+        {
+            ArrayList<Alerta_temprana> alerta_tempranas = new Gestion_alerta_temprana().generar_json(json);
+            if(alerta_tempranas.isEmpty())
+            {
+                alerta_tempranaArrayList = alerta_tempranas;
+            }
+            else
+            {
+                alerta_tempranaArrayList.addAll(0, alerta_tempranas);
+                id_max = alerta_tempranaArrayList.get(0).id_alerta_temprana;
+            }
+            adapterItemCliente.notifyItemInserted(0);
+        }
+        else
+        {
+            alerta_tempranaArrayList = new Gestion_alerta_temprana().generar_json(json);
+            //num_alertas = alerta_tempranaArrayList.size();
+            recyclerView_alertas_tempranas = view_permanente.findViewById(R.id.historialAlertasTempranasRecyclerView);
+            recyclerView_alertas_tempranas.setLayoutManager(new GridLayoutManager(view_permanente.getContext(),1));
+            adapterItemCliente = new AdapterAlerta(alerta_tempranaArrayList, getFragmentManager());
+            recyclerView_alertas_tempranas.setAdapter(adapterItemCliente);
+            recyclerView_alertas_tempranas.setHasFixedSize(true);
+        }
+        generando_consulta = false;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
