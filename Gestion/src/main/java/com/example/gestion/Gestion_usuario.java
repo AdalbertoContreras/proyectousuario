@@ -18,14 +18,21 @@ public class Gestion_usuario {
     private static String tipo_consulta;
     private static Usuario usuario_online = null;
 
-    private static void iniciar_axu()
-    {
-        aux = new Usuario();
-    }
-
     public HashMap<String, String> registrar_usuario(Usuario usuario)
     {
         tipo_consulta = "insert";
+        return construir_parametros(usuario);
+    }
+
+    public HashMap<String, String> modificar_datos_personales(Usuario usuario)
+    {
+        tipo_consulta = "modificar_datos_personales";
+        return construir_parametros(usuario);
+    }
+
+    public HashMap<String, String> actualizar_contrasena_usuario(Usuario usuario)
+    {
+        tipo_consulta = "actualizar_contrasena_usuario";
         return construir_parametros(usuario);
     }
 
@@ -35,11 +42,10 @@ public class Gestion_usuario {
         return construir_parametros(usuario);
     }
 
-    public HashMap<String, String> consultar_usuario_por_id(int id)
+    public HashMap<String, String> consultar_usuario_por_id(Usuario usuario)
     {
         tipo_consulta = "consultar_usuario_por_id";
-        aux.id_usuario = id;
-        return construir_parametros(aux);
+        return construir_parametros(usuario);
     }
 
     public ArrayList<Usuario> generar_json(String respuesta)

@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.fragment.AlertTempranaFragment;
+import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.comfacesar.comfacesar.fragment.UbicacionFragment;
 
@@ -25,7 +27,9 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter{
                 fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new HomeFragment();
+                HomeFragment.fragmentConsultarNoticiasActivo = false;
+                AsesoriaFragment.fragmentManager = ContainerActivity.fragmentManager;
+                fragment = new AsesoriaFragment();
                 break;
             case 2:
                 HomeFragment.fragmentConsultarNoticiasActivo = false;

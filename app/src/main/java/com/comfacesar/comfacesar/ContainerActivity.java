@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +23,15 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
+import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
+import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.example.extra.Config;
 import com.example.gestion.Gestion_usuario;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-public class ContainerActivity extends AppCompatActivity{
+public class ContainerActivity extends AppCompatActivity implements AsesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener{
     private Menu menu;
     private FloatingActionButton chat_asesoriaFloatingActionButton;
     private FloatingActionButton iniciar_sesionFloatingActionButton;
@@ -38,7 +41,7 @@ public class ContainerActivity extends AppCompatActivity{
     private FloatingActionMenu floatingActionMenu;
     private boolean usuario_dio_click;
     public static String texto_buscar = "";
-
+    public static FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,13 +117,11 @@ public class ContainerActivity extends AppCompatActivity{
         {
             onCreateOptionsMenu(menu);
         }
-        Toast.makeText(getBaseContext(), "onCreateView", Toast.LENGTH_SHORT).show();
+        fragmentManager = getSupportFragmentManager();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(getBaseContext(), "Resumen", Toast.LENGTH_SHORT).show();
         if(menu != null)
         {
             onCreateOptionsMenu(menu);
@@ -208,6 +209,7 @@ public class ContainerActivity extends AppCompatActivity{
         menu.removeItem(R.id.historialAsesoriasMenu);
         menu.removeItem(R.id.action_buscar);
         menu.removeItem(R.id.acercaDeMenu);
+        menu.removeItem(R.id.modificarMiContraseña);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         int tamaño_menu = menu.size();
         for(int i = 0; i < menu.size(); i++) {
@@ -243,6 +245,11 @@ public class ContainerActivity extends AppCompatActivity{
                 menu.removeItem(item.getItemId());
                 removido = true;
             }
+            if(item.getItemId() == R.id.modificarMiContraseña && Gestion_usuario.getUsuario_online() == null)
+            {
+                menu.removeItem(item.getItemId());
+                removido = true;
+            }
             if(removido)
             {
                 SpannableString spanString = new SpannableString(menu.getItem(i).getTitle().toString());
@@ -263,6 +270,15 @@ public class ContainerActivity extends AppCompatActivity{
                     //searchView.setText("");
                 }
                 return false;
+            }
+        });
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    searchView.setSelection(0, searchView.getText().toString().length());
+                }
             }
         });
         /*
@@ -334,6 +350,10 @@ public class ContainerActivity extends AppCompatActivity{
                 intent.putExtra("id",8);
                 selecionado = true;
                 break;
+            case  R.id.modificarMiContraseña:
+                intent.putExtra("id",9);
+                selecionado = true;
+                break;
         }
         if(selecionado)
         {
@@ -348,6 +368,10 @@ public class ContainerActivity extends AppCompatActivity{
         System.exit(0);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
 
 

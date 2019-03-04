@@ -17,10 +17,13 @@
     <item
         android:id="@+id/modificarMisDatos"
         android:orderInCategory="100"
-        android:title="Modificar mis dartos"
-
-        app:showAsAction="never"
-        />
+        android:title="Modificar mis datos"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/modificarMiContraseña"
+        android:orderInCategory="100"
+        android:title="Modificar mi contraseña"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/historialAlertasMenu"
         android:orderInCategory="100"

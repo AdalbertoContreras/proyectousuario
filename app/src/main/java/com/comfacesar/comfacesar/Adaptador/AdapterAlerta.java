@@ -88,7 +88,7 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
                     try {
                         alertaTempranaDialog.show(HistorialAlertasFragment.getFragmentManager_(), "missiles");
                     } catch (IllegalStateException ignored) {
-                        Toast.makeText(view.getContext(), "Dialog no se pudo abrir", Toast.LENGTH_LONG).show();
+
                     }
                 }
             });

@@ -1,6 +1,7 @@
 package com.comfacesar.comfacesar.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.comfacesar.comfacesar.ContainerActivity;
+import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
+import com.example.gestion.Gestion_usuario;
 
 
 /**
@@ -83,39 +88,75 @@ public class AsesoriaFragment extends Fragment {
         nutricion_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatActivosFragment.tipoAsesoria = 3;
-                abrir_ventana_administradores();
+                if(Gestion_usuario.getUsuario_online() != null)
+                {
+                    ChatActivosFragment.tipoAsesoria = 3;
+                    abrir_ventana_administradores();
+                }
+                else
+                {
+                    mensaje_usuario_no_conectado();
+                }
             }
         });
         salud_sexual_y_reproductiva_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatActivosFragment.tipoAsesoria = 1;
-                abrir_ventana_administradores();
+                if(Gestion_usuario.getUsuario_online() != null)
+                {
+                    ChatActivosFragment.tipoAsesoria = 1;
+                    abrir_ventana_administradores();
+                }
+                else
+                {
+                    mensaje_usuario_no_conectado();
+                }
             }
         });
         embarazo_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatActivosFragment.tipoAsesoria = 4;
-                abrir_ventana_administradores();
+                if(Gestion_usuario.getUsuario_online() != null)
+                {
+                    ChatActivosFragment.tipoAsesoria = 4;
+                    abrir_ventana_administradores();
+                }
+                else
+                {
+                    mensaje_usuario_no_conectado();
+                }
             }
         });
         identidad_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatActivosFragment.tipoAsesoria = 2;
-                abrir_ventana_administradores();
+                if(Gestion_usuario.getUsuario_online() != null)
+                {
+                    ChatActivosFragment.tipoAsesoria = 2;
+                    abrir_ventana_administradores();
+                }
+                else
+                {
+                    mensaje_usuario_no_conectado();
+                }
             }
         });
         return view;
     }
 
+    private void mensaje_usuario_no_conectado()
+    {
+        Toast.makeText(getContext(), "Inicia sesion para entrar a las asesorias", Toast.LENGTH_SHORT).show();
+    }
+
     public void abrir_ventana_administradores()
     {
-        Fragment fragment = new ChatActivosFragment();
+        /*Fragment fragment = new ChatActivosFragment();
         ChatActivosFragment.fragmentManager = fragmentManager;
-        fragmentManager.beginTransaction().replace(R.id.container2,fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container2,fragment).commit();*/
+        Intent intent = new Intent(view.getContext(), ContainertwoActivity.class);
+        intent.putExtra("id",10);
+        startActivity(intent);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

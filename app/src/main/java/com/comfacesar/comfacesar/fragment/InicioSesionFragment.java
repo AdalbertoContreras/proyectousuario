@@ -125,7 +125,16 @@ public class InicioSesionFragment extends Fragment {
                         try
                         {
                             val = Integer.parseInt(response);
-                            consultar_usuario_y_agregar_online(val);
+                            if(val == 0)
+                            {
+                                dialog.dismiss();
+                                Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
+                                        "incorrecto", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                consultar_usuario_y_agregar_online(val);
+                            }
                         }
                         catch(NumberFormatException exc)
                         {
@@ -139,7 +148,8 @@ public class InicioSesionFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismiss();
-                        Log.d("Reponse.Error",error.toString());
+                        Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
+                                "incorrecto", Toast.LENGTH_LONG).show();
                     }
                 };
                 StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
@@ -158,7 +168,11 @@ public class InicioSesionFragment extends Fragment {
 
     private void consultar_usuario_y_agregar_online(int id_usuario)
     {
-        HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(id_usuario);
+        Usuario usuario = new Usuario();
+        usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+        usuario.contrasena_usuario = contraseñaEditText.getText().toString();
+        usuario.id_usuario = id_usuario;
+        HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(usuario);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -186,7 +200,8 @@ public class InicioSesionFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dialog.dismiss();
-                Log.d("Reponse.Error",error.toString());
+                Toast.makeText(view_permanente.getContext(), "Error",
+                        Toast.LENGTH_LONG).show();
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
@@ -194,10 +209,6 @@ public class InicioSesionFragment extends Fragment {
 
     }
 
-    private void conect()
-    {
-        Toast.makeText(getContext(), "conectado", Toast.LENGTH_LONG).show();
-    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

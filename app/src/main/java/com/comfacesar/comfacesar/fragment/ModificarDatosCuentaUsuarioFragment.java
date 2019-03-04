@@ -4,11 +4,25 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.R;
+import com.example.extra.Config;
+import com.example.extra.MySocialMediaSingleton;
+import com.example.extra.WebService;
+import com.example.gestion.Gestion_usuario;
+import com.example.modelo.Usuario;
+
+import java.util.HashMap;
 
 
 /**
@@ -62,11 +76,81 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         }
     }
 
+    private static View view_permanente;
+    private EditText nombreCuentaEditText;
+    private EditText contraseñaCuentaEditText;
+    private Button modificar_usuario;
+    private Usuario usuario_espejo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modificar_datos_cuenta_usuario, container, false);
+        view_permanente = inflater.inflate(R.layout.fragment_modificar_datos_cuenta_usuario, container, false);
+        nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaUsuarioEditText);
+        contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaUsuarioEditText);
+        modificar_usuario = view_permanente.findViewById(R.id.modificarUsuarioButton);
+        usuario_espejo = Gestion_usuario.getUsuario_online();
+        evento_modificar_usuario();
+        cargar_datos_usuario();
+        return view_permanente;
+    }
+
+    private void evento_modificar_usuario()
+    {
+        modificar_usuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if(Config.getImei() == null)
+            {
+                Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos de su cuenta.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(contraseñaCuentaEditText.getText().toString().isEmpty())
+            {
+                Toast.makeText(view_permanente.getContext(), "Ingrese la nueva contraseña de su cuenta", Toast.LENGTH_LONG).show();
+                return;
+            }
+            usuario_espejo.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
+            HashMap<String, String> hashMap = new Gestion_usuario().actualizar_contrasena_usuario(usuario_espejo);
+            Response.Listener<String> stringListener = new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("Response : ", response);
+                    int val = 0;
+                    try
+                    {
+                        val = Integer.parseInt(response);
+                        if(val > 0)
+                        {
+                            Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
+                            //registrar_movil_registro(val);
+                            Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (NumberFormatException exc)
+                    {
+                        Toast.makeText(view_permanente.getContext(),"Error al actualizar datos de la cuenta", Toast.LENGTH_LONG).show();
+                    }
+                }
+            };
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+                }
+            };
+            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+            }
+        });
+    }
+
+    private void cargar_datos_usuario()
+    {
+        nombreCuentaEditText.setText(usuario_espejo.nombre_cuenta_usuario);
+        contraseñaCuentaEditText.setText("");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

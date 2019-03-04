@@ -137,12 +137,8 @@ public class ModificarUsuarioFragment extends Fragment {
 
             if(Config.getImei() == null)
             {
-                Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de registrar un nuevo usuario.", Toast.LENGTH_LONG).show();
+                Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos personales de su cuenta.", Toast.LENGTH_LONG).show();
                 return;
-            }
-            else
-            {
-                Toast.makeText(view_permanente.getContext(), Config.getImei(), Toast.LENGTH_LONG).show();
             }
             if(nombreUsuarioEditText.getText().toString().isEmpty())
             {
@@ -154,35 +150,39 @@ public class ModificarUsuarioFragment extends Fragment {
                 Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
                 return;
             }
-            Usuario usuario = new Usuario();
             if(masculinoRadioButton.isChecked())
             {
-                usuario.sexo_usuario = 0;
+                usuario_espejo.sexo_usuario = 0;
             }
             else
             {
-                usuario.sexo_usuario = 1;
+                usuario_espejo.sexo_usuario = 1;
             }
-            usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
-            usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
-            usuario.apellidos_usuario = apellidoEditText.getText().toString();
-            usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
-            usuario.telefono_usuario = telefonoEditText.getText().toString();
-            usuario.direccion_usuario = direccionEditText.getText().toString();
-            HashMap<String, String> hashMap = new Gestion_usuario().registrar_usuario(usuario);
-            Log.d("Parametros : ", hashMap.toString());
+            usuario_espejo.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
+            usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
+            usuario_espejo.apellidos_usuario = apellidoEditText.getText().toString();
+            usuario_espejo.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
+            usuario_espejo.telefono_usuario = telefonoEditText.getText().toString();
+            usuario_espejo.direccion_usuario = direccionEditText.getText().toString();
+            usuario_espejo.correo_usuario = correo_electronicoEditText.getText().toString();
+            HashMap<String, String> hashMap = new Gestion_usuario().modificar_datos_personales(usuario_espejo);
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
                 public void onResponse(String response) {
-                    Log.d("Response : ", response);
                     int val = 0;
                     try
                     {
                         val = Integer.parseInt(response);
                         if(val > 0)
                         {
-                            registrar_movil_registro(val);
+                            Gestion_usuario.getUsuario_online().nombres_usuario = usuario_espejo.nombres_usuario;
+                            Gestion_usuario.getUsuario_online().apellidos_usuario = usuario_espejo.apellidos_usuario;
+                            Gestion_usuario.getUsuario_online().direccion_usuario = usuario_espejo.direccion_usuario;
+                            Gestion_usuario.getUsuario_online().telefono_usuario = usuario_espejo.telefono_usuario;
+                            Gestion_usuario.getUsuario_online().correo_usuario = usuario_espejo.correo_usuario;
+                            Gestion_usuario.getUsuario_online().sexo_usuario = usuario_espejo.sexo_usuario;
+                            Gestion_usuario.getUsuario_online().fecha_nacimiento = usuario_espejo.fecha_nacimiento;
                             Toast.makeText(view_permanente.getContext(),"Datos personales actualizados", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -207,7 +207,6 @@ public class ModificarUsuarioFragment extends Fragment {
     private void cargar_datos_usuario()
     {
         numeroIdentificacionEditText.setText(usuario_espejo.numero_identificacion_usuario);
-        Toast.makeText(getContext(), usuario_espejo.nombres_usuario,Toast.LENGTH_SHORT).show();
         nombreUsuarioEditText.setText(usuario_espejo.nombres_usuario);
         apellidoEditText.setText(usuario_espejo.apellidos_usuario);
         fecha_nacimientoEditText.setText(usuario_espejo.fecha_nacimiento);
@@ -217,10 +216,11 @@ public class ModificarUsuarioFragment extends Fragment {
         }
         else
         {
-            masculinoRadioButton.setChecked(true);
+            femeninoRadioButton.setChecked(true);
         }
         telefonoEditText.setText(usuario_espejo.telefono_usuario);
         direccionEditText.setText(usuario_espejo.direccion_usuario);
+        correo_electronicoEditText.setText(usuario_espejo.correo_usuario);
     }
 
     private void showDatePickerDialog()

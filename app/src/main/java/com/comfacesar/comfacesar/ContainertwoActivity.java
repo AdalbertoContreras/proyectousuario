@@ -12,11 +12,11 @@ import com.comfacesar.comfacesar.fragment.Chat_asesoriaFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAlertasFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
 import com.comfacesar.comfacesar.fragment.InicioSesionFragment;
+import com.comfacesar.comfacesar.fragment.ModificarDatosCuentaUsuarioFragment;
 import com.comfacesar.comfacesar.fragment.RegistrarUsuarioFragment;
 import com.comfacesar.comfacesar.fragment.ModificarUsuarioFragment;
 
-
-public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener {
+public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener, ModificarDatosCuentaUsuarioFragment.OnFragmentInteractionListener {
 
     public static Bundle bundle;
     @Override
@@ -58,7 +58,6 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 break;
             case "6":
                 mifragment= new AsesoriaFragment();
-                AsesoriaFragment.fragmentManager = getSupportFragmentManager();
                 ShowToolbar("Asesorias",true);
                 break;
             case "7":
@@ -67,7 +66,16 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 break;
             case "8":
                 mifragment= new ModificarUsuarioFragment();
-                ShowToolbar("Asesorias",true);
+                ShowToolbar("Modificar mis datos personales",true);
+                break;
+            case "9":
+                mifragment= new ModificarDatosCuentaUsuarioFragment();
+                ShowToolbar("Modificar mi contraseña",true);
+                break;
+            case "10":
+                mifragment= new ChatActivosFragment();
+                ChatActivosFragment.fragmentManager = getSupportFragmentManager();
+                ShowToolbar("Modificar mi contraseña",true);
                 break;
         }
         if(mifragment != null)

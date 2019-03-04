@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
-    private List<ItemNoticia> itemNoticias_general;
+    private static List<ItemNoticia> itemNoticias_general = new ArrayList<>();
     private List<ItemNoticia> itemNoticias_filtrada;
     private RecyclerView recycle;
     private AdapterNoticia exampleAdapter;
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     private Usuario usuario_nuevo = null;
     public static boolean fragmentConsultarNoticiasActivo = true;
     public static boolean creado = false;
-    private int id_ultimo = 0;
+    private static int id_ultimo = 0;
     private boolean agregar_noticias_nuevas;
     private boolean generando_conmsulta = false;
     private int cont = 0;
@@ -75,10 +75,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         view_permantente = inflater.inflate(R.layout.fragment_home, container, false);
-
-        itemNoticias_general = new ArrayList<>();
         itemNoticias_filtrada = new ArrayList<>();
         textoFiltroNuevo = ContainerActivity.texto_buscar;
         textoFiltroAnterior = textoFiltroNuevo;
@@ -94,6 +91,13 @@ public class HomeFragment extends Fragment {
         filtrando_noticias = false;
         hilo_consulta_noticias();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        fragmentConsultarNoticiasActivo = false;
+    }
+
     private int aux = 0;
     private void hiloCambioFiltro()
     {
@@ -138,7 +142,7 @@ public class HomeFragment extends Fragment {
 
                     }
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -162,6 +166,7 @@ public class HomeFragment extends Fragment {
 
     private void llenar()
     {
+
         exampleAdapter = new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
         recycle.setAdapter(exampleAdapter);
     }
@@ -360,7 +365,6 @@ public class HomeFragment extends Fragment {
             recycle.setHasFixedSize(true);
             hiloCambioFiltro();
         }
-
     }
     private boolean agregado = false;
 }
