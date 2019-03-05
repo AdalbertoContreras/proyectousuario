@@ -1,14 +1,12 @@
 package com.comfacesar.comfacesar;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,13 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
-import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.example.extra.Config;
 import com.example.gestion.Gestion_usuario;
 import com.github.clans.fab.FloatingActionButton;
@@ -259,15 +254,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         }
         MenuItem searchItem = menu.findItem(R.id.action_buscar);
-        final EditText searchView = (EditText) searchItem.getActionView();
+        searchView = (EditText) searchItem.getActionView();
         searchView.setSingleLine(true);
         searchView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(keyCode == KeyEvent.KEYCODE_ENTER)
                 {
-                    texto_buscar = searchView.getText().toString();
-                    //searchView.setText("");
+                    escuchadorCambioFiltro.filtroCambiado(searchView.getText().toString());
                 }
                 return false;
             }
@@ -281,35 +275,15 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 }
             }
         });
-        /*
-        searchView.setQueryHint("Search People");
-        //permite modificar el hint que el EditText muestra por defecto
-        searchView.setQueryHint("Buscar articulos");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //se oculta el EditText
-                Toast.makeText(getBaseContext(),query, Toast.LENGTH_SHORT).show();
-                texto_buscar = query;
-                if(!HomeFragment.fragmentConsultarNoticiasActivo)
-                {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container2,new HomeFragment()).commit();
-                }
-                searchView.setIconified(true);
-                return true;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(newText.equals(""))
-                {
-                    //texto_buscar = "";
-                }
-                return true;
-            }
-        });*/
         this.menu = menu;
         return true;
     }
+    private EditText searchView;
+    public interface escuchador{
+        void filtroCambiado(String textoNuevo);
+    }
+
+    public static escuchador escuchadorCambioFiltro;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

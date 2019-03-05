@@ -110,7 +110,7 @@ public class Chat_asesoriaFragment extends Fragment {
         recyclerView_chat_asesoria = view.findViewById(R.id.mensajes_chat_asesoria_recyclerview_chat_Assoria);
         recyclerView_chat_asesoria.setLayoutManager(new GridLayoutManager(view.getContext(),1));
         iniciar_conexion_chat();
-        hilo_actualizacion_mensajes();
+
         mensajeEditText = view.findViewById(R.id.mensajeEdittextChatAsesoria);
         enviarButton = view.findViewById(R.id.enviarButton_chatAesoria);
 
@@ -132,11 +132,6 @@ public class Chat_asesoriaFragment extends Fragment {
                         @Override
                         public void onResponse(String response) {
                             mensaje_enviado = true;
-                            consultando = true;
-                            if(!consultando)
-                            {
-                                consultar_mensajes_nuevos();
-                            }
                         }
                     };
                     Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -244,7 +239,7 @@ public class Chat_asesoriaFragment extends Fragment {
         recyclerView_chat_asesoria.setAdapter(adapter_mensajes_chat_asesoria);
         recyclerView_chat_asesoria.setHasFixedSize(true);
         consultando = false;
-
+        hilo_actualizacion_mensajes();
     }
 
     private void consultar_mensajes_nuevos()

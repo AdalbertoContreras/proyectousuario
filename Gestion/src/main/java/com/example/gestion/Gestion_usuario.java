@@ -1,5 +1,6 @@
 package com.example.gestion;
 
+import com.example.gestion.Escuchadores.EscuchadorUsuario;
 import com.example.modelo.Usuario;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -10,13 +11,14 @@ import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Gestion_usuario {
+public class Gestion_usuario{
     private static Usuario aux = new Usuario();
     private static String llave_ws = "usuario";
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
     private static Usuario usuario_online = null;
+    public static EscuchadorUsuario escuchadorUsuario;
 
     public HashMap<String, String> registrar_usuario(Usuario usuario)
     {
@@ -130,5 +132,6 @@ public class Gestion_usuario {
 
     public static void setUsuario_online(Usuario usuario_online) {
         Gestion_usuario.usuario_online = usuario_online;
+        escuchadorUsuario.usuarioCambiado(usuario_online);
     }
 }

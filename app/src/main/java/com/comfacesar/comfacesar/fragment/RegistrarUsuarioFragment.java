@@ -209,6 +209,7 @@ public class RegistrarUsuarioFragment extends Fragment {
     private void showDatePickerDialog()
     {
         DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because january is zero

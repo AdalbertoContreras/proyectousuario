@@ -5,13 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,7 +20,7 @@ import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
-import com.example.gestion.Gestion_chat_asesoria;
+import com.example.gestion.Escuchadores.EscuchadorUsuario;
 import com.example.gestion.Gestion_imagen_noticia;
 import com.example.gestion.Gestion_noticia;
 import com.example.gestion.Gestion_usuario;
@@ -56,7 +54,7 @@ public class HomeFragment extends Fragment {
     public static boolean creado = false;
     private static int id_ultimo = 0;
     private boolean agregar_noticias_nuevas;
-    private boolean generando_conmsulta = false;
+    private boolean generandoConsulta = false;
     private int cont = 0;
     private String textoFiltroAnterior = "";
     private String textoFiltroNuevo = "";
@@ -79,6 +77,7 @@ public class HomeFragment extends Fragment {
         itemNoticias_filtrada = new ArrayList<>();
         textoFiltroNuevo = ContainerActivity.texto_buscar;
         textoFiltroAnterior = textoFiltroNuevo;
+
         return view_permantente;
     }
 
@@ -89,6 +88,53 @@ public class HomeFragment extends Fragment {
         fragmentConsultarNoticiasActivo = true;
         noticias_nuevas = new ArrayList<>();
         filtrando_noticias = false;
+        Gestion_usuario.escuchadorUsuario = new EscuchadorUsuario() {
+            @Override
+            public void usuarioCambiado(Usuario usuario) {
+                usuario_anterior = usuario_nuevo = usuario;
+                agregar_noticias_nuevas = false;
+                //noticias_nuevas = new ArrayList<>();
+                //itemNoticias_general = new ArrayList<>();
+                while(generandoConsulta)
+                {
+                    try
+                    {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                consultar_noticias();
+                exampleAdapter = new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
+                recycle.setAdapter(exampleAdapter);
+            }
+        };
+        ContainerActivity.escuchadorCambioFiltro = new ContainerActivity.escuchador() {
+            @Override
+            public void filtroCambiado(String textoNuevo) {
+                textoFiltroAnterior = textoFiltroNuevo = textoNuevo;
+                while(filtrando_noticias)
+                {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                filtrando_noticias = true;
+                if(textoFiltroNuevo.equals(""))
+                {
+                    itemNoticias_filtrada = itemNoticias_general;
+                    llenar();
+                }
+                else
+                {
+                    filtrar_noticias();
+                    llenar();
+                }
+                filtrando_noticias = false;
+            }
+        };
         hilo_consulta_noticias();
     }
 
@@ -99,74 +145,9 @@ public class HomeFragment extends Fragment {
     }
 
     private int aux = 0;
-    private void hiloCambioFiltro()
-    {
-        new Thread(new Runnable()
-        {
-            public void run() {
-                int id_anterio = 0;
-
-                while (fragmentConsultarNoticiasActivo)
-                {
-                    textoFiltroNuevo = ContainerActivity.texto_buscar;
-                    if(!textoFiltroNuevo.equals(textoFiltroAnterior))
-                    {
-                        textoFiltroAnterior = textoFiltroNuevo;
-
-                        while(filtrando_noticias)
-                        {
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        filtrando_noticias = true;
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                            if(textoFiltroNuevo.equals(""))
-                            {
-                                itemNoticias_filtrada = itemNoticias_general;
-                                llenar();
-                            }
-                            else
-                            {
-                                filtrar_noticias();
-                                llenar();
-                            }
-                            filtrando_noticias = false;
-                            }
-                        });
-
-                    }
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if(id_anterio == 10101010)
-                    {
-                        id_anterio = id_ultimo;
-                        itemNoticias_filtrada = itemNoticias_general;
-                        exampleAdapter= new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                recycle.setAdapter(exampleAdapter);
-                            }
-                        });
-                    }
-                    aux ++;
-                }
-            }
-        }).start();
-    }
 
     private void llenar()
     {
-
         exampleAdapter = new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
         recycle.setAdapter(exampleAdapter);
     }
@@ -178,37 +159,7 @@ public class HomeFragment extends Fragment {
             public void run() {
                 while (fragmentConsultarNoticiasActivo)
                 {
-                    usuario_nuevo = Gestion_usuario.getUsuario_online();
-                    if(usuario_nuevo != usuario_anterior)
-                    {
-                        usuario_anterior = usuario_nuevo;
-                        agregar_noticias_nuevas = false;
-                        //noticias_nuevas = new ArrayList<>();
-                        //itemNoticias_general = new ArrayList<>();
-                        while(generando_conmsulta)
-                        {
-                            try
-                            {
-                                Thread.sleep(100);
-                                cont += 100;
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        consultar_noticias();
-                        if(getActivity() != null)
-                        {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    exampleAdapter = new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
-                                    recycle.setAdapter(exampleAdapter);
-                                }
-                            });
-                        }
-                        cont = 0;
-                    }
-                    if(cont >= 5000 && !generando_conmsulta && getActivity() != null)
+                    if(cont >= 5000 && !generandoConsulta && getActivity() != null)
                     {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -259,9 +210,9 @@ public class HomeFragment extends Fragment {
 
     private void consultar_noticias()
     {
-        if(!generando_conmsulta)
+        if(!generandoConsulta)
         {
-            generando_conmsulta = true;
+            generandoConsulta = true;
             final Gestion_noticia gestion_noticia = new Gestion_noticia();
             //tomo los parametros del controlador
             HashMap<String,String> params;
@@ -294,13 +245,13 @@ public class HomeFragment extends Fragment {
                         }
                     }
                     cargar_noticias(noticias_nuevas);
-                    generando_conmsulta = false;
+                    generandoConsulta = false;
                 }
             };
             Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    generando_conmsulta = false;
+                    generandoConsulta = false;
                     Log.d("Reponse.Error",error.toString());
                 }
             };
@@ -363,7 +314,6 @@ public class HomeFragment extends Fragment {
             recycle.setLayoutManager(new GridLayoutManager(getContext(),1));
             recycle.setAdapter(exampleAdapter);
             recycle.setHasFixedSize(true);
-            hiloCambioFiltro();
         }
     }
     private boolean agregado = false;
