@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/icon_75"
+    <item android:drawable="@drawable/iconv"
         android:state_checked="false" >
     </item>
-    <item android:drawable="@drawable/icon2_75"
+    <item android:drawable="@drawable/iconr"
         android:state_checked="true" >
     </item>
 
-    <item android:drawable="@drawable/icon_75"></item>
+    <item android:drawable="@drawable/iconv"></item>
 
 
 </selector>

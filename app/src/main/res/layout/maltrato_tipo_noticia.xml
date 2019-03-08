@@ -5,8 +5,22 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp"
+    android:paddingHorizontal="10dp"
     >
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="2dp"
+        android:elevation="10dp"
+        app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,58 +28,65 @@
         android:background="@color/Gris3"
        >
 
-   <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimaryDark"
-        >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="MALTRATO"
-            android:textColor="@color/White"
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:gravity="center"/>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="190dp"
+         android:orientation="vertical">
 
-    </LinearLayout>
+         <android.support.v7.widget.CardView
+             android:layout_width="match_parent"
+             android:layout_height="190dp"
+             android:background="@color/Gris3"
+             app:cardCornerRadius="6dp"
+             android:elevation="20dp"
+             app:cardUseCompatPadding="true"
+             >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical"
-        android:background="@color/Gris3"
-        android:padding="10dp">
+             <ImageView
+                 android:id="@+id/imagen_imageView_itemNoticia"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@drawable/imagen_nueva"
+                 android:scaleType="centerCrop"/>
+         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:background="@color/Gris3"
-            app:cardCornerRadius="6dp"
-            android:elevation="20dp"
-            app:cardUseCompatPadding="true"
-            android:padding="10dp"
-            >
-
-            <ImageView
-                android:id="@+id/imagen_imageView_itemNoticia"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/imagen_nueva"
-                android:scaleType="centerCrop"/>
-        </android.support.v7.widget.CardView>
-
+     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
             android:paddingRight="20dp"
             android:paddingBottom="5dp"
-            android:gravity="right"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_gravity="bottom"
+            android:weightSum="1"
+
+
             >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="maltrato"
+                    android:layout_gravity="center"
+                    android:textColor="@color/White"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="left"
+                    android:layout_weight="0.01"
+
+                    android:layout_marginLeft="5dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="0.999"
+                android:layout_gravity="right"
+                android:gravity="right">
 
             <CheckBox
                 android:id="@+id/me_gusta_checkBox_itemNoticia"
@@ -73,25 +94,19 @@
                 android:layout_height="wrap_content"
                 android:button="@drawable/checkbox_selector"
 
-
                 />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+
                 <TextView
                     android:id="@+id/me_gusta_textView_itemNoticia"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:paddingLeft="10dp"
                     android:text="me gusta"
                     android:textColor="@color/Gris"
-                    android:gravity="bottom"
+                    android:gravity="right"
                     android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity=""
                     />
-
             </LinearLayout>
         </LinearLayout>
 
@@ -101,10 +116,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
         android:paddingLeft="15dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp">
+
         <TextView
             android:textAllCaps="true"
             android:layout_width="match_parent"
@@ -112,8 +128,8 @@
             android:gravity="center"
             android:text="EMBARAZOS NO DESEADOS"
             android:id="@+id/titulo_textView_itemNoticia"
-            android:paddingLeft="10dp"
-            android:textSize="24dp"
+            android:paddingLeft="5dp"
+            android:textSize="15dp"
             android:typeface="sans"
             android:textStyle="bold"/>
 
@@ -132,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="15dp"
+                    android:layout_width="8dp"
                     android:layout_height="match_parent"
                     android:background="@color/colorPrimaryDark">
                 </LinearLayout>
@@ -165,10 +181,12 @@
         </android.support.v7.widget.CardView>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -176,6 +194,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/Gris3"></LinearLayout>
-
-
 </LinearLayout>
+
+
+
+
