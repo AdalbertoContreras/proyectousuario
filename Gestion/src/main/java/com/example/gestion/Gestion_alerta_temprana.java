@@ -92,6 +92,10 @@ public class Gestion_alerta_temprana {
                 {
                     atendido_por = -1;
                 }
+                if(!jsonObject.get("asunto").isJsonNull())
+                {
+                    asunto = jsonObject.get("asunto").getAsString();
+                }
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }
@@ -127,7 +131,6 @@ public class Gestion_alerta_temprana {
                 obj.addProperty("usuario_ol","");
                 obj.addProperty("contrasena_ol","");
             }
-
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

@@ -79,7 +79,6 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Bundle args = new Bundle();
                     AlertaTempranaDialog.alerta_temprana = Alerta_temprana;
                     AlertaTempranaDialog.asunto = asunto;
@@ -95,29 +94,15 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
         }
 
         private void consultar_asunto(final Alerta_temprana alerta_temprana) {
-
-            HashMap<String, String> hashMap = new Gestion_asunto().consultar_asuntos();
-            Response.Listener<String> stringListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
-                    ArrayList<Asunto> aux = new Gestion_asunto().generar_json(response);
-                    escoger_asunto(aux, alerta_temprana.asunto_alerta_temprana);
-                }
-            };
-            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(), hashMap, stringListener, MySocialMediaSingleton.errorListener());
-            MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-        }
-
-        private void escoger_asunto(ArrayList<Asunto> asuntos, int id) {
-            for (Asunto item : asuntos) {
-                if (id == item.id_asunto) {
-                    asunto = item;
-                    nombreAsuntoTextView.setText(item.nombre_asunto);
-                    return;
-                }
+            ArrayList<Asunto> asuntos = new Gestion_asunto().generar_json(alerta_temprana.asunto);
+            if(asuntos.isEmpty())
+            {
+                nombreAsuntoTextView.setText("");
             }
-            nombreAsuntoTextView.setText("no encontrado");
+            else
+            {
+                nombreAsuntoTextView.setText(asuntos.get(0).nombre_asunto);
+            }
         }
     }
 }

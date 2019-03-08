@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -23,20 +24,13 @@ import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.example.extra.Config;
 import com.example.gestion.Gestion_usuario;
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 public class ContainerActivity extends AppCompatActivity implements AsesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener{
     private Menu menu;
-    private FloatingActionButton chat_asesoriaFloatingActionButton;
-    private FloatingActionButton iniciar_sesionFloatingActionButton;
-    private FloatingActionButton historial_alertasFloatingActionButton;
-    private FloatingActionButton cerrar_sesionFloatingActionButton;
-    private FloatingActionButton registrarmeFloatingActionButton;
-    private FloatingActionMenu floatingActionMenu;
-    private boolean usuario_dio_click;
     public static String texto_buscar = "";
     public static FragmentManager fragmentManager;
+    private FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,69 +45,23 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                intent.putExtra("id",10);
+                startActivity(intent);
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
-        chat_asesoriaFloatingActionButton = findViewById(R.id.chat_asesoriasButton);
-        iniciar_sesionFloatingActionButton = findViewById(R.id.iniciar_sesionButton);
-        historial_alertasFloatingActionButton = findViewById(R.id.historial_alertasButton);
-        cerrar_sesionFloatingActionButton = findViewById(R.id.cerrar_sesionButton);
-        registrarmeFloatingActionButton = findViewById(R.id.registrarmeButton);
-        floatingActionMenu =  findViewById(R.id.menu_floatingActionMenu);
-        floatingActionMenu.setClosedOnTouchOutside(true);
-        historial_alertasFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                floatingActionMenu.close(true);
-                usuario_dio_click = true;
-                intent.putExtra("id",1);
-                startActivity(intent);
-            }
-        });
-        chat_asesoriaFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                floatingActionMenu.close(true);
-                intent.putExtra("id",6);
-                usuario_dio_click = true;
-                startActivity(intent);
-            }
-        });
-        iniciar_sesionFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                floatingActionMenu.close(true);
-                Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                intent.putExtra("id",3);
-                usuario_dio_click = true;
-                startActivity(intent);
-            }
-        });
-        cerrar_sesionFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //floatingActionMenu.close(true);
-                Gestion_usuario.setUsuario_online(null);
-                usuario_dio_click = true;
-                cambiar_estado_action_menu();
-            }
-        });
-        registrarmeFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //floatingActionMenu.close(true);
-                Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                intent.putExtra("id",4);
-                usuario_dio_click = true;
-                startActivity(intent);
-            }
-        });
         if(menu != null)
         {
             onCreateOptionsMenu(menu);
         }
         fragmentManager = getSupportFragmentManager();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -126,67 +74,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     @Override
     protected void onStart() {
         super.onStart();
-        usuario_dio_click = false;
-        cambiar_estado_action_menu();
     }
 
-    private void cambiar_estado_action_menu()
-    {
-        if(Gestion_usuario.getUsuario_online() != null)
-        {
-            iniciar_sesionFloatingActionButton.setVisibility(View.GONE);
-            registrarmeFloatingActionButton.setVisibility(View.GONE);
-            historial_alertasFloatingActionButton.setVisibility(View.VISIBLE);
-            chat_asesoriaFloatingActionButton.setVisibility(View.VISIBLE);
-            cerrar_sesionFloatingActionButton.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            iniciar_sesionFloatingActionButton.setVisibility(View.VISIBLE);
-            registrarmeFloatingActionButton.setVisibility(View.VISIBLE);
-            historial_alertasFloatingActionButton.setVisibility(View.GONE);
-            chat_asesoriaFloatingActionButton.setVisibility(View.GONE);
-            cerrar_sesionFloatingActionButton.setVisibility(View.GONE);
-        }
-        floatingActionMenu.open(true);
-        new Thread(new Runnable() {
-            public void run() {
-            int cont_m = 0;
-            boolean salir = false;
-            while(!usuario_dio_click && !salir)
-            {
-                try {
-                    Thread.sleep(100);
-                    cont_m += 100;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(cont_m >= 5000)
-                {
-                    salir = true;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            cerrar_floatingbutton();
-                            usuario_dio_click = false;
-
-                        }
-                    });
-                }
-                if(usuario_dio_click)
-                {
-                    salir = true;
-                }
-            }
-            usuario_dio_click = false;
-            }
-        }).start();
-    }
-
-    public void cerrar_floatingbutton()
-    {
-        floatingActionMenu.close(true);
-    }
 
     @Override
     protected void onRestart() {

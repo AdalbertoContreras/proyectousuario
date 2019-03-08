@@ -77,6 +77,11 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 ChatActivosFragment.fragmentManager = getSupportFragmentManager();
                 ShowToolbar("Modificar mi contraseña",true);
                 break;
+            case "11":
+                mifragment= new ChatActivosFragment();
+                ChatActivosFragment.fragmentManager = getSupportFragmentManager();
+                ShowToolbar("Modificar mi contraseña",true);
+                break;
         }
         if(mifragment != null)
         {

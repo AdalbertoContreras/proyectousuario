@@ -17,7 +17,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="5dp"
+        android:paddingTop="5dp"
+        android:background="@color/White">
 
 
 
@@ -62,11 +65,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="bottom"
-            android:weightSum="1"
-
-
-            >
-
+            android:weightSum="1">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,9 +77,7 @@
                     android:background="@color/colorPrimaryDark"
                     android:gravity="left"
                     android:layout_weight="0.01"
-
                     android:layout_marginLeft="5dp"/>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,9 +90,7 @@
                 android:id="@+id/me_gusta_checkBox_itemNoticia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checkbox_selector"
-
-                />
+                android:button="@drawable/checkbox_selector"/>
 
                 <TextView
                     android:id="@+id/me_gusta_textView_itemNoticia"
@@ -106,8 +101,7 @@
                     android:gravity="right"
                     android:textSize="14sp"
                     android:layout_marginLeft="5dp"
-                    android:layout_gravity=""
-                    />
+                    android:paddingRight="5dp"/>
             </LinearLayout>
         </LinearLayout>
 

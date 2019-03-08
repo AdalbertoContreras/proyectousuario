@@ -150,34 +150,7 @@ public class HistorialAlertasFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         seguir = true;
         cont_m = 10000;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(seguir)
-                {
-                    while(generando_consulta)
-                    {
-                        try {
-                            Thread.sleep(100);
-                            cont_m += 100;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(cont_m >= 10000 && !generando_consulta)
-                    {
-                        comparar_num_alertas();
-                    }
-                    try {
-                        Thread.sleep(100);
-                        cont_m += 100;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }).start();
+        comparar_num_alertas();
     }
 
     @Override

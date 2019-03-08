@@ -13,4 +13,5 @@ public class Alerta_temprana
     public int numero_visitas;
     public int estado_atendido;
     public int atendido_por;
+    public String asunto;
 }
