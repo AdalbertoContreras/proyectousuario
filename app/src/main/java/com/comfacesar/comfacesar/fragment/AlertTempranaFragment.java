@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
@@ -116,7 +117,15 @@ public class AlertTempranaFragment extends Fragment {
                 llenar_y_cargar_asuntos(response);
             }
         };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, MySocialMediaSingleton.errorListener());
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "asuntos  no cargados de " + WebService.getUrl(), Toast.LENGTH_SHORT).show();
+                Log.d("Reponse.Error",error.toString());
+                //Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
     }
 
