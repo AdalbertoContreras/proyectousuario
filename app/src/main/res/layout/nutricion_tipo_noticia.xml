@@ -63,8 +63,6 @@
                     android:layout_marginRight="10dp"
                     android:layout_gravity="bottom"
                     android:weightSum="1"
-
-
                     >
 
                     <TextView
@@ -72,13 +70,12 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:text="maltrato"
+                        android:text="nutricion"
                         android:layout_gravity="center"
                         android:textColor="@color/White"
-                        android:background="@color/colorAccent"
+                        android:background="@color/tipo_one"
                         android:gravity="left"
                         android:layout_weight="0.01"
-
                         android:layout_marginLeft="5dp"/>
 
                     <LinearLayout
@@ -148,14 +145,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="8dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/tipo_one">
+                        </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="286dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.9"
                             android:orientation="vertical"
                             android:padding="10dp">
 
@@ -165,16 +164,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginBottom="20dp"
-                                android:maxHeight="120dp"
-                                android:text="" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="8dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorAccent"
-                            android:layout_weight="0.1">
-                        </LinearLayout>
+                                android:text=""
+                                android:maxHeight="120dp"/>
 
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

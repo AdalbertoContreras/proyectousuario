@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/Gris3"
+        android:paddingBottom="7dp"
        >
 
 
@@ -127,9 +128,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="EMBARAZOS NO DESEADOS"
+            android:textColor="@color/colorAccent"
             android:id="@+id/titulo_textView_itemNoticia"
             android:paddingLeft="5dp"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:typeface="sans"
             android:textStyle="bold"/>
 
@@ -167,12 +169,7 @@
                         android:layout_marginBottom="20dp"
                         android:text=""
                         android:maxHeight="120dp"/>
-                    <TextView
-                        android:id="@+id/fecha_textView_itemNoticia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text=""/>
+
 
                 </LinearLayout>
 
