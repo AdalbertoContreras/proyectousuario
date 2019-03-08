@@ -5,8 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    >
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/Gris3"
+       >
+
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
@@ -16,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="MALTRATO"
+            android:textColor="@color/White"
+            android:textStyle="bold"
             android:textSize="19sp"
             android:gravity="center"/>
 
@@ -156,5 +166,16 @@
 
 
     </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/Gris3"></LinearLayout>
+
 
 </LinearLayout>

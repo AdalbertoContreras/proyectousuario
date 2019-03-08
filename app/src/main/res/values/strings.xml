@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">ServiamigoAdmin</string>
     <string name="textoprueba">Lorem Ipsum is simply dummy titulo of the printing and \" +
-        \"typesetting industry. Lorem Ipsum has been the industry\'s standard dummy titulo ever since the 1500s, when an unknown printer\" +
-        \" took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap\"
+        \"typesetting industry. Lorem Ipsum has been the industry\'s standard dummy titulo ever since the 1500s, when an unknown printer\"
         </string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
