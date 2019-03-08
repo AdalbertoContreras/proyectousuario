@@ -36,7 +36,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_container2);
-        new Config().iniciar_config(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("ServiAmigo");
         toolbar.setBackgroundResource(R.color.Gris3);
@@ -65,6 +65,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     @Override
     protected void onResume() {
         super.onResume();
+        new Config().iniciar_config(this);
         if(menu != null)
         {
             onCreateOptionsMenu(menu);

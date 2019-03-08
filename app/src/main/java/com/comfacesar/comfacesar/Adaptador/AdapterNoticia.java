@@ -129,35 +129,41 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
             }
-            megusta_CheckBox.setEnabled(false);
+            megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(Gestion_usuario.getUsuario_online() != null)
+                    {
+                        if(!cambiando_estado)
+                        {
+                            HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
+                            Response.Listener<String> stringListener = new Response.Listener<String>()
+                            {
+                                @Override
+                                public void onResponse(String response) {
+                                    consultar_noticia();
+                                }
+                            };
+                            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    tengo_me_gusta();
+                                }
+                            };
+                            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+                            MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(view.getContext(), "Inicie sesion para dar me gusta", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                megusta_CheckBox.setEnabled(true);
                 tengo_me_gusta();
-                megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
-                    {
-                        HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
-                        Response.Listener<String> stringListener = new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                consultar_noticia();
-                            }
-                        };
-                        Response.ErrorListener errorListener = new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                tengo_me_gusta();
-                            }
-                        };
-                        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-                        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-                    }
-                    }
-                });
+
             }
             if(item.getImagen() != "")
             {

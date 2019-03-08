@@ -58,11 +58,11 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 break;
             case "6":
                 mifragment= new AsesoriaFragment();
-                ShowToolbar("Asesorias",true);
+                ShowToolbar("Tipos de asesorias",true);
                 break;
             case "7":
                 mifragment= new Chat_asesoriaFragment();
-                ShowToolbar("Asesorias",true);
+                ShowToolbar("Chat",true);
                 break;
             case "8":
                 mifragment= new ModificarUsuarioFragment();
@@ -70,12 +70,12 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 break;
             case "9":
                 mifragment= new ModificarDatosCuentaUsuarioFragment();
-                ShowToolbar("Modificar mi contraseña",true);
+                ShowToolbar("Cambiar mi contraseña",true);
                 break;
             case "10":
                 mifragment= new ChatActivosFragment();
                 ChatActivosFragment.fragmentManager = getSupportFragmentManager();
-                ShowToolbar("Modificar mi contraseña",true);
+                ShowToolbar("Asesores",true);
                 break;
             case "11":
                 mifragment= new ChatActivosFragment();
