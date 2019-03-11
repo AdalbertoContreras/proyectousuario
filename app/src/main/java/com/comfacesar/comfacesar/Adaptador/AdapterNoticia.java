@@ -101,7 +101,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         private final CheckBox megusta_CheckBox;
         private final TextView numero_megusta_TextView;
         private boolean comprobando_usuario = false;
-        private final TextView fecha_TextView;
         private ItemNoticia itemNoticia;
         private View view;
         private FrameLayout frameLayout;
@@ -114,7 +113,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             megusta_CheckBox = itemView.findViewById(R.id.me_gusta_checkBox_itemNoticia);
             megusta_CheckBox.setChecked(false);
             numero_megusta_TextView = itemView.findViewById(R.id.me_gusta_textView_itemNoticia);
-            fecha_TextView = itemView.findViewById(R.id.fecha_textView_itemNoticia);
             view = itemView;
             this.frameLayout = frameLayout;
 
@@ -126,7 +124,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             tituto_textview.setText(item.getNoticia().titulo_noticia);
             contenido_TextView.setText(item.getNoticia().contenido_noticia);
             numero_megusta_TextView.setText(item.getNoticia().numero_me_gusta + " me gusta");
-            fecha_TextView.setText(item.getNoticia().fecha_registro_noticia);
             if(item.getImagen() !="")
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
