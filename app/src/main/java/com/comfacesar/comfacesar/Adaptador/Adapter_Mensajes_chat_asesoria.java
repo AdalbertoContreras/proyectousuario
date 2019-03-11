@@ -21,11 +21,26 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
         this.mensaje_chat_asesoriaArrayList = mensaje_chat_asesorias;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+
+        return mensaje_chat_asesoriaArrayList.get(position).tipo_creador_mensaje_chat_asesoria;
+    }
+
     @NonNull
     @Override
     public Adapter_Mensajes_chat_asesoria.ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_mensaje_chat_assoria, null, false);
+        if(i == 1)
+        {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_mensaje_chat_assoria, null, false);
+        }
+        else
+        {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_mensaje_chat_asesoria_recibir, null, false);
+        }
+
         return new Adapter_Mensajes_chat_asesoria.ViewHolderDatos(view);
     }
 
@@ -57,14 +72,6 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
         }
 
         public void setDatos(final Mensaje_chat_asesoria mensaje_chat_asesoria)       {
-            if(mensaje_chat_asesoria.tipo_creador_mensaje_chat_asesoria == 1)
-            {
-                contenidoTextView.setTextColor(Color.BLUE);
-            }
-            else
-            {
-                contenidoTextView.setTextColor(Color.RED);
-            }
             contenidoTextView.setText(mensaje_chat_asesoria.contenido_mensaje_chat_asesoria);
             fechatextView.setText(mensaje_chat_asesoria.fecha_envio_mensaje_chat_asesoria + " " + mensaje_chat_asesoria.hora_envio_mensaje_asesoria);
         }

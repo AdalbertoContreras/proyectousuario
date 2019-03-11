@@ -1,46 +1,27 @@
-package com.comfacesar.comfacesar.fragment;
+package com.comfacesar.comfacesar;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.comfacesar.comfacesar.Adaptador.AdapterListaAsesoresPorEspecialidad;
-import com.comfacesar.comfacesar.R;
-import com.example.extra.MySocialMediaSingleton;
-import com.example.extra.WebService;
-import com.example.gestion.Gestion_administrador;
-import com.example.modelo.Administrador;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChatActivosFragment.OnFragmentInteractionListener} interface
+ * {@link ChatActivosGeneralFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChatActivosFragment#newInstance} factory method to
+ * Use the {@link ChatActivosGeneralFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChatActivosFragment extends Fragment {
+public class ChatActivosGeneralFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static int tipoAsesoria;
-    private RecyclerView recyclerView;
-    private View view;
-    public static FragmentManager fragmentManager;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,7 +29,7 @@ public class ChatActivosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ChatActivosFragment() {
+    public ChatActivosGeneralFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +39,11 @@ public class ChatActivosFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChatActivosFragment.
+     * @return A new instance of fragment ChatActivosGeneralFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChatActivosFragment newInstance(String param1, String param2) {
-        ChatActivosFragment fragment = new ChatActivosFragment();
+    public static ChatActivosGeneralFragment newInstance(String param1, String param2) {
+        ChatActivosGeneralFragment fragment = new ChatActivosGeneralFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,40 +63,8 @@ public class ChatActivosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragmen
-        view =  inflater.inflate(R.layout.fragment_chat_activos, container, false);
-        recyclerView = view.findViewById(R.id.chat_activos_recyclerView);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        consultar_administradores();
-    }
-
-    private void consultar_administradores()
-    {
-        //tomo los parametros del controlador
-        HashMap<String,String> params = new Gestion_administrador().consultar_administradores_por_especialidad(tipoAsesoria);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-            generar_consulta(response);
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
-        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-    }
-
-    private void generar_consulta(final String response)
-    {
-        ArrayList<Administrador> list = new Gestion_administrador().generar_json(response);
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),1));
-        AdapterListaAsesoresPorEspecialidad adapterItemCliente = new AdapterListaAsesoresPorEspecialidad(list, fragmentManager);
-        recyclerView.setAdapter(adapterItemCliente);
-        recyclerView.setHasFixedSize(true);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_chat_activos_general, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -123,11 +72,6 @@ public class ChatActivosFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override

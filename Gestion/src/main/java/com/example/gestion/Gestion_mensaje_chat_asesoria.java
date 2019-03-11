@@ -98,7 +98,7 @@ public class Gestion_mensaje_chat_asesoria {
             if(Gestion_usuario.getUsuario_online() != null)
             {
                 obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
+                obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
             }
             else
             {
