@@ -28,6 +28,14 @@ public class Gestion_usuario{
 
     public HashMap<String, String> modificar_datos_personales(Usuario usuario)
     {
+        if(usuario.foto_perfil_usuario.equals(usuario.foto_perfil_anterior))
+        {
+            usuario.foto_perfil_usuario = usuario.foto_perfil_usuario.replace("http://31.220.63.102/WScomfacesar/", "");
+        }
+        if(usuario.foto_perfil_anterior != null)
+        {
+            usuario.foto_perfil_anterior = usuario.foto_perfil_anterior.replace("http://31.220.63.102/WScomfacesar/", "");
+        }
         tipo_consulta = "modificar_datos_personales";
         return construir_parametros(usuario);
     }
@@ -82,7 +90,6 @@ public class Gestion_usuario{
                 fecha_nacimiento = jsonObject.get("fecha_nacimiento").getAsString();
                 correo_usuario = jsonObject.get("correo_usuario").getAsString();
                 nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
-                contrasena_usuario = jsonObject.get("contraseña_usuario").getAsString();
                 foto_perfil_usuario = jsonObject.get("foto_perfil_usuario").getAsString();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();

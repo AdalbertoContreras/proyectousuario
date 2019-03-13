@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +28,20 @@ import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
+import com.example.gestion.Gestion_administrador;
 import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
+import com.example.modelo.Administrador;
 import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ModificarUsuarioFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -100,6 +108,8 @@ public class ModificarUsuarioFragment extends Fragment {
     private Bitmap bitmap;
     private static final int PICK_IMAGE = 100;
     private int REQUEST_IMAGE_CAPTURE = 1;
+    private Uri imageUri;
+    private boolean imagen_modificada;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,6 +126,7 @@ public class ModificarUsuarioFragment extends Fragment {
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadUsuarioEditText);
         correo_electronicoEditText = view_permanente.findViewById(R.id.correoEletronicoUsuarioEditText);
         fotoPerfilImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
+        actualizar_perfil();
         subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
         tomarFotoButton = view_permanente.findViewById(R.id.tomarFotoButton);
         eliminarFotoButton = view_permanente.findViewById(R.id.eliminar_imagenButton);
@@ -157,6 +168,36 @@ public class ModificarUsuarioFragment extends Fragment {
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK && requestCode == PICK_IMAGE)
+        {
+            imageUri = data.getData();
+            fotoPerfilImageView.setImageURI(imageUri);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(view_permanente.getContext().getContentResolver(), imageUri);
+                imagen_modificada = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            bitmap = (Bitmap) extras.get("data");
+            fotoPerfilImageView.setImageBitmap(bitmap);
+            imagen_modificada = true;
+        }
+    }
+
+    private String bitmap_conver_to_String(Bitmap bitmap)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, stream);
+        byte[] bytes = stream.toByteArray();
+        String s = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return s;
     }
 
     private void evento_fecha_nacimiento()
@@ -207,6 +248,15 @@ public class ModificarUsuarioFragment extends Fragment {
             {
                 usuario_espejo.sexo_usuario = 1;
             }
+            usuario_espejo.foto_perfil_usuario = Gestion_usuario.getUsuario_online().foto_perfil_usuario;
+            usuario_espejo.foto_perfil_anterior = Gestion_usuario.getUsuario_online().foto_perfil_usuario;
+            if(imagen_modificada)
+            {
+                if(bitmap != null)
+                {
+                    usuario_espejo.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
+                }
+            }
             usuario_espejo.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
             usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
             usuario_espejo.apellidos_usuario = apellidoEditText.getText().toString();
@@ -253,6 +303,38 @@ public class ModificarUsuarioFragment extends Fragment {
         });
     }
 
+    private void actualizar_perfil()
+    {
+        HashMap<String,String> params = new Gestion_usuario().consultar_usuario_por_id(Gestion_usuario.getUsuario_online());
+        Log.d("parametros", params.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
+                Log.d("response", response);
+                if(!response.equals(""))
+                {
+                    ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                    if(!usuarios.isEmpty())
+                    {
+                        Usuario usuario = usuarios.get(0);
+                        Gestion_usuario.getUsuario_online().foto_perfil_usuario = usuario.foto_perfil_usuario;
+                        Picasso.with(getContext()).load(usuario.foto_perfil_usuario).into(fotoPerfilImageView);
+                    }
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w("Response.error", error.toString());
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
     private void cargar_datos_usuario()
     {
         numeroIdentificacionEditText.setText(usuario_espejo.numero_identificacion_usuario);
@@ -284,29 +366,6 @@ public class ModificarUsuarioFragment extends Fragment {
             }
         });
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-
-    private void registrar_movil_registro(int id_registrado)
-    {
-        Movil_registro movil_registro = new Movil_registro();
-        movil_registro.id_registrado_movil_registro = id_registrado;
-        movil_registro.tipo_registro_movil_registro = 2;
-        movil_registro.imei_movil_registro = Config.getImei();
-        HashMap<String, String> hashMap = new Gestion_movil_registro().registrar_movil_registro(movil_registro);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
