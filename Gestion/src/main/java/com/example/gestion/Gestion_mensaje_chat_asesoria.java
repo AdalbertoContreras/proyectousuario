@@ -19,6 +19,16 @@ public class Gestion_mensaje_chat_asesoria {
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
+    private static final String ID_MENSAJE_CHAT_ASESORIA = "A";
+    private static final String FECHA_ENVIO_MENSAJE_CHAT_ASESORIA = "B";
+    private static final String HORA_ENVIO_MENSAJE_ASESORIA = "C";
+    private static final String CONTENIDO_MENSAJE_CHAT_ASESORIA = "D";
+    private static final String CHAT_MENSAJE_CHAT_ASESORIA = "E";
+    private static final String ID_CREADOR_MENSAJE_CHAT_ASESORIA = "F";
+    private static final String TIPO_CREADOR_MENSAJE_CHAT_ASESORIA = "G";
+    private static final String NOMBRE_USUARIO = "NU";
+    private static final String CONTRASENA_USUARIO = "CU";
+    private static final String TIPO_CONSULTA = "TC";
 
     private static void iniciar_axu()
     {
@@ -66,14 +76,15 @@ public class Gestion_mensaje_chat_asesoria {
     private Mensaje_chat_asesoria agregar_elemento(final JsonObject jsonObject)
     {
         return new Mensaje_chat_asesoria(){{
-            try {
-                id_mensaje_chat_asesoria = jsonObject.get("id_mensaje_chat_asesoria").getAsInt();
-                fecha_envio_mensaje_chat_asesoria = jsonObject.get("fecha_envio_mensaje_chat_asesoria").getAsString();
-                hora_envio_mensaje_asesoria = jsonObject.get("hora_envio_mensaje_asesoria").getAsString();
-                contenido_mensaje_chat_asesoria = jsonObject.get("contenido_mensaje_chat_asesoria").getAsString();
-                chat_mensaje_chat_asesoria = jsonObject.get("chat_mensaje_chat_asesoria").getAsInt();
-                id_creador_mensaje_chat_asesoria = jsonObject.get("id_creador_mensaje_chat_asesoria").getAsInt();
-                tipo_creador_mensaje_chat_asesoria = jsonObject.get("tipo_creador_mensaje_chat_asesoria").getAsInt();
+            try
+            {
+                id_mensaje_chat_asesoria = jsonObject.get(ID_MENSAJE_CHAT_ASESORIA).getAsInt();
+                fecha_envio_mensaje_chat_asesoria = jsonObject.get(FECHA_ENVIO_MENSAJE_CHAT_ASESORIA).getAsString();
+                hora_envio_mensaje_asesoria = jsonObject.get(HORA_ENVIO_MENSAJE_ASESORIA).getAsString();
+                contenido_mensaje_chat_asesoria = jsonObject.get(CONTENIDO_MENSAJE_CHAT_ASESORIA).getAsString();
+                chat_mensaje_chat_asesoria = jsonObject.get(CHAT_MENSAJE_CHAT_ASESORIA).getAsInt();
+                id_creador_mensaje_chat_asesoria = jsonObject.get(ID_CREADOR_MENSAJE_CHAT_ASESORIA).getAsInt();
+                tipo_creador_mensaje_chat_asesoria = jsonObject.get(TIPO_CREADOR_MENSAJE_CHAT_ASESORIA).getAsInt();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }
@@ -84,26 +95,26 @@ public class Gestion_mensaje_chat_asesoria {
     {
         JsonObject obj = new JsonObject();
         try {
-            obj.addProperty("id_mensaje_chat_asesoria", elemento.id_mensaje_chat_asesoria);
-            obj.addProperty("fecha_envio_mensaje_chat_asesoria", elemento.fecha_envio_mensaje_chat_asesoria);
-            obj.addProperty("hora_envio_mensaje_asesoria", elemento.hora_envio_mensaje_asesoria);
-            obj.addProperty("contenido_mensaje_chat_asesoria", elemento.contenido_mensaje_chat_asesoria);
-            obj.addProperty("chat_mensaje_chat_asesoria", elemento.chat_mensaje_chat_asesoria);
-            obj.addProperty("id_creador_mensaje_chat_asesoria", elemento.id_creador_mensaje_chat_asesoria);
-            obj.addProperty("tipo_creador_mensaje_chat_asesoria", elemento.tipo_creador_mensaje_chat_asesoria);
+            obj.addProperty(ID_CREADOR_MENSAJE_CHAT_ASESORIA, elemento.id_mensaje_chat_asesoria);
+            obj.addProperty(FECHA_ENVIO_MENSAJE_CHAT_ASESORIA, elemento.fecha_envio_mensaje_chat_asesoria);
+            obj.addProperty(HORA_ENVIO_MENSAJE_ASESORIA, elemento.hora_envio_mensaje_asesoria);
+            obj.addProperty(CONTENIDO_MENSAJE_CHAT_ASESORIA, elemento.contenido_mensaje_chat_asesoria);
+            obj.addProperty(CHAT_MENSAJE_CHAT_ASESORIA, elemento.chat_mensaje_chat_asesoria);
+            obj.addProperty(ID_CREADOR_MENSAJE_CHAT_ASESORIA, elemento.id_creador_mensaje_chat_asesoria);
+            obj.addProperty(TIPO_CREADOR_MENSAJE_CHAT_ASESORIA, elemento.tipo_creador_mensaje_chat_asesoria);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
-            obj.addProperty("tipo_consulta",tipo_consulta);
+            obj.addProperty(TIPO_CONSULTA,tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
+                obj.addProperty(NOMBRE_USUARIO,Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+                obj.addProperty(CONTRASENA_USUARIO,Gestion_usuario.getUsuario_online().contrasena_usuario);
             }
             else
             {
-                obj.addProperty("usuario_ol","");
-                obj.addProperty("contrasena_ol","");
+                obj.addProperty(NOMBRE_USUARIO,"");
+                obj.addProperty(CONTRASENA_USUARIO,"");
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

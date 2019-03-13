@@ -83,6 +83,7 @@ public class Gestion_usuario{
                 correo_usuario = jsonObject.get("correo_usuario").getAsString();
                 nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
                 contrasena_usuario = jsonObject.get("contraseña_usuario").getAsString();
+                foto_perfil_usuario = jsonObject.get("foto_perfil_usuario").getAsString();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }
@@ -104,6 +105,8 @@ public class Gestion_usuario{
             obj.addProperty("correo_usuario", elemento.correo_usuario);
             obj.addProperty("nombre_cuenta_usuario", elemento.nombre_cuenta_usuario);
             obj.addProperty("contrasena_usuario", elemento.contrasena_usuario);
+            obj.addProperty("foto_perfil_usuario", elemento.foto_perfil_usuario);
+            obj.addProperty("foto_perfil_anterior", elemento.foto_perfil_anterior);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);

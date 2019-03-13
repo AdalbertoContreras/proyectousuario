@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.gestion.Gestion_usuario;
@@ -33,7 +32,7 @@ public class AsesoriaFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private ImageView salud_sexual_y_reproductiva_ImageView;
     private ImageView identidad_ImageView;
-    private ImageView nutricion_ImageView;
+    private ImageView maltrato_ImageView;
     private ImageView embarazo_ImageView;
     public static FragmentManager fragmentManager;
     private String especialidad;
@@ -80,12 +79,12 @@ public class AsesoriaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_asesoria, container, false);
-        nutricion_ImageView = view.findViewById(R.id.nutricion_imageview_asesoria);
+        maltrato_ImageView = view.findViewById(R.id.maltrato_imageview_asesoria);
         salud_sexual_y_reproductiva_ImageView = view.findViewById(R.id.salud_sexual_reproductiva_imageview_asesoria);
         embarazo_ImageView = view.findViewById(R.id.embarazo_imageview_asesoria);
         identidad_ImageView = view.findViewById(R.id.identidad_imageview_asesoria);
         final Fragment fragment = null;
-        nutricion_ImageView.setOnClickListener(new View.OnClickListener() {
+        maltrato_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Gestion_usuario.getUsuario_online() != null)

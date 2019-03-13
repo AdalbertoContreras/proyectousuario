@@ -16,6 +16,22 @@ public class Gestion_chat_asesoria {
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
+    private static String ID_CHAT_ASESORIA = "A";
+    private static String FECHA_INICIO_ASESORIA = "B";
+    private static String HORA_INICIO_ASESORIA = "C";
+    private static String FECHA_CIERRE_ASESORIA = "D";
+    private static String HORA_CIERRA_CHAT_ASESORIA = "E";
+    private static String ADMINISTRADOR_CHAT_ASESORIA = "F";
+    private static String USUARIO_CHAT_ASESORIA = "G";
+    private static String ESTADO_CERRADO = "H";
+    private static String TIEMPO_SESION_CHAT_ASESORIA = "I";
+    private static String ESPECIALIZACION_CHAT_ASESORIA = "J";
+    private static String ULTIMA_FECHA_CHAT_ASESORIA = "K";
+    private static String ULTIMA_HORA_CHAT_ASESORIA = "L";
+    private static String ULTIMO_MENSAJE = "M";
+    private static String NOMBRE_USUARIO = "NU";
+    private static String CONTRASENA_USUARIO = "CU";
+    private static String TIPO_CONSULTA = "TC";
 
     private static void iniciar_axu()
     {
@@ -60,30 +76,30 @@ public class Gestion_chat_asesoria {
     {
         return new Chat_asesoria(){{
             try {
-                id_chat_asesoria = jsonObject.get("id_chat_asesoria").getAsInt();
-                fecha_inicio_asesoria = jsonObject.get("fecha_inicio_asesoria").getAsString();
-                hora_inicio_asesoria = jsonObject.get("hora_inicio_asesoria").getAsString();
-                if(!jsonObject.get("fecha_cierre_asesoria").isJsonNull())
+                id_chat_asesoria = jsonObject.get(ID_CHAT_ASESORIA).getAsInt();
+                fecha_inicio_asesoria = jsonObject.get(FECHA_INICIO_ASESORIA).getAsString();
+                hora_inicio_asesoria = jsonObject.get(HORA_INICIO_ASESORIA).getAsString();
+                if(!jsonObject.get(FECHA_CIERRE_ASESORIA).isJsonNull())
                 {
-                    fecha_cierre_asesoria = jsonObject.get("fecha_cierre_asesoria").getAsString();
+                    fecha_cierre_asesoria = jsonObject.get(FECHA_CIERRE_ASESORIA).getAsString();
                 }
                 else
                 {
                     fecha_cierre_asesoria = "";
                 }
-                if(!jsonObject.get("hora_cierra_chat_asesoria").isJsonNull())
+                if(!jsonObject.get(HORA_CIERRA_CHAT_ASESORIA).isJsonNull())
                 {
-                    hora_cierra_chat_asesoria = jsonObject.get("hora_cierra_chat_asesoria").getAsString();
+                    hora_cierra_chat_asesoria = jsonObject.get(HORA_CIERRA_CHAT_ASESORIA).getAsString();
                 }
                 else
                 {
                     hora_cierra_chat_asesoria = "";
                 }
-                administrador_chat_asesoria = jsonObject.get("administrador_chat_asesoria").getAsInt();
-                usuario_chat_asesoria = jsonObject.get("usuario_chat_asesoria").getAsInt();
-                estado_cerrado = jsonObject.get("estado_cerrado").getAsInt();
-                tiempo_sesion_chat_asesoria = jsonObject.get("tiempo_sesion_chat_asesoria").getAsString();
-                especializacion_chat_asesoria = jsonObject.get("especializacion_chat_asesoria").getAsInt();
+                administrador_chat_asesoria = jsonObject.get(ADMINISTRADOR_CHAT_ASESORIA).getAsInt();
+                usuario_chat_asesoria = jsonObject.get(USUARIO_CHAT_ASESORIA).getAsInt();
+                estado_cerrado = jsonObject.get(ESTADO_CERRADO).getAsInt();
+                tiempo_sesion_chat_asesoria = jsonObject.get(TIEMPO_SESION_CHAT_ASESORIA).getAsString();
+                especializacion_chat_asesoria = jsonObject.get(ESPECIALIZACION_CHAT_ASESORIA).getAsInt();
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }
@@ -94,29 +110,29 @@ public class Gestion_chat_asesoria {
     {
         JsonObject obj = new JsonObject();
         try {
-            obj.addProperty("id_chat_asesoria", elemento.id_chat_asesoria);
-            obj.addProperty("fecha_inicio_asesoria", elemento.fecha_inicio_asesoria);
-            obj.addProperty("hora_inicio_asesoria", elemento.hora_inicio_asesoria);
-            obj.addProperty("fecha_cierre_asesoria", elemento.fecha_cierre_asesoria);
-            obj.addProperty("hora_cierra_chat_asesoria", elemento.hora_cierra_chat_asesoria);
-            obj.addProperty("administrador_chat_asesoria", elemento.administrador_chat_asesoria);
-            obj.addProperty("usuario_chat_asesoria", elemento.usuario_chat_asesoria);
-            obj.addProperty("estado_cerrado", elemento.estado_cerrado);
-            obj.addProperty("tiempo_sesion_chat_asesoria", elemento.tiempo_sesion_chat_asesoria);
-            obj.addProperty("especializacion_chat_asesoria", elemento.especializacion_chat_asesoria);
+            obj.addProperty(ID_CHAT_ASESORIA, elemento.id_chat_asesoria);
+            obj.addProperty(FECHA_INICIO_ASESORIA, elemento.fecha_inicio_asesoria);
+            obj.addProperty(HORA_INICIO_ASESORIA, elemento.hora_inicio_asesoria);
+            obj.addProperty(FECHA_CIERRE_ASESORIA, elemento.fecha_cierre_asesoria);
+            obj.addProperty(HORA_CIERRA_CHAT_ASESORIA, elemento.hora_cierra_chat_asesoria);
+            obj.addProperty(ADMINISTRADOR_CHAT_ASESORIA, elemento.administrador_chat_asesoria);
+            obj.addProperty(USUARIO_CHAT_ASESORIA, elemento.usuario_chat_asesoria);
+            obj.addProperty(ESTADO_CERRADO, elemento.estado_cerrado);
+            obj.addProperty(TIEMPO_SESION_CHAT_ASESORIA, elemento.tiempo_sesion_chat_asesoria);
+            obj.addProperty(ESPECIALIZACION_CHAT_ASESORIA, elemento.especializacion_chat_asesoria);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
-            obj.addProperty("tipo_consulta",tipo_consulta);
+            obj.addProperty(TIPO_CONSULTA,tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
+                obj.addProperty(NOMBRE_USUARIO,Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+                obj.addProperty(CONTRASENA_USUARIO,Gestion_usuario.getUsuario_online().contrasena_usuario);
             }
             else
             {
-                obj.addProperty("usuario_ol","");
-                obj.addProperty("contrasena_ol","");
+                obj.addProperty(NOMBRE_USUARIO,"");
+                obj.addProperty(CONTRASENA_USUARIO,"");
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
@@ -132,10 +148,10 @@ public class Gestion_chat_asesoria {
         try {
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
-            obj.addProperty("tipo_consulta",tipo_consulta);
+            obj.addProperty(TIPO_CONSULTA,tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
-            obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-            obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
+            obj.addProperty(NOMBRE_USUARIO,Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+            obj.addProperty(CONTRASENA_USUARIO,Gestion_usuario.getUsuario_online().contrasena_usuario);
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }

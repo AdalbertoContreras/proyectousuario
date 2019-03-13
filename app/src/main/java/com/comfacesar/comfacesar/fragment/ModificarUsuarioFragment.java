@@ -2,8 +2,11 @@ package com.comfacesar.comfacesar.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -87,6 +92,14 @@ public class ModificarUsuarioFragment extends Fragment {
     private EditText fecha_nacimientoEditText;
     private EditText correo_electronicoEditText;
     private Usuario usuario_espejo;
+    private ImageView fotoPerfilImageView;
+    private Button subirFotoButton;
+    private Button tomarFotoButton;
+    private Button eliminarFotoButton;
+    private boolean imagen_eliminada;
+    private Bitmap bitmap;
+    private static final int PICK_IMAGE = 100;
+    private int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,12 +115,48 @@ public class ModificarUsuarioFragment extends Fragment {
         telefonoEditText = view_permanente.findViewById(R.id.telefonoUsuarioEditText);
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadUsuarioEditText);
         correo_electronicoEditText = view_permanente.findViewById(R.id.correoEletronicoUsuarioEditText);
+        fotoPerfilImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
+        subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
+        tomarFotoButton = view_permanente.findViewById(R.id.tomarFotoButton);
+        eliminarFotoButton = view_permanente.findViewById(R.id.eliminar_imagenButton);
+        subirFotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+        tomarFotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tomarFoto();
+            }
+        });
+        eliminarFotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagen_eliminada = true;
+                bitmap = null;
+                fotoPerfilImageView.setImageBitmap(null);
+            }
+        });
         fecha_nacimientoEditText.setFocusable(false);
         usuario_espejo = Gestion_usuario.getUsuario_online();
         evento_fecha_nacimiento();
         evento_modificar_usuario();
         cargar_datos_usuario();
         return view_permanente;
+    }
+
+    private void openGallery(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    public void tomarFoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
     private void evento_fecha_nacimiento()
@@ -210,6 +259,7 @@ public class ModificarUsuarioFragment extends Fragment {
         nombreUsuarioEditText.setText(usuario_espejo.nombres_usuario);
         apellidoEditText.setText(usuario_espejo.apellidos_usuario);
         fecha_nacimientoEditText.setText(usuario_espejo.fecha_nacimiento);
+        Picasso.with(getContext()).load(usuario_espejo.foto_perfil_usuario).into(fotoPerfilImageView);
         if(usuario_espejo.sexo_usuario == 0)
         {
             masculinoRadioButton.setChecked(true);

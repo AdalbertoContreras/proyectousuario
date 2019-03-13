@@ -90,11 +90,10 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
     }
     public void ShowToolbar(String Tittle, boolean upButton)
     {
-        Toolbar toolbar =  (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Tittle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
-
     }
 
     @Override

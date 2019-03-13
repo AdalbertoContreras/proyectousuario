@@ -181,6 +181,7 @@ public class Chat_asesoriaFragment extends Fragment {
     private void iniciar_conexion_chat()
     {
         HashMap<String,String> params = new Gestion_chat_asesoria().consultar_chat_asesoria_por_usuario_administrador_y_especialidad(administrador.id_administrador, Gestion_usuario.getUsuario_online().id_usuario, ChatActivosFragment.tipoAsesoria);
+        Log.d("Parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -207,6 +208,7 @@ public class Chat_asesoriaFragment extends Fragment {
     private void consultar_mensajes()
     {
         HashMap<String,String> params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
+        Log.d("Parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
