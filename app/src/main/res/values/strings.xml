@@ -34,4 +34,7 @@
     <string name="Texto_alerta3">lo antes posible </string>
     <string name="title_activity_referencia">Referencia</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="text">“Te atenderán profesionales con
+total confidencialidad”</string>
 </resources>

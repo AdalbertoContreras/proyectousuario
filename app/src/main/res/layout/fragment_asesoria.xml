@@ -6,63 +6,128 @@
     android:layout_height="match_parent"
     tools:context=".fragment.AsesoriaFragment">
     <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/fondo2">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="5dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+
             android:weightSum="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:layout_weight="0.5"
-                android:orientation="horizontal">
+                android:paddingBottom="5dp"
+                >
 
-                <RelativeLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.25"
-                    android:padding="10dp">
+                    android:elevation="20dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginRight="5dp"
+                    >
 
-                    <ImageView
-                        android:id="@+id/salud_sexual_reproductiva_imageview_asesoria"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/tipo_one"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/Gris3"
+                            android:layout_weight="0.040">
 
-                        android:background="@drawable/opcionsaludsexual" />
-                </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/salud_sexual_reproductiva_imageview_asesoria"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/embaraz"
+                                />
 
-                <RelativeLayout
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/tipo_one"
+                            android:layout_weight="0.210">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="bottom"
+                                android:text="EMBARAZO"
+                                android:textColor="@color/White"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
-
-                    android:gravity="center"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:id="@+id/identidad_imageview_asesoria"
+                    android:elevation="20dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"
-                        android:layout_weight="0.25"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/tipo_one"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/Gris3"
+                            android:layout_weight="0.040">
 
-                        android:background="@drawable/opcionidentidad" />
-                </RelativeLayout>
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/maltrato"
+                                />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimaryDark"
+                            android:layout_weight="0.210">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="bottom"
+                                android:text="MALTRATO"
+                                android:textColor="@color/White"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
 
             </LinearLayout>
 
@@ -70,38 +135,130 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:orientation="horizontal">
-
-                <RelativeLayout
+                android:paddingTop="5dp"
+                >
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:layout_weight="0.25"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:id="@+id/nutricion_imageview_asesoria"
+                    android:elevation="20dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginRight="5dp"
+                    >
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/tipo_one"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/Gris3"
+                            android:layout_weight="0.040">
 
-                        android:background="@drawable/nutricion" />
-                </RelativeLayout>
+                            <ImageView
 
-                <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/sexualidad"
+                                />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorAccent"
+                            android:layout_weight="0.210">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="bottom"
+                                android:text="SEXUALIDAD"
+                                android:textColor="@color/White"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:layout_weight="0.25"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:id="@+id/embarazo_imageview_asesoria"
+                    android:elevation="20dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"
-                        android:layout_weight="0.25"
-                        android:background="@drawable/embarazo" />
-                </RelativeLayout>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/tipo_one"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/Gris3"
+                            android:layout_weight="0.040">
+
+                            <ImageView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/identidad"
+                                />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/Gris2"
+                            android:layout_weight="0.210">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="bottom"
+                                android:text="IDENTIDAD"
+                                android:textColor="@color/White"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/Gris3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/text"
+                    android:gravity="center"
+                    android:textSize="18dp"
+
+
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
