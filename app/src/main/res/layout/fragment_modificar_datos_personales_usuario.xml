@@ -11,26 +11,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="115dp"
-                android:orientation="vertical"
-                android:padding="40dp"
-                android:background="@color/Gris3"
-                tools:ignore="MissingConstraints">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                   android:text="MODIFICAR DATOS"
-                    android:gravity="center"/>
 
-            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -309,11 +297,11 @@
                 android:paddingBottom="20dp">
                 <Button
                     android:id="@+id/modificarUsuarioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="300dp"
+                    android:layout_height="65dp"
                     android:text="MODIFICAR DATOS PERSONALES"
-                    android:textColor="@color/Gris"
-                    android:theme="@style/Button" />
+                    android:theme="@style/Button"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
