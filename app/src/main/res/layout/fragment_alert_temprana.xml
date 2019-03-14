@@ -136,6 +136,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <RadioButton
                                 android:id="@+id/abusoRadioButton"
                                 android:layout_width="wrap_content"
@@ -143,28 +144,35 @@
                                 android:layout_weight="1"
                                 android:checked="true"
                                 android:text="Abuso"
-                                android:textColor="@color/Gris" />
+                                android:textColor="@color/Gris"
+                                android:textSize="12dp" />
+
                             <RadioButton
                                 android:id="@+id/maltratoRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Maltrato"
-                                android:textColor="@color/Gris" />
+                                android:textColor="@color/Gris"
+                                android:textSize="12dp" />
+
                             <RadioButton
                                 android:id="@+id/acosoRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Acoso"
-                                android:textColor="@color/Gris" />
+                                android:textColor="@color/Gris"
+                                android:textSize="12dp" />
+
                             <RadioButton
                                 android:id="@+id/violenciaRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Violencia"
-                                android:textColor="@color/Gris" />
+                                android:textColor="@color/Gris"
+                                android:textSize="12dp" />
                         </RadioGroup>
                     </LinearLayout>
                 </LinearLayout>
@@ -217,8 +225,7 @@
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:text="Descripcion:"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    />
+                                    android:textColor="@color/colorPrimaryDark" />
                                 <android.support.design.widget.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="240dp"
