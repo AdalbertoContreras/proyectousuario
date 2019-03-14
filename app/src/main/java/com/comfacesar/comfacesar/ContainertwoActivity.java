@@ -1,5 +1,6 @@
 package com.comfacesar.comfacesar;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.comfacesar.comfacesar.fragment.ModificarUsuarioFragment;
 public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener, ModificarDatosCuentaUsuarioFragment.OnFragmentInteractionListener {
 
     public static Bundle bundle;
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
         bundle = savedInstanceState;
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundResource(R.color.Gris3);
+
         setSupportActionBar(toolbar);
 
         int cadena = getIntent().getExtras().getInt("id");
