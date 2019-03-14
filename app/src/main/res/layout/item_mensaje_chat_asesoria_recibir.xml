@@ -14,14 +14,14 @@
         android:weightSum="1">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fotoPerfilImageView"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:src="@drawable/sede"
-            android:elevation="5dp"
-            android:layout_marginRight="10dp"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
             android:layout_weight="0.01"
-            />
+            android:elevation="5dp"
+            android:src="@drawable/sede" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
