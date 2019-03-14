@@ -282,6 +282,7 @@ public class ModificarUsuarioFragment extends Fragment {
                             Gestion_usuario.getUsuario_online().correo_usuario = usuario_espejo.correo_usuario;
                             Gestion_usuario.getUsuario_online().sexo_usuario = usuario_espejo.sexo_usuario;
                             Gestion_usuario.getUsuario_online().fecha_nacimiento = usuario_espejo.fecha_nacimiento;
+                            actualizar_perfil();
                             Toast.makeText(view_permanente.getContext(),"Datos personales actualizados", Toast.LENGTH_LONG).show();
                         }
                     }

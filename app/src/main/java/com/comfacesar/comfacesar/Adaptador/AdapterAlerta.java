@@ -101,6 +101,7 @@ public class AdapterAlerta extends  RecyclerView.Adapter<AdapterAlerta.ViewHolde
             }
             else
             {
+                asunto = asuntos.get(0);
                 nombreAsuntoTextView.setText(asuntos.get(0).nombre_asunto);
             }
         }

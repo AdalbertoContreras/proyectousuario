@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -31,6 +32,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     public static String texto_buscar = "";
     public static FragmentManager fragmentManager;
     private FloatingActionButton floatingActionButton;
+    private android.support.v7.widget.SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +145,32 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 i--;
             }
         }
+
+
         MenuItem searchItem = menu.findItem(R.id.action_buscar);
-        searchView = (EditText) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                {
+                    searchView.setIconified(true);
+                }
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                escuchadorCambioFiltro.filtroCambiado(s);
+                return false;
+            }
+        });
+        /*searchView = (EditText) searchItem.getActionView();
         searchView.setSingleLine(true);
         searchView.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -164,11 +190,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     searchView.setSelection(0, searchView.getText().toString().length());
                 }
             }
-        });
+        });*/
+
         this.menu = menu;
         return true;
     }
-    private EditText searchView;
+
     public interface escuchador{
         void filtroCambiado(String textoNuevo);
     }

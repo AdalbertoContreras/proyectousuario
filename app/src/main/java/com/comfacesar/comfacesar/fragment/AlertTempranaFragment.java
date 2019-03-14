@@ -11,12 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.Dialog.MensajeInicioSesionDialog;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
@@ -42,6 +44,10 @@ public class AlertTempranaFragment extends Fragment {
     private View view;
     private ArrayList<Asunto> asuntoArrayList;
     private Asunto asunto_selecionado;
+    private RadioButton abusoRadioButton;
+    private RadioButton maltratoRadioButton;
+    private RadioButton acosoRadioButton;
+    private RadioButton violenciaRadioButton;
     public AlertTempranaFragment() {
         // Required empty public constructor
     }
@@ -54,7 +60,10 @@ public class AlertTempranaFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_alert_temprana, container, false);
         descripcionTextView = view.findViewById(R.id.descripcionEditTextRegiostrarAlerta);
         enviar_alerta_tempranaButton = view.findViewById(R.id.enviarButtonRegistrarAlertatemprana);
-
+        abusoRadioButton = view.findViewById(R.id.abusoRadioButton);
+        acosoRadioButton = view.findViewById(R.id.acosoRadioButton);
+        violenciaRadioButton = view.findViewById(R.id.violenciaRadioButton);
+        maltratoRadioButton = view.findViewById(R.id.maltratoRadioButton);
         enviar_alerta_tempranaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +75,12 @@ public class AlertTempranaFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(view.getContext(),"Inicie sesion antes de realizar una alerta temprana", Toast.LENGTH_LONG).show();
+                    MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaUbstancia("Inicie sesionpara poder enviar una alerta.");
+                    try {
+                        detalleAsesorDialog.show(getActivity().getSupportFragmentManager(), "missiles");
+                    } catch (IllegalStateException ignored) {
+
+                    }
                 }
 
             }
@@ -84,36 +98,24 @@ public class AlertTempranaFragment extends Fragment {
         return view;
     }
 
-    private String[] asuntos_a_array_string()
-    {
-        String[] array = new String[asuntoArrayList.size() + 1];
-        array[0] = "Selecione un asunto";
-        int cont = 1;
-        for(Asunto item : asuntoArrayList)
-        {
-            array[cont] = item.nombre_asunto;
-            cont ++;
-        }
-        return array;
-    }
-    private String[] asuntos_a_array_string_vacio()
-    {
-        String[] array = new String[asuntoArrayList.size() + 1];
-        array[0] = "No hay asunto";
-        return array;
-    }
-
     private Alerta_temprana validar_alerta_temprana()
     {
         Alerta_temprana alerta_temprana = new Alerta_temprana();
-        if(asunto_selecionado == null)
+        if(acosoRadioButton.isChecked())
         {
-            Toast.makeText(view.getContext(), "Selecione el asunto de su alerta.", Toast.LENGTH_LONG).show();
-            return  null;
+            alerta_temprana.asunto_alerta_temprana = 1;
         }
-        else
+        if(maltratoRadioButton.isChecked())
         {
-            alerta_temprana.asunto_alerta_temprana = asunto_selecionado.id_asunto;
+            alerta_temprana.asunto_alerta_temprana = 2;
+        }
+        if(acosoRadioButton.isChecked())
+        {
+            alerta_temprana.asunto_alerta_temprana = 3;
+        }
+        if(violenciaRadioButton.isChecked())
+        {
+            alerta_temprana.asunto_alerta_temprana = 4;
         }
         if(descripcionTextView.getText().toString().isEmpty())
         {
@@ -157,5 +159,6 @@ public class AlertTempranaFragment extends Fragment {
     private void limpiar()
     {
         descripcionTextView.setText("");
+        abusoRadioButton.setChecked(true);
     }
 }

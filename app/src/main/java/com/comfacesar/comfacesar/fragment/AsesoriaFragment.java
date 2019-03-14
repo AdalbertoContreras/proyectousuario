@@ -13,8 +13,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.comfacesar.comfacesar.ContainertwoActivity;
+import com.comfacesar.comfacesar.Dialog.MensajeInicioSesionDialog;
 import com.comfacesar.comfacesar.R;
 import com.example.gestion.Gestion_usuario;
+import com.example.modelo.Administrador;
+import com.example.modelo.Mensaje_chat_asesoria;
+
+import java.util.ArrayList;
 
 
 /**
@@ -145,7 +150,12 @@ public class AsesoriaFragment extends Fragment {
 
     private void mensaje_usuario_no_conectado()
     {
-        Toast.makeText(getContext(), "Inicia sesion para entrar a las asesorias", Toast.LENGTH_SHORT).show();
+        MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaUbstancia("Inicie sesion para poder acceder al chat");
+        try {
+            detalleAsesorDialog.show(getActivity().getSupportFragmentManager(), "missiles");
+        } catch (IllegalStateException ignored) {
+
+        }
     }
 
     public void abrir_ventana_administradores()

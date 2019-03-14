@@ -161,7 +161,6 @@ public class HistorialAlertasFragment extends Fragment {
 
     private void consultar_alertas_tempranas()
     {
-        final Gestion_noticia gestion_noticia = new Gestion_noticia();
         //tomo los parametros del controlador
         if(Gestion_usuario.getUsuario_online() != null && !generando_consulta)
         {
@@ -176,11 +175,13 @@ public class HistorialAlertasFragment extends Fragment {
                 agregando_nuevas_alertas = true;
                 params = new Gestion_alerta_temprana().consultar_por_usuario_mayor(id_max, Gestion_usuario.getUsuario_online().id_usuario);
             }
+            Log.d("parametros", params.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
                 public void onResponse(String response) {
 
+                    Log.d("respuesta", response);
                     llenar_alertas_tempranas(response);
                 }
             };
