@@ -54,15 +54,16 @@ public class Chat_asesoriaFragment extends Fragment {
     private EditText mensajeEditText;
     private Button enviarButton;
     private ArrayList<Mensaje_chat_asesoria> mensaje_chat_asesorias;
-    private boolean fragment_activo = true;
+    private boolean fragment_activo;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Adapter_Mensajes_chat_asesoria adapter_mensajes_chat_asesoria;
     private OnFragmentInteractionListener mListener;
-    private int ultimo_id = 0;
+    private String ultima_fecha = "";
+    private String ultima_hora = "";
     private boolean consultando = false;
-    private boolean mensaje_enviado = false;
+    private boolean mensaje_enviado;
 
     public Chat_asesoriaFragment() {
         // Required empty public constructor
@@ -94,6 +95,14 @@ public class Chat_asesoriaFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        fragment_activo = true;
+        mensaje_enviado = false;
+        iniciar_conexion_chat();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -109,7 +118,7 @@ public class Chat_asesoriaFragment extends Fragment {
         mensaje_chat_asesorias = new ArrayList<>();
         recyclerView_chat_asesoria = view.findViewById(R.id.mensajes_chat_asesoria_recyclerview_chat_Assoria);
         recyclerView_chat_asesoria.setLayoutManager(new GridLayoutManager(view.getContext(),1));
-        iniciar_conexion_chat();
+
 
         mensajeEditText = view.findViewById(R.id.mensajeEdittextChatAsesoria);
         enviarButton = view.findViewById(R.id.enviarButton_chatAesoria);
@@ -232,11 +241,12 @@ public class Chat_asesoriaFragment extends Fragment {
         consultando = true;
         mensaje_chat_asesorias = new Gestion_mensaje_chat_asesoria().generar_json(response);
         //Collections.reverse(mensaje_chat_asesorias);
-        adapter_mensajes_chat_asesoria = new Adapter_Mensajes_chat_asesoria(mensaje_chat_asesorias);
+        adapter_mensajes_chat_asesoria = new Adapter_Mensajes_chat_asesoria(mensaje_chat_asesorias, chat_asesoria);
         if(!mensaje_chat_asesorias.isEmpty())
         {
             recyclerView_chat_asesoria.smoothScrollToPosition(mensaje_chat_asesorias.size() - 1);
-            ultimo_id = mensaje_chat_asesorias.get(mensaje_chat_asesorias.size() - 1).id_mensaje_chat_asesoria;
+            ultima_fecha = mensaje_chat_asesorias.get(mensaje_chat_asesorias.size() - 1).fecha_envio_mensaje_chat_asesoria;
+            ultima_hora = mensaje_chat_asesorias.get(mensaje_chat_asesorias.size() - 1).hora_envio_mensaje_asesoria;
         }
         recyclerView_chat_asesoria.setAdapter(adapter_mensajes_chat_asesoria);
         recyclerView_chat_asesoria.setHasFixedSize(true);
@@ -249,7 +259,7 @@ public class Chat_asesoriaFragment extends Fragment {
         HashMap<String,String> params;
         if(!mensaje_chat_asesorias.isEmpty())
         {
-            params = new Gestion_mensaje_chat_asesoria().mensaje_chat_asesoria_por_chat_mayor(ultimo_id, chat_asesoria.id_chat_asesoria);
+            params = new Gestion_mensaje_chat_asesoria().mensaje_chat_asesoria_por_chat_mayor(ultima_fecha, ultima_hora, chat_asesoria.id_chat_asesoria);
         }
         else
         {
@@ -278,7 +288,8 @@ public class Chat_asesoriaFragment extends Fragment {
         ArrayList<Mensaje_chat_asesoria> mensaje_chat_asesorias_aux = new Gestion_mensaje_chat_asesoria().generar_json(response);
         if(!mensaje_chat_asesorias_aux.isEmpty())
         {
-            ultimo_id = mensaje_chat_asesorias_aux.get(mensaje_chat_asesorias_aux.size() - 1).id_mensaje_chat_asesoria;
+            ultima_fecha = mensaje_chat_asesorias_aux.get(mensaje_chat_asesorias_aux.size() - 1).fecha_envio_mensaje_chat_asesoria;
+            ultima_hora = mensaje_chat_asesorias_aux.get(mensaje_chat_asesorias_aux.size() - 1).hora_envio_mensaje_asesoria;
             mensaje_chat_asesorias.addAll(mensaje_chat_asesorias_aux);
             adapter_mensajes_chat_asesoria.notifyItemInserted(mensaje_chat_asesorias.size() - 1 );
             if(mensaje_enviado)

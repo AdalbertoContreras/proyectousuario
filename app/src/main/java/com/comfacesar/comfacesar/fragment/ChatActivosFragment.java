@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,7 @@ public class ChatActivosFragment extends Fragment {
     {
         //tomo los parametros del controlador
         HashMap<String,String> params = new Gestion_administrador().consultar_administradores_por_especialidad(tipoAsesoria);
+        Log.d("parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override

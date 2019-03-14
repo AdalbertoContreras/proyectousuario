@@ -100,6 +100,14 @@ public class Gestion_chat_asesoria {
                 estado_cerrado = jsonObject.get(ESTADO_CERRADO).getAsInt();
                 tiempo_sesion_chat_asesoria = jsonObject.get(TIEMPO_SESION_CHAT_ASESORIA).getAsString();
                 especializacion_chat_asesoria = jsonObject.get(ESPECIALIZACION_CHAT_ASESORIA).getAsInt();
+                if(!jsonObject.get("usuario").isJsonNull())
+                {
+                    usuario = jsonObject.get("usuario").getAsString();
+                }
+                if(!jsonObject.get("administrador").isJsonNull())
+                {
+                    administrador = jsonObject.get("administrador").getAsString();
+                }
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }

@@ -48,9 +48,10 @@ public class Gestion_mensaje_chat_asesoria {
         return construir_parametros(aux);
     }
 
-    public HashMap<String, String> mensaje_chat_asesoria_por_chat_mayor(int id,int id_chat)
+    public HashMap<String, String> mensaje_chat_asesoria_por_chat_mayor(String fecha, String hora,int id_chat)
     {
-        aux.id_mensaje_chat_asesoria = id;
+        aux.fecha_envio_mensaje_chat_asesoria = fecha;
+        aux.hora_envio_mensaje_asesoria = hora;
         aux.chat_mensaje_chat_asesoria = id_chat;
         tipo_consulta = "mensaje_chat_asesoria_por_chat_mayor";
         return construir_parametros(aux);

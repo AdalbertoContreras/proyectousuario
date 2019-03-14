@@ -58,6 +58,7 @@ public class Gestion_administrador{
                 estado_administrador = jsonObject.get("estado_administrador").getAsInt();
                 fecha_registro_administrador = jsonObject.get("fecha_registro_administrador").getAsString();
                 hora_registro_administrador= jsonObject.get("hora_registro_administrador").getAsString();
+                url_foto_perfil_administrador= jsonObject.get("url_foto_perfil_administrador").getAsString();
                 numero_asesorias_dadas_administrador = jsonObject.get("numero_asesorias_dadas_administrador").getAsInt();
                 numero_asesorias_dadas_primera_infancia_administrador = jsonObject.get("numero_asesorias_dadas_primera_infancia_administrador").getAsInt();
                 numero_asesorias_dadas_infancia_administrador = jsonObject.get("numero_asesorias_dadas_infancia_administrador").getAsInt();
