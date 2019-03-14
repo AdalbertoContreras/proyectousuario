@@ -15,7 +15,6 @@
         android:paddingRight="@dimen/paddin_left"
         android:paddingTop="5dp"
         android:paddingBottom="2dp"
-
         >
 
         <ScrollView
@@ -138,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <RadioButton
-                                android:id="@+id/masculinoUsuarioRadioButton"
+                                android:id="@+id/abusoRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -146,19 +145,21 @@
                                 android:text="Abuso"
                                 android:textColor="@color/Gris" />
                             <RadioButton
-                                android:id="@+id/femeninoUsuarioRadioButton"
+                                android:id="@+id/maltratoRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Maltrato"
                                 android:textColor="@color/Gris" />
                             <RadioButton
+                                android:id="@+id/acosoRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Acoso"
                                 android:textColor="@color/Gris" />
                             <RadioButton
+                                android:id="@+id/violenciaRadioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

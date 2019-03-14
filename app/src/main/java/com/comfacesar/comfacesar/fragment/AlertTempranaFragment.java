@@ -39,7 +39,6 @@ import java.util.HashMap;
 public class AlertTempranaFragment extends Fragment {
     private EditText nombreTextView, apellidoTextView, direccionTextView, telefonoTextView, descripcionTextView;
     private Button enviar_alerta_tempranaButton;
-    private Spinner asuntoSpinner;
     private View view;
     private ArrayList<Asunto> asuntoArrayList;
     private Asunto asunto_selecionado;
@@ -55,8 +54,7 @@ public class AlertTempranaFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_alert_temprana, container, false);
         descripcionTextView = view.findViewById(R.id.descripcionEditTextRegiostrarAlerta);
         enviar_alerta_tempranaButton = view.findViewById(R.id.enviarButtonRegistrarAlertatemprana);
-        asuntoSpinner = view.findViewById(R.id.asuntoSpinnerRegistrarAlertaTemprana);
-        consultar_asuntos();
+
         enviar_alerta_tempranaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,72 +76,12 @@ public class AlertTempranaFragment extends Fragment {
             }
             }
         });
-        asuntoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position > 0)
-                {
-                    asunto_selecionado = asuntoArrayList.get(position -1);
-                }
-                else
-                {
-                    asunto_selecionado = null;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         descripcionTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
             }
         });
         return view;
-    }
-
-    private void consultar_asuntos()
-    {
-        asuntoArrayList = new ArrayList<>();
-        Gestion_asunto gestion_asunto = new Gestion_asunto();
-        HashMap<String, String> hashMap = gestion_asunto.consultar_asuntos();
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response)
-            {
-                llenar_y_cargar_asuntos(response);
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "asuntos  no cargados de " + WebService.getUrl(), Toast.LENGTH_SHORT).show();
-                Log.d("Reponse.Error",error.toString());
-                //Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-    }
-
-    private void llenar_y_cargar_asuntos(String json_asuntos)
-    {
-        asuntoArrayList = new Gestion_asunto().generar_json(json_asuntos);
-        String[] asuntosArray;
-        if(!asuntoArrayList.isEmpty())
-        {
-            asuntosArray = asuntos_a_array_string();
-        }
-        else
-        {
-            asuntosArray= asuntos_a_array_string_vacio();
-
-        }
-        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item, asuntosArray);
-        asuntoSpinner.setAdapter(arrayAdapter);
     }
 
     private String[] asuntos_a_array_string()
@@ -218,7 +156,6 @@ public class AlertTempranaFragment extends Fragment {
 
     private void limpiar()
     {
-        asuntoSpinner.setSelection(0);
         descripcionTextView.setText("");
     }
 }

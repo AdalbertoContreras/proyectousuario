@@ -2,9 +2,13 @@ package com.comfacesar.comfacesar.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +30,14 @@ import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class RegistrarUsuarioFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -83,6 +94,16 @@ public class RegistrarUsuarioFragment extends Fragment {
     private EditText direccionEditText;
     private Button registrar_usuario;
     private EditText fecha_nacimientoEditText;
+    private Button tomarFotoButton;
+    private Button subirFotoButton;
+    private Button eliminarFotoButton;
+    private Uri imageUri;
+    private int PICK_IMAGE = 100;
+    private int REQUEST_IMAGE_CAPTURE = 1;
+    private Bitmap bitmap;
+    private boolean imagen_modificada;
+    private boolean imagen_eliminada = true;
+    private CircleImageView fotoPerfilCircleImageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,6 +120,30 @@ public class RegistrarUsuarioFragment extends Fragment {
         direccionEditText = view_permanente.findViewById(R.id.direccionEditText);
         telefonoEditText = view_permanente.findViewById(R.id.telefonoEditText);
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadEditText);
+        tomarFotoButton = view_permanente.findViewById(R.id.tomarFotoButton);
+        subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
+        eliminarFotoButton = view_permanente.findViewById(R.id.eliminar_imagenButton);
+        fotoPerfilCircleImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
+        subirFotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
+        tomarFotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tomarFoto();
+            }
+        });
+        eliminarFotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagen_eliminada = true;
+                bitmap = null;
+                fotoPerfilCircleImageView.setImageBitmap(null);
+            }
+        });
         fecha_nacimientoEditText.setFocusable(false);
         fecha_nacimientoEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +197,11 @@ public class RegistrarUsuarioFragment extends Fragment {
                     Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de la cuenta", Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                if(fecha_nacimientoEditText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Usuario usuario = new Usuario();
                 usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
                 usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
@@ -167,6 +216,14 @@ public class RegistrarUsuarioFragment extends Fragment {
                 else
                 {
                     usuario.sexo_usuario = 1;
+                }
+                if(imagen_eliminada)
+                {
+                    usuario.foto_perfil_usuario = "-1";
+                }
+                else
+                {
+                    usuario.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
                 }
                 usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
                 usuario.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
@@ -204,6 +261,50 @@ public class RegistrarUsuarioFragment extends Fragment {
             }
         });
         return view_permanente;
+    }
+
+    private void openGallery(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    public void tomarFoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK && requestCode == PICK_IMAGE)
+        {
+            imageUri = data.getData();
+            fotoPerfilCircleImageView.setImageURI(imageUri);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(view_permanente.getContext().getContentResolver(), imageUri);
+                imagen_modificada = true;
+                imagen_eliminada = false;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            bitmap = (Bitmap) extras.get("data");
+            fotoPerfilCircleImageView.setImageBitmap(bitmap);
+            imagen_modificada = true;
+            imagen_eliminada = false;
+        }
+    }
+
+    private String bitmap_conver_to_String(Bitmap bitmap)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, stream);
+        byte[] bytes = stream.toByteArray();
+        String s = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return s;
     }
 
     private void showDatePickerDialog()
