@@ -94,6 +94,7 @@ public class InicioSesionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog = new ProgressDialog(view_permanente.getContext());
+                dialog.setMessage("Conectandose a SERVIAMIGO");
                 dialog.show();
                 dialog.setCancelable(false);
             if(Config.getImei() != null)
@@ -157,6 +158,7 @@ public class InicioSesionFragment extends Fragment {
             }
             else
             {
+                dialog.dismiss();
                 Toast.makeText(view_permanente.getContext(), "Acepte los permisos para poder iniciar sesion en este dispositivo", Toast.LENGTH_LONG).show();
             }
             }
@@ -189,7 +191,7 @@ public class InicioSesionFragment extends Fragment {
                     usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
                     Gestion_usuario.setUsuario_online(usuarios.get(0));
                     dialog.dismiss();
-                    Toast.makeText(view_permanente.getContext(), "Logueado",
+                    Toast.makeText(view_permanente.getContext(), "Cocnetado a SERVIAMIGO",
                             Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getActivity(), ContainerActivity.class);
                     startActivity(intent);

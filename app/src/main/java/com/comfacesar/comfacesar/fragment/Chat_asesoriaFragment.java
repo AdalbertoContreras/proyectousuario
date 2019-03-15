@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Adaptador.Adapter_Mensajes_chat_asesoria;
+import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
@@ -115,10 +116,11 @@ public class Chat_asesoriaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_chat_asesoria, container, false);
+
         mensaje_chat_asesorias = new ArrayList<>();
         recyclerView_chat_asesoria = view.findViewById(R.id.mensajes_chat_asesoria_recyclerview_chat_Assoria);
         recyclerView_chat_asesoria.setLayoutManager(new GridLayoutManager(view.getContext(),1));
-
+        ((ContainertwoActivity) getActivity()).getSupportActionBar().setTitle(administrador.nombre_cuenta_administrador);
 
         mensajeEditText = view.findViewById(R.id.mensajeEdittextChatAsesoria);
         enviarButton = view.findViewById(R.id.enviarButton_chatAesoria);
