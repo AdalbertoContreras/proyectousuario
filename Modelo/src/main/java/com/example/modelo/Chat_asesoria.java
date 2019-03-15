@@ -11,6 +11,10 @@ public class Chat_asesoria {
     public int estado_cerrado;
     public String tiempo_sesion_chat_asesoria;
     public int especializacion_chat_asesoria;
+    public String ultima_fecha_chat_asesoria;
+    public String ultimo_mensaje;
     public String usuario;
     public String administrador;
+    public String ultima_hora_chat_asesoria;
+    public String especialidad;
 }

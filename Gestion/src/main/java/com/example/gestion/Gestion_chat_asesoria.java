@@ -48,6 +48,13 @@ public class Gestion_chat_asesoria {
     }
 
 
+    public HashMap<String, String> consultar_por_usuario( int usuario)
+    {
+        aux.usuario_chat_asesoria = usuario;
+        tipo_consulta = "consultar_por_usuario";
+        return construir_parametros(aux);
+    }
+
     public HashMap<String, String> chat_asesoria_por_id(int id_chat)
     {
         aux.id_chat_asesoria = id_chat;
@@ -100,6 +107,18 @@ public class Gestion_chat_asesoria {
                 estado_cerrado = jsonObject.get(ESTADO_CERRADO).getAsInt();
                 tiempo_sesion_chat_asesoria = jsonObject.get(TIEMPO_SESION_CHAT_ASESORIA).getAsString();
                 especializacion_chat_asesoria = jsonObject.get(ESPECIALIZACION_CHAT_ASESORIA).getAsInt();
+                if(!jsonObject.get(ULTIMO_MENSAJE).isJsonNull())
+                {
+                    ultimo_mensaje = jsonObject.get(ULTIMO_MENSAJE).getAsString();
+                }
+                if(!jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_fecha_chat_asesoria = jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).getAsString();
+                }
+                if(!jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_hora_chat_asesoria = jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).getAsString();
+                }
                 if(!jsonObject.get("usuario").isJsonNull())
                 {
                     usuario = jsonObject.get("usuario").getAsString();
@@ -107,6 +126,10 @@ public class Gestion_chat_asesoria {
                 if(!jsonObject.get("administrador").isJsonNull())
                 {
                     administrador = jsonObject.get("administrador").getAsString();
+                }
+                if(!jsonObject.get("especialidad").isJsonNull())
+                {
+                    especialidad = jsonObject.get("especialidad").getAsString();
                 }
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
