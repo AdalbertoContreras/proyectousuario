@@ -45,54 +45,78 @@
                     android:textSize="20dp"
                     android:layout_marginVertical="20dp"/>
 
-                <LinearLayout
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
-                    <android.support.design.widget.TextInputLayout
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/nombreCuentaUsuarioEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp">
+                        android:enabled="false"
+                        android:hint="nombre cuenta:"
+                        android:textSize="14sp" />
+                </android.support.design.widget.TextInputLayout>
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/nombreCuentaUsuarioEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:hint="nombre cuenta:"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
-
-                </LinearLayout>
-                <LinearLayout
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
-
-
-                    <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    >
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/contraseñaCuentaAnteriorUsuarioEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp"
-                        >
+                        android:hint="contraseña de la cuenta :"
+                        android:inputType="textPassword"
+                        android:textSize="14sp" />
+                </android.support.design.widget.TextInputLayout>
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/contraseñaCuentaUsuarioEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="contraseña:"
-                            android:inputType="textPassword"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
 
-                </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    >
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/contraseñaCuentaUsuarioEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="contraseña nueva :"
+                        android:inputType="textPassword"
+                        android:textSize="14sp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    >
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/contraseñaCuentaVerificadaUsuarioEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="contraseña nueva :"
+                        android:inputType="textPassword"
+                        android:textSize="14sp" />
+                </android.support.design.widget.TextInputLayout>
 
 
             </LinearLayout>

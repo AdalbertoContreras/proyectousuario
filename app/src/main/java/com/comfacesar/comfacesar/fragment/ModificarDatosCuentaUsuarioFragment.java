@@ -79,8 +79,11 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
     private static View view_permanente;
     private EditText nombreCuentaEditText;
     private EditText contraseñaCuentaEditText;
+    private EditText contraseñaCuentaAnteriorEditText;
+    private EditText contraseñaCuentaVerificadaEditText;
     private Button modificar_usuario;
     private Usuario usuario_espejo;
+    private String contraseña_anterior;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,8 +92,12 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         view_permanente = inflater.inflate(R.layout.fragment_modificar_datos_cuenta_usuario, container, false);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaUsuarioEditText);
         contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaUsuarioEditText);
+        contraseñaCuentaAnteriorEditText = view_permanente.findViewById(R.id.contraseñaCuentaAnteriorUsuarioEditText);
+        contraseñaCuentaVerificadaEditText = view_permanente.findViewById(R.id.contraseñaCuentaVerificadaUsuarioEditText);
         modificar_usuario = view_permanente.findViewById(R.id.modificarUsuarioButton);
-        usuario_espejo = Gestion_usuario.getUsuario_online();
+        usuario_espejo = new Usuario();
+        usuario_espejo.id_usuario = Gestion_usuario.getUsuario_online().id_usuario;
+        nombreCuentaEditText.setText(Gestion_usuario.getUsuario_online().nombres_usuario);
         evento_modificar_usuario();
         cargar_datos_usuario();
         return view_permanente;
@@ -101,50 +108,119 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         modificar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(Config.getImei() == null)
-            {
-                Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos de su cuenta.", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if(contraseñaCuentaEditText.getText().toString().isEmpty())
-            {
-                Toast.makeText(view_permanente.getContext(), "Ingrese la nueva contraseña de su cuenta", Toast.LENGTH_LONG).show();
-                return;
-            }
-            usuario_espejo.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
-            HashMap<String, String> hashMap = new Gestion_usuario().actualizar_contrasena_usuario(usuario_espejo);
-            Response.Listener<String> stringListener = new Response.Listener<String>()
-            {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("Response : ", response);
-                    int val = 0;
-                    try
-                    {
-                        val = Integer.parseInt(response);
-                        if(val > 0)
-                        {
-                            Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
-                            //registrar_movil_registro(val);
-                            Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    catch (NumberFormatException exc)
-                    {
-                        Toast.makeText(view_permanente.getContext(),"Error al actualizar datos de la cuenta", Toast.LENGTH_LONG).show();
-                    }
+                if(Config.getImei() == null)
+                {
+                    Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos de su cuenta.", Toast.LENGTH_LONG).show();
+                    return;
                 }
-            };
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+                if(contraseñaCuentaAnteriorEditText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de esta cuenta.", Toast.LENGTH_LONG).show();
+                    return;
                 }
-            };
-            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+                validar_cuenta();
             }
         });
+    }
+
+    private void validar_cuenta()
+    {
+        contraseña_anterior = Gestion_usuario.getUsuario_online().contrasena_usuario;
+        Usuario usuario_con_contraseña_validad = Gestion_usuario.getUsuario_online();
+        usuario_con_contraseña_validad.contrasena_usuario = contraseñaCuentaAnteriorEditText.getText().toString();
+        Gestion_usuario.setUsuario_online(usuario_con_contraseña_validad);
+        HashMap<String, String> hashMap = new Gestion_usuario().validar_usuario(usuario_con_contraseña_validad);
+        Log.d("parametros", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response : ", response);
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        if(contraseñaCuentaEditText.getText().toString().isEmpty())
+                        {
+                            Toast.makeText(view_permanente.getContext(), "Ingrese la nueva contraseña de su cuenta.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(contraseñaCuentaVerificadaEditText.getText().toString().isEmpty())
+                        {
+                            Toast.makeText(view_permanente.getContext(), "Ingrese de nuevo la nueva contraseña.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(!contraseñaCuentaEditText.getText().toString().equals(contraseñaCuentaVerificadaEditText.getText().toString()))
+                        {
+                            Toast.makeText(view_permanente.getContext(), "Las contraseñas ingresadas no coinciden.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        else
+                        {
+                            actualizar_contraseña();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(view_permanente.getContext(), "No cuenta con acceso a cambiar la contraseña de esta cuenta", Toast.LENGTH_LONG).show();
+                        Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
+                    }
+                }
+                catch (NumberFormatException exc)
+                {
+                    Toast.makeText(view_permanente.getContext(), "No cuenta con acceso a cambiar la contraseña de esta cuenta", Toast.LENGTH_LONG).show();
+                    Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+                Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    public void actualizar_contraseña()
+    {
+        usuario_espejo.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
+        Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
+        HashMap<String, String> hashMap = new Gestion_usuario().actualizar_contrasena_usuario(usuario_espejo);
+        Log.d("parametros", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response : ", response);
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
+                        Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (NumberFormatException exc)
+                {
+                    Toast.makeText(view_permanente.getContext(),"Error al actualizar datos de la cuenta", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     private void cargar_datos_usuario()
