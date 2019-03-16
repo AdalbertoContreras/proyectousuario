@@ -48,14 +48,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         viewPager.setAdapter(myPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                intent.putExtra("id",10);
-                startActivity(intent);
-            }
-        });
+
+
         tabLayout.setupWithViewPager(viewPager);
         if(menu != null)
         {
@@ -71,6 +65,22 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         if(menu != null)
         {
             onCreateOptionsMenu(menu);
+        }
+        if(Gestion_usuario.getUsuario_online() == null)
+        {
+            floatingActionButton.hide();
+        }
+        else
+        {
+            floatingActionButton.show();
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                    intent.putExtra("id",11);
+                    startActivity(intent);
+                }
+            });
         }
     }
 

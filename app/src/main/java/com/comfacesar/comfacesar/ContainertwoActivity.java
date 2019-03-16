@@ -76,7 +76,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 ShowToolbar("Cambiar contraseña",true);
                 break;
             case "10":
-                mifragment= new HistorialAsesoriasFragment();
+                mifragment= new ChatActivosFragment();
                 ChatActivosFragment.fragmentManager = getSupportFragmentManager();
                 ShowToolbar("Asesores",true);
                 break;

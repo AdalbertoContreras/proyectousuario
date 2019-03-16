@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.comfacesar.comfacesar.fragment.Chat_asesoriaFragment;
 import com.example.gestion.Gestion_administrador;
 import com.example.gestion.Gestion_especialidad;
@@ -20,6 +21,8 @@ import com.example.modelo.Especialidad;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter_historia_chat_asesoria.ViewHolderDatos> {
     private ArrayList<Chat_asesoria> chat_asesorias;
@@ -33,7 +36,7 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
     @Override
     public Adapter_historia_chat_asesoria.ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             view = LayoutInflater.from(viewGroup.getContext())
-            .inflate(R.layout.item_administrador, null, false);
+            .inflate(R.layout.item_historial_chat_asesoria, null, false);
             return new Adapter_historia_chat_asesoria.ViewHolderDatos(view);
             }
 
@@ -56,7 +59,7 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
         private TextView ultimo_mensajeTextView;
         private TextView tipo_asesoriaTextView;
         private TextView fecha_ultimo_mensajeTextView;
-        private ImageView foto_perfil_asesorImageView;
+        private CircleImageView foto_perfil_asesorImageView;
         public ViewHolderDatos(@NonNull final View itemView) {
             super(itemView);
             this.view = itemView;
@@ -68,8 +71,8 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
         }
 
         public void setDatos(final Chat_asesoria chat_asesoria, final FragmentManager fragmentManager) {
-            ArrayList<Administrador> administradores = new Gestion_administrador().generar_json(chat_asesoria.administrador);
-            ArrayList<Especialidad> especialidades = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
+            final ArrayList<Administrador> administradores = new Gestion_administrador().generar_json(chat_asesoria.administrador);
+            final ArrayList<Especialidad> especialidades = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
             if(!administradores.isEmpty())
             {
                 nombre_asesorTextView.setText(administradores.get(0).nombre_cuenta_administrador);
@@ -81,6 +84,22 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
             }
             ultimo_mensajeTextView.setText(chat_asesoria.ultimo_mensaje);
             fecha_ultimo_mensajeTextView.setText(chat_asesoria.ultima_fecha_chat_asesoria + " " + chat_asesoria.ultima_hora_chat_asesoria);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(administradores.isEmpty())
+                    {
+
+                    }
+                    else
+                    {
+                        Fragment fragment = new Chat_asesoriaFragment();
+                        Chat_asesoriaFragment.administrador = administradores.get(0);
+                        ChatActivosFragment.tipoAsesoria = especialidades.get(0).id_especialidad;
+                        fragmentManager.beginTransaction().replace(R.id.container2,fragment).commit();
+                    }
+                }
+            });
         }
     }
 }
