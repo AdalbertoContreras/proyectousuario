@@ -69,7 +69,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Usuario:"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:singleLine="true"/>
                         </android.support.design.widget.TextInputLayout>
                     </android.support.v7.widget.CardView>
 
@@ -100,7 +101,8 @@
                                 android:layout_height="wrap_content"
                                 android:hint="Contraseña:"
                                 android:inputType="textPassword"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:singleLine="true"/>
                         </android.support.design.widget.TextInputLayout>
                     </android.support.v7.widget.CardView>
 
