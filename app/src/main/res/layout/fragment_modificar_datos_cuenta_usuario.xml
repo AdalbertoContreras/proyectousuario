@@ -25,7 +25,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="REGISTRO DE USUARIO"
+                    android:text="MODIFICAR CONTRASEÑA"
                     android:gravity="center"/>
             </RelativeLayout>
 
@@ -136,7 +136,7 @@
                     android:id="@+id/modificarUsuarioButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="MODIFICAR CUENTA"
+                    android:text="CAMBIAR CONTRASEÑA"
                     android:textColor="@color/Gris"
                     android:theme="@style/Button" />
 

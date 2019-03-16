@@ -11,7 +11,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:orientation="vertical"
+                android:padding="40dp"
+                android:background="@color/Gris3"
+                tools:ignore="MissingConstraints">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="MODIFICAR DATOS PERSONALES"
+                    android:gravity="center"/>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -299,7 +312,7 @@
                     android:id="@+id/modificarUsuarioButton"
                     android:layout_width="300dp"
                     android:layout_height="65dp"
-                    android:text="MODIFICAR DATOS PERSONALES"
+                    android:text="CAMBIAR DATOS PERSONALES"
                     android:theme="@style/Button"
                     android:layout_gravity="center"/>
             </LinearLayout>
