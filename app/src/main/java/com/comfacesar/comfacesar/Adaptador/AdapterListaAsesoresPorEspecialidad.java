@@ -12,8 +12,12 @@ import android.widget.TextView;
 import com.comfacesar.comfacesar.Activities.ChatAsesoria;
 import com.comfacesar.comfacesar.R;
 import com.example.modelo.Administrador;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AdapterListaAsesoresPorEspecialidad extends  RecyclerView.Adapter<AdapterListaAsesoresPorEspecialidad.ViewHolderDatos> {
     private ArrayList<Administrador> administradores;
     private FragmentManager fragmentManager;
@@ -46,14 +50,17 @@ public class AdapterListaAsesoresPorEspecialidad extends  RecyclerView.Adapter<A
     public static class ViewHolderDatos extends RecyclerView.ViewHolder {
         private View view;
         private TextView nombre_administrador_TextView;
+        private CircleImageView fotoPerfilCircleImageView;
         public ViewHolderDatos(@NonNull final View itemView) {
             super(itemView);
             this.view = itemView;
             nombre_administrador_TextView = view.findViewById(R.id.nombre_administradortextView_item_administrador);
+            fotoPerfilCircleImageView = view.findViewById(R.id.foto_pefilImageView);
         }
 
         public void setDatos(final Administrador administrador, final FragmentManager fragmentManager) {
-            nombre_administrador_TextView.setText(administrador.nombres_administrador + " " + administrador.apellidos_administrador);
+            nombre_administrador_TextView.setText(administrador.nombre_cuenta_administrador);
+            Picasso.with(view.getContext()).load(administrador.url_foto_perfil_administrador).into(fotoPerfilCircleImageView);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
