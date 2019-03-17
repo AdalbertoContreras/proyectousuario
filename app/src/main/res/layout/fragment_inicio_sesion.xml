@@ -119,7 +119,7 @@
                     android:id="@+id/iniciarSesionButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="INICIAR DE SESION"
+                    android:text="INICIAR SESION"
                     android:theme="@style/Button"/>
                 <TextView
                     android:id="@+id/registrarmeTextView"

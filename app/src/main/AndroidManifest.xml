@@ -24,6 +24,7 @@
         <activity android:name=".Activities.ChatAsesoria"></activity>
         <activity
             android:name=".ContainertwoActivity"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".ContainerActivity"
             android:screenOrientation="portrait">
             <meta-data
