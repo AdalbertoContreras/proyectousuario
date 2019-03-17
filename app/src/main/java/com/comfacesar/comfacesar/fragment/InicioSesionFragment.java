@@ -13,11 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.ContainerActivity;
+import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
@@ -84,6 +86,7 @@ public class InicioSesionFragment extends Fragment {
     private EditText nombreCuentaEditText;
     private EditText contraseñaEditText;
     private Button iniciarSesionButton;
+    private TextView registrarmeTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,12 +95,21 @@ public class InicioSesionFragment extends Fragment {
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
+        registrarmeTextView = view_permanente.findViewById(R.id.registrarmeTextView);
         /**/
         iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 iniciar_sesion();
+            }
+        });
+        registrarmeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ContainertwoActivity.class);
+                intent.putExtra("id",4);
+                startActivity(intent);
             }
         });
         return view_permanente;
