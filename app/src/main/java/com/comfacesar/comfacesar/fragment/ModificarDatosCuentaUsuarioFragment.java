@@ -97,7 +97,6 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         modificar_usuario = view_permanente.findViewById(R.id.modificarUsuarioButton);
         usuario_espejo = new Usuario();
         usuario_espejo.id_usuario = Gestion_usuario.getUsuario_online().id_usuario;
-        nombreCuentaEditText.setText(Gestion_usuario.getUsuario_online().nombres_usuario);
         evento_modificar_usuario();
         cargar_datos_usuario();
         return view_permanente;
@@ -225,7 +224,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
 
     private void cargar_datos_usuario()
     {
-        nombreCuentaEditText.setText(usuario_espejo.nombre_cuenta_usuario);
+        nombreCuentaEditText.setText(Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
         contraseñaCuentaEditText.setText("");
     }
 

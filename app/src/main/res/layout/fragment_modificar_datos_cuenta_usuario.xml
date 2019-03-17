@@ -14,36 +14,12 @@
             android:orientation="vertical"
             >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="115dp"
-                android:orientation="vertical"
-                android:padding="40dp"
-                android:background="@color/Gris3"
-                tools:ignore="MissingConstraints">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="MODIFICAR CONTRASEÑA"
-                    android:gravity="center"/>
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Datos de la cuenta"
-                    android:textAllCaps="true"
-                    android:textSize="20dp"
-                    android:layout_marginVertical="20dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
