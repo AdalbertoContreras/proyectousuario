@@ -56,7 +56,7 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter{
             case 0:
                 return "HOME";
             case 1:
-                return "ASESORIAS";
+                return "ASESOR";
             case 2:
                 return "ALERTA";
             case 3:

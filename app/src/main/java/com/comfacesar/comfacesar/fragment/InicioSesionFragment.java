@@ -1,5 +1,6 @@
 package com.comfacesar.comfacesar.fragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,6 +25,8 @@ import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +51,7 @@ public class InicioSesionFragment extends Fragment {
     private String mParam2;
     private ProgressDialog dialog;
     private OnFragmentInteractionListener mListener;
+    public Activity actividad;
 
     public InicioSesionFragment() {
         // Required empty public constructor
@@ -73,6 +78,8 @@ public class InicioSesionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -82,11 +89,13 @@ public class InicioSesionFragment extends Fragment {
     private EditText nombreCuentaEditText;
     private EditText contraseñaEditText;
     private Button iniciarSesionButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
@@ -161,8 +170,15 @@ public class InicioSesionFragment extends Fragment {
             }
             }
         });
+
+
         return view_permanente;
+
+
     }
+
+
+
 
 
 
@@ -247,4 +263,6 @@ public class InicioSesionFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

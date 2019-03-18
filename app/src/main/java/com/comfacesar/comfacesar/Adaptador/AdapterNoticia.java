@@ -1,12 +1,21 @@
 package com.comfacesar.comfacesar.Adaptador;
 
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.transition.AutoTransition;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +31,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.ClaseAbstracta.ViewHolder;
+import com.comfacesar.comfacesar.ContainerActivity;
+import com.comfacesar.comfacesar.ContainertwoActivity;
+import com.comfacesar.comfacesar.Detalle_Articulo_Activity;
 import com.comfacesar.comfacesar.Interface.ListItem;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
@@ -42,12 +54,16 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
 
 
     private List<ItemNoticia> mItems;
-    private View view;
+    public View view;
     private  FragmentManager fragmentManager;
+    private Activity actividad;
 
-    public AdapterNoticia(List<ItemNoticia> items, FragmentManager fragmentManager) {
+
+    public AdapterNoticia(Activity _actividad,List<ItemNoticia> items, FragmentManager fragmentManager) {
         this.mItems = items;
         this.fragmentManager = fragmentManager;
+        this.actividad= _actividad;
+
     }
 
     ///////////////////////////////////////////
@@ -82,9 +98,28 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
 
     //////////////////////////////////////////
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         ItemNoticia item = mItems.get(i);
         viewHolder.setDatos(item, fragmentManager);
+
+        viewHolder.imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(actividad,Detalle_Articulo_Activity.class);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                {
+
+                   Explode explode= new Explode();
+                    explode.setDuration(1000);
+                    actividad.getWindow().setExitTransition(new AutoTransition());
+                    actividad.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(actividad).toBundle());
+
+                }
+                else{
+                actividad.startActivity(intent);
+            }}
+        });
+
     }
     /////////////////////
     @Override

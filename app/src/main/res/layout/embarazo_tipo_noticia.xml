@@ -49,7 +49,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/imagen_nueva"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop"
+                            android:transitionName="@string/transicion_imagen"/>
                     </android.support.v7.widget.CardView>
 
                 </LinearLayout>

@@ -6,26 +6,28 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:padding="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/rojo">
-
         <TextView
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="INICIAR SESION"
-            android:textColor="@color/Black" />
+            android:id="@+id/mensajeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:textSize="18sp"
+            android:gravity="center"/>
     </LinearLayout>
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/mensajeTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Inicie sesion"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="16dp"
-        android:gravity="center"/>
-</LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+

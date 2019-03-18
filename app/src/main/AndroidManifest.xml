@@ -8,9 +8,12 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-feature android:name="android.hardware.camera"
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,13 +22,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".ContainertwoActivity"
+        <activity android:name=".Detalle_Articulo_Activity"
+            android:parentActivityName=".ContainerActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".ContainerActivity">
+            >
             <meta-data
                 android:name="android.support.PARRENY_ACTIVITY"
-                android:value=".ContainerActivity"/>
+                android:value=".ContainerActivity" />
         </activity>
+
+
+        <activity
+            android:name=".ContainertwoActivity"
+            android:parentActivityName=".ContainerActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARRENY_ACTIVITY"
+                android:value=".ContainerActivity" />
+        </activity>
+
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,11 +63,10 @@
         <activity
             android:name=".MapsActivity"
             android:label="Mao" />
-        <activity android:name=".ContainerActivity"
+        <activity
+            android:name=".ContainerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

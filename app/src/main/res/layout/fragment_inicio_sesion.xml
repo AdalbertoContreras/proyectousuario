@@ -10,16 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/Gris3"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_gravity="center">
 
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
@@ -115,10 +116,33 @@
 
                 <Button
                     android:id="@+id/iniciarSesionButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:text="INICIO DE SESION"
-                    android:theme="@style/Button"/>
+                    android:theme="@style/Button"
+                    android:layout_marginBottom="60dp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="¿No tienes cuenta?"
+                    android:layout_marginRight="10dp"
+                    />
+
+                    <TextView
+                        android:id="@+id/crear_cuenta"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="crea una aqui"
+                        android:textStyle="bold"
+
+                        />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.AsesoriaFragment">
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
@@ -18,13 +19,12 @@
             android:orientation="vertical"
             android:paddingHorizontal="10dp"
             android:paddingTop="10dp"
-
             android:weightSum="1"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="200dp"
                 android:orientation="horizontal"
                 android:layout_weight="0.5"
                 android:paddingBottom="5dp"
@@ -134,7 +134,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="200dp"
                 android:layout_weight="0.5"
                 android:paddingTop="5dp"
                 >
@@ -252,14 +252,15 @@
                     android:layout_height="match_parent"
                     android:text="@string/text"
                     android:gravity="center"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
 
 
                     />
 
             </LinearLayout>
 
-        </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
+
+</ScrollView>
 </FrameLayout>

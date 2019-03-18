@@ -1,6 +1,7 @@
 package com.comfacesar.comfacesar.fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,6 +61,8 @@ public class HomeFragment extends Fragment {
     private String textoFiltroNuevo = "";
     private boolean filtrando_noticias = false;
 
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -78,7 +81,11 @@ public class HomeFragment extends Fragment {
         textoFiltroNuevo = ContainerActivity.texto_buscar;
         textoFiltroAnterior = textoFiltroNuevo;
 
+
+
+
         return view_permantente;
+
     }
 
     @Override
@@ -105,7 +112,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 consultar_noticias();
-                exampleAdapter = new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
+                exampleAdapter = new AdapterNoticia(getActivity(),itemNoticias_filtrada, getFragmentManager());
                 recycle.setAdapter(exampleAdapter);
             }
         };
@@ -148,7 +155,7 @@ public class HomeFragment extends Fragment {
 
     private void llenar()
     {
-        exampleAdapter = new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
+        exampleAdapter = new AdapterNoticia(getActivity(),itemNoticias_filtrada, getFragmentManager());
         recycle.setAdapter(exampleAdapter);
     }
 
@@ -309,7 +316,7 @@ public class HomeFragment extends Fragment {
         {
             agregado = true;
             itemNoticias_filtrada = itemNoticias_general;
-            exampleAdapter= new AdapterNoticia(itemNoticias_filtrada, getFragmentManager());
+            exampleAdapter= new AdapterNoticia(getActivity(),itemNoticias_filtrada, getFragmentManager());
             recycle = view_permantente.findViewById(R.id.Recycle_IdHome);
             recycle.setLayoutManager(new GridLayoutManager(getContext(),1));
             recycle.setAdapter(exampleAdapter);

@@ -17,12 +17,12 @@
     <item
         android:id="@+id/modificarMisDatos"
         android:orderInCategory="100"
-        android:title="Modificar mis datos"
+        android:title="Modificar datos"
         app:showAsAction="never"/>
     <item
         android:id="@+id/modificarMiContraseña"
         android:orderInCategory="100"
-        android:title="Modificar mi contraseña"
+        android:title="Cambiar contraseña"
         app:showAsAction="never"/>
     <item
         android:id="@+id/historialAlertasMenu"
