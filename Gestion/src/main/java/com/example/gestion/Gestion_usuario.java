@@ -40,6 +40,34 @@ public class Gestion_usuario{
         return construir_parametros(usuario);
     }
 
+    public HashMap<String, String> consultar_por_nombre_cuenta(String nombre_cuenta)
+    {
+        tipo_consulta = "consultar_por_nombre_cuenta";
+        aux.nombre_cuenta_usuario = nombre_cuenta;
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String, String> existe_nombre_cuenta(String nombre_cuenta)
+    {
+        tipo_consulta = "existe_nombre_cuenta";
+        aux.nombre_cuenta_usuario = nombre_cuenta;
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String, String> consultar_por_numero_identificacion(String numero_identificacion)
+    {
+        tipo_consulta = "consultar_por_numero_identificacion";
+        aux.numero_identificacion_usuario = numero_identificacion;
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String, String> existe_numero_identificacion(String numero_identificacion)
+    {
+        tipo_consulta = "existe_numero_identificacion";
+        aux.numero_identificacion_usuario = numero_identificacion;
+        return construir_parametros(aux);
+    }
+
     public HashMap<String, String> actualizar_contrasena_usuario(Usuario usuario)
     {
         tipo_consulta = "actualizar_contrasena_usuario";

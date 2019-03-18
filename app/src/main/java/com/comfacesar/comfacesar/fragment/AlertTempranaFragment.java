@@ -77,7 +77,7 @@ public class AlertTempranaFragment extends Fragment {
                 }
                 else
                 {
-                    MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaUbstancia("Inicie sesionpara poder enviar una alerta.");
+                    MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaUbstancia("Inicie sesion para poder enviar una alerta.");
                     try {
                         detalleAsesorDialog.show(getActivity().getSupportFragmentManager(), "missiles");
                     } catch (IllegalStateException ignored) {

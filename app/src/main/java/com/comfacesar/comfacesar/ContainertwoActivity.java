@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import com.comfacesar.comfacesar.fragment.AcercaDeFragment;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
-import com.comfacesar.comfacesar.fragment.Chat_asesoriaFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAlertasFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
 import com.comfacesar.comfacesar.fragment.InicioSesionFragment;
@@ -17,7 +16,7 @@ import com.comfacesar.comfacesar.fragment.ModificarDatosCuentaUsuarioFragment;
 import com.comfacesar.comfacesar.fragment.RegistrarUsuarioFragment;
 import com.comfacesar.comfacesar.fragment.ModificarUsuarioFragment;
 
-public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, Chat_asesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener, ModificarDatosCuentaUsuarioFragment.OnFragmentInteractionListener {
+public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener, ModificarDatosCuentaUsuarioFragment.OnFragmentInteractionListener {
 
     public static Bundle bundle;
     @SuppressLint("ResourceAsColor")
@@ -63,10 +62,6 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 mifragment= new AsesoriaFragment();
                 ShowToolbar("Tipos de asesorias",true);
                 break;
-            case "7":
-                mifragment= new Chat_asesoriaFragment();
-                ShowToolbar("Chat",true);
-                break;
             case "8":
                 mifragment= new ModificarUsuarioFragment();
                 ShowToolbar("Modificar Datos",true);
@@ -81,9 +76,9 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
                 ShowToolbar("Asesores",true);
                 break;
             case "11":
-                mifragment= new ChatActivosFragment();
+                mifragment= new HistorialAsesoriasFragment();
                 ChatActivosFragment.fragmentManager = getSupportFragmentManager();
-                ShowToolbar("Modificar contraseña",true);
+                ShowToolbar("Mis asesorias",true);
                 break;
         }
         if(mifragment != null)

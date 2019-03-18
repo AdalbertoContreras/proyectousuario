@@ -4,11 +4,28 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.Adaptador.AdapterListaAsesoresPorEspecialidad;
+import com.comfacesar.comfacesar.Adaptador.Adapter_historia_chat_asesoria;
 import com.comfacesar.comfacesar.R;
+import com.example.extra.MySocialMediaSingleton;
+import com.example.extra.WebService;
+import com.example.gestion.Gestion_administrador;
+import com.example.gestion.Gestion_chat_asesoria;
+import com.example.gestion.Gestion_usuario;
+import com.example.modelo.Administrador;
+import com.example.modelo.Chat_asesoria;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -28,7 +45,8 @@ public class HistorialAsesoriasFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private RecyclerView recyclerView;
+    private View view;
     private OnFragmentInteractionListener mListener;
 
     public HistorialAsesoriasFragment() {
@@ -66,8 +84,42 @@ public class HistorialAsesoriasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_historial_asesorias, container, false);
+        view = inflater.inflate(R.layout.fragment_historial_asesorias, container, false);
+        recyclerView = view.findViewById(R.id.historial_asesoriasRecyclerView);
+        return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        consultar_chats();
+    }
+
+    private void consultar_chats()
+    {
+        //tomo los parametros del controlador
+        HashMap<String,String> params = new Gestion_chat_asesoria().consultar_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
+        Log.d("parametros", params.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                generar_consulta(response);
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
+        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void generar_consulta(final String response)
+    {
+        ArrayList<Chat_asesoria> list = new Gestion_chat_asesoria().generar_json(response);
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),1));
+        Adapter_historia_chat_asesoria adapterItemCliente = new Adapter_historia_chat_asesoria(list, getFragmentManager());
+        recyclerView.setAdapter(adapterItemCliente);
+        recyclerView.setHasFixedSize(true);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

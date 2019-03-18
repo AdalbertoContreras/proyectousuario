@@ -33,6 +33,7 @@ import com.example.modelo.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -163,104 +164,175 @@ public class RegistrarUsuarioFragment extends Fragment {
         registrar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(Config.getImei() == null)
-                {
-                    Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de registrar un nuevo usuario.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                else
-                {
-                    Toast.makeText(view_permanente.getContext(), Config.getImei(), Toast.LENGTH_LONG).show();
-                }
-                if(numeroIdentificacionEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese su numero de identificacion", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(nombreUsuarioEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese su nombres", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(apellidoEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(nombreCuentaEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de cuenta para iniciar sesion", Toast.LENGTH_LONG).show();
-                    return;
-                }if(contraseñaCuentaEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de la cuenta", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(fecha_nacimientoEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Usuario usuario = new Usuario();
-                usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
-                usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
-                usuario.apellidos_usuario = apellidoEditText.getText().toString();
-                usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
-                usuario.telefono_usuario = telefonoEditText.getText().toString();
-                usuario.direccion_usuario = direccionEditText.getText().toString();
-                if(masculinoRadioButton.isChecked())
-                {
-                    usuario.sexo_usuario = 0;
-                }
-                else
-                {
-                    usuario.sexo_usuario = 1;
-                }
-                if(imagen_eliminada)
-                {
-                    usuario.foto_perfil_usuario = "-1";
-                }
-                else
-                {
-                    usuario.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
-                }
-                usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
-                usuario.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
-                HashMap<String, String> hashMap = new Gestion_usuario().registrar_usuario(usuario);
-                Log.d("Parametros : ", hashMap.toString());
-                Response.Listener<String> stringListener = new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response : ", response);
-                        int val = 0;
-                        try
-                        {
-                            val = Integer.parseInt(response);
-                            if(val > 0)
-                            {
-                                registrar_movil_registro(val);
-                                Toast.makeText(view_permanente.getContext(),"Usuario registrado con exito", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        catch (NumberFormatException exc)
-                        {
-                            Toast.makeText(view_permanente.getContext(),"Usuario no registrado", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                };
-                Response.ErrorListener errorListener = new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
-                    }
-                };
-                StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-                MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+                validar_numero_identificacion();
             }
         });
         return view_permanente;
+    }
+
+    private void validar_numero_identificacion()
+    {
+        HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
+        Log.d("parametros", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                }
+                catch(NumberFormatException exc)
+                {
+
+                }
+                validar_nombre_cuenta(val == 1);
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void validar_nombre_cuenta(final Boolean numero_identificacion_vaido)
+    {
+        HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
+        Log.d("parametros", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                }
+                catch(NumberFormatException exc)
+                {
+
+                }
+                registrar_usuario(val == 1, numero_identificacion_vaido);
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void registrar_usuario(Boolean existe_nombre_cuenta, Boolean existe_numero_identificacion)
+    {
+        if(Config.getImei() == null)
+        {
+            Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de registrar un nuevo usuario.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(numeroIdentificacionEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese su numero de identificacion", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(existe_numero_identificacion)
+        {
+            Toast.makeText(view_permanente.getContext(), "Este numero de identifacion esta siendo utilizado por otro usuario", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(nombreUsuarioEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese su nombres", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(apellidoEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(nombreCuentaEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de cuenta para iniciar sesion", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(existe_nombre_cuenta)
+        {
+            Toast.makeText(view_permanente.getContext(), "Este nombre de cuenta esta siendo utilizado por otro usuario", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(contraseñaCuentaEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de la cuenta", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(fecha_nacimientoEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Usuario usuario = new Usuario();
+        usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
+        usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
+        usuario.apellidos_usuario = apellidoEditText.getText().toString();
+        usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
+        usuario.telefono_usuario = telefonoEditText.getText().toString();
+        usuario.direccion_usuario = direccionEditText.getText().toString();
+        if(masculinoRadioButton.isChecked())
+        {
+            usuario.sexo_usuario = 0;
+        }
+        else
+        {
+            usuario.sexo_usuario = 1;
+        }
+        if(imagen_eliminada)
+        {
+            usuario.foto_perfil_usuario = "-1";
+        }
+        else
+        {
+            usuario.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
+        }
+        usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+        usuario.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
+        HashMap<String, String> hashMap = new Gestion_usuario().registrar_usuario(usuario);
+        Log.d("Parametros : ", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response : ", response);
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        registrar_movil_registro(val);
+                        Toast.makeText(view_permanente.getContext(),"Usuario registrado con exito", Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (NumberFormatException exc)
+                {
+                    Toast.makeText(view_permanente.getContext(),"Usuario no registrado", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     private void openGallery(){
