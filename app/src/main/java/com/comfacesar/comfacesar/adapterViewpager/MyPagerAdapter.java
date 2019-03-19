@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.fragment.AlertTempranaFragment;
@@ -13,7 +14,6 @@ import com.comfacesar.comfacesar.fragment.UbicacionFragment;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter{
     private Context context;
-    private Fragment fragment_anterior;
     public MyPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;

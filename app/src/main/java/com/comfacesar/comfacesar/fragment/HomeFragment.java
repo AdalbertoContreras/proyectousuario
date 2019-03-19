@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -59,6 +60,12 @@ public class HomeFragment extends Fragment {
     private String textoFiltroAnterior = "";
     private String textoFiltroNuevo = "";
     private boolean filtrando_noticias = false;
+    public static FragmentAbierto fragmentAbierto;
+    public interface FragmentAbierto
+    {
+        void abierto();
+        void cerrado();
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -77,13 +84,14 @@ public class HomeFragment extends Fragment {
         itemNoticias_filtrada = new ArrayList<>();
         textoFiltroNuevo = ContainerActivity.texto_buscar;
         textoFiltroAnterior = textoFiltroNuevo;
-
         return view_permantente;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+
         cont = 5000;
         fragmentConsultarNoticiasActivo = true;
         noticias_nuevas = new ArrayList<>();
@@ -136,12 +144,20 @@ public class HomeFragment extends Fragment {
             }
         };
         hilo_consulta_noticias();
+        if(fragmentAbierto != null)
+        {
+            fragmentAbierto.abierto();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         fragmentConsultarNoticiasActivo = false;
+        if(fragmentAbierto != null)
+        {
+            fragmentAbierto.cerrado();
+        }
     }
 
     private int aux = 0;
@@ -161,11 +177,17 @@ public class HomeFragment extends Fragment {
                 {
                     if(cont >= 5000 && !generandoConsulta && getActivity() != null)
                     {
+                        try {
+                            Thread.sleep(1000);
+                            cont += 100;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 cont = 0;
-                                consultar_num_noticias();
+                                consultar_noticias();
                             }
                         });
                     }
@@ -314,6 +336,15 @@ public class HomeFragment extends Fragment {
             recycle.setLayoutManager(new GridLayoutManager(getContext(),1));
             recycle.setAdapter(exampleAdapter);
             recycle.setHasFixedSize(true);
+        }
+        else
+        {
+            if(!noticias.isEmpty())
+            {
+                exampleAdapter.notifyItemInserted(0);
+                recycle.smoothScrollToPosition(0);
+
+            }
         }
     }
     private boolean agregado = false;

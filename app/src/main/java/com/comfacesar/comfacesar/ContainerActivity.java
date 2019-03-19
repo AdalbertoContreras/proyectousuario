@@ -14,15 +14,19 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
+import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.example.extra.Config;
 import com.example.gestion.Gestion_usuario;
 import com.github.clans.fab.FloatingActionMenu;
@@ -33,6 +37,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     public static FragmentManager fragmentManager;
     private FloatingActionButton floatingActionButton;
     private android.support.v7.widget.SearchView searchView;
+    private int pageSelecionado = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +46,47 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         setContentView(R.layout.activity_container2);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pageSelecionado != 0)
+                {
+                    if(searchView != null)
+                    {
+                        Toast.makeText(getBaseContext(), "Toolbar clickeado", Toast.LENGTH_SHORT).show();
+                        searchView.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
         toolbar.setTitle("ServiAmigo");
         toolbar.setBackgroundResource(R.color.Gris3);
         setSupportActionBar(toolbar);
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                pageSelecionado = i;
+                if(menu != null)
+                {
+                    onCreateOptionsMenu(menu);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
-
 
         tabLayout.setupWithViewPager(viewPager);
         if(menu != null)
@@ -107,6 +145,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         menu.removeItem(R.id.action_buscar);
         menu.removeItem(R.id.acercaDeMenu);
         menu.removeItem(R.id.modificarMiContraseña);
+        menu.removeItem(R.id.action_buscar);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         int tamaño_menu = menu.size();
         for(int i = 0; i < menu.size(); i++) {
@@ -147,6 +186,11 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 menu.removeItem(item.getItemId());
                 removido = true;
             }
+            if(item.getItemId() == R.id.action_buscar && pageSelecionado != 0)
+            {
+                menu.removeItem(item.getItemId());
+
+            }
             if(removido)
             {
                 SpannableString spanString = new SpannableString(menu.getItem(i).getTitle().toString());
@@ -155,31 +199,32 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 i--;
             }
         }
-
-
-        MenuItem searchItem = menu.findItem(R.id.action_buscar);
-        searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                {
-                    searchView.setIconified(true);
+        if(pageSelecionado == 0)
+        {
+            MenuItem searchItem = menu.findItem(R.id.action_buscar);
+            searchView = (SearchView) searchItem.getActionView();
+            searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus)
+                    {
+                        searchView.setIconified(true);
+                    }
                 }
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
+            });
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                escuchadorCambioFiltro.filtroCambiado(s);
-                return false;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    escuchadorCambioFiltro.filtroCambiado(s);
+                    return false;
+                }
+            });
+        }
         /*searchView = (EditText) searchItem.getActionView();
         searchView.setSingleLine(true);
         searchView.setOnKeyListener(new View.OnKeyListener() {
