@@ -112,7 +112,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
         if(Gestion_usuario.escuchadorParaActivityPrincipal == null)
         {
-
             Gestion_usuario.escuchadorParaActivityPrincipal = new EscuchadorUsuario() {
                 @Override
                 public void usuarioCambiado(Usuario usuario) {
@@ -195,7 +194,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                             chat_asesorias_local.addAll(chat_asesorias_remoto);
                             for(Chat_asesoria item :  chat_asesorias_remoto)
                             {
-                                createNotificationChanel();
                                 ArrayList<Administrador> administradors = new Gestion_administrador().generar_json(item.administrador);
                                 ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(item.especialidad);
                                 String titulo = "";
@@ -334,8 +332,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
 // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANEL_ID);
         builder.setSmallIcon(R.drawable.ic_launcher_background);

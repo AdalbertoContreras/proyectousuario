@@ -39,16 +39,10 @@ public class Gestion_chat_asesoria {
     private static String NOMBRE_USUARIO = "NU";
     private static String CONTRASENA_USUARIO = "CU";
     private static String TIPO_CONSULTA = "TC";
-    public static ChatAbierto chatAbierto;
+    public  static ChatAbierto chatAbierto;
     public interface ChatAbierto
     {
         void abierto(int id_chat);
-    }
-
-
-
-    public static void setChatAbierto(ChatAbierto chatAbierto) {
-        Gestion_chat_asesoria.chatAbierto = chatAbierto;
     }
 
     public static void chat_abiero(int id_chat)
