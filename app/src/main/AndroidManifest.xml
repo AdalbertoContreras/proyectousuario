@@ -24,6 +24,9 @@
         <activity
             android:name=".Activities.ChatAsesoria"></activity>
         <activity
+            android:name=".Activities.Detalle_Articulo_Activity"
+            android:parentActivityName=".ContainerActivity"></activity>
+        <activity
             android:name=".ContainertwoActivity"
             android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".ContainerActivity"
@@ -32,6 +35,8 @@
                 android:name="android.support.PARRENY_ACTIVITY"
                 android:value=".ContainerActivity" />
         </activity>
+
+
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait">
