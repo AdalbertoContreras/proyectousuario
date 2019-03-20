@@ -28,12 +28,10 @@ public class AlertaTempranaDialog extends DialogFragment {
         View v = inflater.inflate(R.layout.detallealertedialog, null);
 
         TextView asuntoTextView, fechaTextView, descripionTextView;
-        asuntoTextView = v.findViewById(R.id.asuntoTextViewAlertaTempranaDialog);
-        fechaTextView = v.findViewById(R.id.fechaTextViewAlertaTempranaDialog);
         descripionTextView = v.findViewById(R.id.descripcionTextViewAlertaTempranaDialog);
-        asuntoTextView.setText(asunto.nombre_asunto);
+        //asuntoTextView.setText(asunto.nombre_asunto);
         descripionTextView.setText(alerta_temprana.descripcion_alerta_temprana);
-        fechaTextView.setText(alerta_temprana.fecha_alerta_temprana);
+        //fechaTextView.setText(alerta_temprana.fecha_alerta_temprana);
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.detallealertedialog, null))
