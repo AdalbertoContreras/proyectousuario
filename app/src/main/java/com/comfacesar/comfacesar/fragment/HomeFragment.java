@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
         fragmentConsultarNoticiasActivo = true;
         noticias_nuevas = new ArrayList<>();
         filtrando_noticias = false;
-        Gestion_usuario.escuchadorUsuario = new EscuchadorUsuario() {
+        Gestion_usuario.escuchadorParaHome = new EscuchadorUsuario() {
             @Override
             public void usuarioCambiado(Usuario usuario) {
                 usuario_anterior = usuario_nuevo = usuario;

@@ -26,9 +26,16 @@ public class Gestion_chat_asesoria {
     private static String ESTADO_CERRADO = "H";
     private static String TIEMPO_SESION_CHAT_ASESORIA = "I";
     private static String ESPECIALIZACION_CHAT_ASESORIA = "J";
-    private static String ULTIMA_FECHA_CHAT_ASESORIA = "K";
-    private static String ULTIMA_HORA_CHAT_ASESORIA = "L";
-    private static String ULTIMO_MENSAJE = "M";
+    private static String ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA = "K";
+    private static String ULTIMA_HORA_ADMINISTRADOR_CHAT_ASESORIA = "L";
+    private static String ULTIMO_MENSAJE_ADMINISTRADOR_CHAT_ASESORIA = "M";
+    private static String ULTIMA_FECHA_USUARIO_CHAT_ASESORIA = "N";
+    private static String ULTIMA_HORA_USUARIO_CHAT_ASESORIA = "O";
+    private static String ULTIMO_MENSAJE_USUARIO_CHAT_ASESORIA = "P";
+    private static String ULTIMA_FECHA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "Q";
+    private static String ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "R";
+    private static String ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA = "S";
+    private static String ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA = "T";
     private static String NOMBRE_USUARIO = "NU";
     private static String CONTRASENA_USUARIO = "CU";
     private static String TIPO_CONSULTA = "TC";
@@ -47,6 +54,12 @@ public class Gestion_chat_asesoria {
             return construir_parametros(aux);
     }
 
+    public HashMap<String, String> vista_por_usuario( int id_chat)
+    {
+        aux.id_chat_asesoria = id_chat;
+        tipo_consulta = "vista_por_usuario";
+        return construir_parametros(aux);
+    }
 
     public HashMap<String, String> consultar_por_usuario( int usuario)
     {
@@ -107,17 +120,77 @@ public class Gestion_chat_asesoria {
                 estado_cerrado = jsonObject.get(ESTADO_CERRADO).getAsInt();
                 tiempo_sesion_chat_asesoria = jsonObject.get(TIEMPO_SESION_CHAT_ASESORIA).getAsString();
                 especializacion_chat_asesoria = jsonObject.get(ESPECIALIZACION_CHAT_ASESORIA).getAsInt();
-                if(!jsonObject.get(ULTIMO_MENSAJE).isJsonNull())
+                if(!jsonObject.get(ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
                 {
-                    ultimo_mensaje = jsonObject.get(ULTIMO_MENSAJE).getAsString();
+                    ultima_fecha_administrador_chat_asesoria = jsonObject.get(ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
                 }
-                if(!jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).isJsonNull())
+                else
                 {
-                    ultima_fecha_chat_asesoria = jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).getAsString();
+                    ultima_fecha_administrador_chat_asesoria = "-1";
                 }
-                if(!jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).isJsonNull())
+                if(!jsonObject.get(ULTIMA_HORA_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
                 {
-                    ultima_hora_chat_asesoria = jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).getAsString();
+                    ultima_hora_administrador_chat_asesoria = jsonObject.get(ULTIMA_HORA_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_hora_administrador_chat_asesoria = "-1";
+                }
+                if(!jsonObject.get(ULTIMO_MENSAJE_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultimo_mensaje_administrador_chat_asesoria = jsonObject.get(ULTIMO_MENSAJE_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
+                }
+                if(!jsonObject.get(ULTIMA_FECHA_USUARIO_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_fecha_usuario_chat_asesoria = jsonObject.get(ULTIMA_FECHA_USUARIO_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_fecha_usuario_chat_asesoria = "-1";
+                }
+                if(!jsonObject.get(ULTIMA_HORA_USUARIO_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_hora_usuario_chat_asesoria = jsonObject.get(ULTIMA_HORA_USUARIO_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_hora_usuario_chat_asesoria = "-1";
+                }
+                if(!jsonObject.get(ULTIMO_MENSAJE_USUARIO_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultimo_mensaje_usuario_chat_asesoria = jsonObject.get(ULTIMO_MENSAJE_USUARIO_CHAT_ASESORIA).getAsString();
+                }
+                if(!jsonObject.get(ULTIMA_FECHA_VISTA_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_fecha_vista_administrador_chat_asesoria = jsonObject.get(ULTIMA_FECHA_VISTA_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_fecha_vista_administrador_chat_asesoria = "-1";
+                }
+                if(!jsonObject.get(ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_hora_vista_administrador_chat_asesoria = jsonObject.get(ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_hora_vista_administrador_chat_asesoria = "-1";
+                }
+                if(!jsonObject.get(ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_fecha_vista_usuario_chat_asesoria = jsonObject.get(ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_fecha_vista_usuario_chat_asesoria = "-1";
+                }
+                if(!jsonObject.get(ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_hora_vista_usuario_chat_asesoria = jsonObject.get(ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA).getAsString();
+                }
+                else
+                {
+                    ultima_hora_vista_usuario_chat_asesoria = "-1";
                 }
                 if(!jsonObject.get("usuario").isJsonNull())
                 {

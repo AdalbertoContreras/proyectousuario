@@ -18,7 +18,8 @@ public class Gestion_usuario{
     private static String fecha2;
     private static String tipo_consulta;
     private static Usuario usuario_online = null;
-    public static EscuchadorUsuario escuchadorUsuario;
+    public static EscuchadorUsuario escuchadorParaHome;
+    public static EscuchadorUsuario escuchadorParaActivityPrincipal = null;
 
     public HashMap<String, String> registrar_usuario(Usuario usuario)
     {
@@ -170,6 +171,7 @@ public class Gestion_usuario{
 
     public static void setUsuario_online(Usuario usuario_online) {
         Gestion_usuario.usuario_online = usuario_online;
-        escuchadorUsuario.usuarioCambiado(usuario_online);
+        escuchadorParaActivityPrincipal.usuarioCambiado(usuario_online);
+        escuchadorParaHome.usuarioCambiado(usuario_online);
     }
 }
