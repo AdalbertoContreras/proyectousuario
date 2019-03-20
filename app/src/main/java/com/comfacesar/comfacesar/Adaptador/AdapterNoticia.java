@@ -63,7 +63,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         this.mItems = items;
         this.fragmentManager = fragmentManager;
         this.actividad= _actividad;
-
     }
 
     ///////////////////////////////////////////
