@@ -30,10 +30,10 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.Activities.Detalle_Articulo_Activity;
 import com.comfacesar.comfacesar.ClaseAbstracta.ViewHolder;
 import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.ContainertwoActivity;
-import com.comfacesar.comfacesar.Detalle_Articulo_Activity;
 import com.comfacesar.comfacesar.Interface.ListItem;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
@@ -107,7 +107,13 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         viewHolder.imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(actividad,Detalle_Articulo_Activity.class);
+                Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
+                intent.putExtra("titulo", mItems.get(i).getNoticia().titulo_noticia);
+                intent.putExtra("contenido", mItems.get(i).getNoticia().contenido_noticia);
+                intent.putExtra("fecha", mItems.get(i).getNoticia().fecha_registro_noticia);
+                intent.putExtra("hora", mItems.get(i).getNoticia().hora_registro_noticia);
+                intent.putExtra("imagen", mItems.get(i).getImagen());
+
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                 {
 
