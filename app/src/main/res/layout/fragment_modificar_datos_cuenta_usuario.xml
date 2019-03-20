@@ -70,7 +70,7 @@
                             android:id="@+id/contraseñaCuentaUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="contraseña:"
+                            android:hint="contraseña anterior:"
                             android:inputType="textPassword"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
@@ -91,22 +91,11 @@
                 android:paddingBottom="20dp"
                 >
 
-
-                <Button
-                    android:id="@+id/modificarUsuarioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:text="GUARDAR"
-                    android:theme="@style/Button"
-                    android:layout_gravity="center"
-
-                    />
-
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/contraseñaCuentaAnteriorUsuarioEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="contraseña:"
+                    android:hint="contraseña nueva:"
                     android:inputType="textPassword"
                     android:textSize="14sp" />
 
@@ -114,9 +103,22 @@
                     android:id="@+id/contraseñaCuentaVerificadaUsuarioEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="contraseña:"
+                    android:hint="confirmar contraseña:"
                     android:inputType="textPassword"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <Button
+                    android:id="@+id/modificarUsuarioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="MODIFICAR"
+                    android:theme="@style/Button"
+                    android:layout_gravity="center"
+
+                    />
 
             </LinearLayout>
 
