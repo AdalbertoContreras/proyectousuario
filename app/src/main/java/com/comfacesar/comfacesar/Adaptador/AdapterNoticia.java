@@ -92,6 +92,9 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             case ListItem.MALTRATO:
                 view=LayoutInflater.from(contexto.getContext()).inflate(R.layout.maltrato_tipo_noticia,null,false);
                 break;
+            case ListItem.IDENTDAD:
+                view=LayoutInflater.from(contexto.getContext()).inflate(R.layout.identidad_tipo_noticia,null,false);
+                break;
         }
         return new AdapterNoticia.ViewHolder(view);
     }

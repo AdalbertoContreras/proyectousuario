@@ -112,6 +112,6 @@ public class TypeC implements ListItem {
 
     @Override
     public int getListItemType() {
-        return ListItem.VIOLENCIA_DE_GENERO;
+        return ListItem.IDENTDAD;
     }
 }
