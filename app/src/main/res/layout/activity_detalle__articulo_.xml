@@ -131,6 +131,7 @@
                     android:text="@string/Lorem" />
 
                 <TextView
+                    android:id="@+id/fecha_textView_itemNoticia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"

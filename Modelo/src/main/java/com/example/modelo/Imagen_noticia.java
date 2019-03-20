@@ -1,6 +1,8 @@
 package com.example.modelo;
 
-public class Imagen_noticia {
+import java.io.Serializable;
+
+public class Imagen_noticia implements Serializable {
     public int id_imagen_noticia;
     public String url_imagen_noticia;
     public String fecha_registro_imagen_noticia;
