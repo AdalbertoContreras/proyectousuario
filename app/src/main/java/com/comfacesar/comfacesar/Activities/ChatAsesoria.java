@@ -60,6 +60,7 @@ public class ChatAsesoria extends AppCompatActivity {
         try
         {
             id_chat_notificacion = getIntent().getExtras().getInt("chat");
+            Gestion_chat_asesoria.chat_abiero(id_chat_notificacion);
         }
         catch (NullPointerException exc)
         {
@@ -218,6 +219,7 @@ public class ChatAsesoria extends AppCompatActivity {
     private void consultar_mensajes()
     {
         HashMap<String,String> params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
+        Gestion_chat_asesoria.chat_abiero(chat_asesoria.id_chat_asesoria);
         Log.d("Parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
