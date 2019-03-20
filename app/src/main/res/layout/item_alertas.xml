@@ -6,35 +6,40 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints"
-        android:background="@color/colorAccent"
-        android:weightSum="1"
-        android:padding="20dp"
-        >
-        <TextView
-            android:id="@+id/asuntoTextViewAlertaTempranaItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:gravity="center"
-            android:text=" ASUNTO"
-            android:textSize="20sp"
-            android:paddingBottom="20dp"/>
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/fechaTextViewAlertaTempranaItem"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text=" 10/08/09" />
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            android:background="@color/colorAccent"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/asuntoTextViewAlertaTempranaItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:text=" ASUNTO"
+                android:textStyle="bold"
+                android:paddingVertical="10dp"/>
+
+            <TextView
+                android:id="@+id/fechaTextViewAlertaTempranaItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" 10/08/09"
+                android:background="@color/White"
+                android:paddingRight="15dp"
+                android:layout_weight="0.7"
+                android:paddingVertical="10dp"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
