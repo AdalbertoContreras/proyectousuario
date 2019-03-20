@@ -1,6 +1,8 @@
 package com.example.modelo;
 
-public class Chat_asesoria {
+import java.io.Serializable;
+
+public class Chat_asesoria implements Serializable {
     public int id_chat_asesoria;
     public String fecha_inicio_asesoria;
     public String hora_inicio_asesoria;

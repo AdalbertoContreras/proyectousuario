@@ -4,7 +4,9 @@ import com.comfacesar.comfacesar.Interface.ListItem;
 import com.example.modelo.Imagen_noticia;
 import com.example.modelo.Noticia;
 
-public class ItemNoticia implements ListItem {
+import java.io.Serializable;
+
+public class ItemNoticia implements ListItem, Serializable {
     private String imagen;
     private Noticia noticia;
 
