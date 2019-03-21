@@ -67,7 +67,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_container2);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +111,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
         if(Gestion_usuario.escuchadorParaActivityPrincipal == null)
         {
-            notificationManagerCompat = NotificationManagerCompat.from(this);
             Gestion_usuario.escuchadorParaActivityPrincipal = new EscuchadorUsuario() {
                 @Override
                 public void usuarioCambiado(Usuario usuario) {
@@ -344,9 +342,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         builder.setLights(Color.RED, 1000, 1000);
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setAutoCancel(true);
-        builder.setContentIntent(resultPendingIntent);
-
-        notificationManagerCompat.notify(id, builder.build());
+        if(hilo_notificaciones_activo)
+        {
+            builder.setContentIntent(resultPendingIntent);
+            notificationManagerCompat = NotificationManagerCompat.from(this);
+            notificationManagerCompat.notify(id, builder.build());
+        }
     }
 
     @Override
@@ -375,8 +376,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         }
         Gestion_chat_asesoria.chatAbierto = new Gestion_chat_asesoria.ChatAbierto() {
             @Override
-            public void abierto(int id_chat) {
-                notificationManagerCompat.cancel(id_chat);
+            public void abierto(int id_chat)
+            {
+                if(notificationManagerCompat != null)
+                {
+                    notificationManagerCompat.cancel(id_chat);
+                }
             }
         };
     }
@@ -563,6 +568,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         {
             for(Chat_asesoria item : chat_asesorias_local)
             {
+                notificationManagerCompat = NotificationManagerCompat.from(this);
                 notificationManagerCompat.cancel(item.id_chat_asesoria);
             }
         }
