@@ -16,7 +16,8 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginRight="5dp">
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -106,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/Gris3"
-        android:layout_marginLeft="70dp"
+        android:layout_marginLeft="75dp"
         android:layout_marginTop="5dp"
         >
 

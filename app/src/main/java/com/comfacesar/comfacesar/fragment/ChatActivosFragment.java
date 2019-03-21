@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,8 +87,11 @@ public class ChatActivosFragment extends Fragment {
         // Inflate the layout for this fragmen
         view =  inflater.inflate(R.layout.fragment_chat_activos, container, false);
         recyclerView = view.findViewById(R.id.chat_activos_recyclerView);
+
         return view;
     }
+
+
 
     @Override
     public void onResume() {

@@ -38,7 +38,6 @@
                 app:cardCornerRadius="6dp"
                 android:elevation="20dp"
                 app:cardUseCompatPadding="true"
-
                 >
 
                 <LinearLayout

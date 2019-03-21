@@ -69,7 +69,9 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_icono_chat_ok"
+            />
 
 
     </android.support.constraint.ConstraintLayout>

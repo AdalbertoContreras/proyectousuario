@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,8 @@ public class ChatAsesoria extends AppCompatActivity {
     private boolean estoy_activo = false;
     private TextView nombreAdministradorTextView;
     int id_chat_notificacion = 0;
+    private String titulo2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,10 @@ public class ChatAsesoria extends AppCompatActivity {
         recyclerView_chat_asesoria = findViewById(R.id.mensajes_chat_asesoria_recyclerview_chat_Assoria);
         recyclerView_chat_asesoria.setLayoutManager(new GridLayoutManager(getBaseContext(),1));
         nombreAdministradorTextView = findViewById(R.id.nombreAdministradortextView);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_chat);
+        toolbar.setBackgroundResource(R.color.Gris3);
+
         id_chat_notificacion = 0;
         try
         {
@@ -73,6 +80,7 @@ public class ChatAsesoria extends AppCompatActivity {
             {
                 administrador = administradors.get(0);
                 nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
+
             }
             ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
             if(!especialidads.isEmpty())
@@ -83,6 +91,8 @@ public class ChatAsesoria extends AppCompatActivity {
         else
         {
             nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
+            titulo2= nombreAdministradorTextView.getText().toString();
+            ShowToolbar(titulo2,true);
         }
 
         mensajeEditText = findViewById(R.id.mensajeEdittextChatAsesoria);
@@ -122,6 +132,14 @@ public class ChatAsesoria extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void ShowToolbar(String Tittle, boolean upButton)
+    {
+        Toolbar toolbar = findViewById(R.id.toolbar_chat);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(Tittle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
     }
 
     private void chatVisto()
