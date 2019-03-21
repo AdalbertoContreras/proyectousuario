@@ -22,8 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".Activities.ChatAsesoria">
-        </activity>
+            android:name=".Activities.ChatAsesoria"></activity>
         <activity
             android:name=".Activities.Detalle_Articulo_Activity"
             android:parentActivityName=".ContainerActivity"></activity>
