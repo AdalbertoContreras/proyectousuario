@@ -134,7 +134,7 @@
                     />
 
                     <TextView
-                        android:id="@+id/crear_cuenta"
+                        android:id="@+id/registrarmeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="crea una aqui"

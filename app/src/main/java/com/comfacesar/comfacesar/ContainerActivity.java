@@ -124,8 +124,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                         hilo_notificaciones_activo = false;
                         if(chat_asesorias_local != null)
                         {
+                            notificationManagerCompat = NotificationManagerCompat.from(ContainerActivity.this);
                             for(Chat_asesoria item : chat_asesorias_local)
                             {
+
                                 notificationManagerCompat.cancel(item.id_chat_asesoria);
                             }
                             chat_asesorias_local.clear();
