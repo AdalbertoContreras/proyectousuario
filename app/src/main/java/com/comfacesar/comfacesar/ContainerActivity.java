@@ -112,6 +112,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
         if(Gestion_usuario.escuchadorParaActivityPrincipal == null)
         {
+            notificationManagerCompat = NotificationManagerCompat.from(this);
             Gestion_usuario.escuchadorParaActivityPrincipal = new EscuchadorUsuario() {
                 @Override
                 public void usuarioCambiado(Usuario usuario) {
@@ -344,7 +345,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setAutoCancel(true);
         builder.setContentIntent(resultPendingIntent);
-        notificationManagerCompat = NotificationManagerCompat.from(this);
+
         notificationManagerCompat.notify(id, builder.build());
     }
 
@@ -558,9 +559,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     @Override
     protected void onDestroy() {
-        for(Chat_asesoria item : chat_asesorias_local)
+        if(chat_asesorias_local != null)
         {
-            notificationManagerCompat.cancel(item.id_chat_asesoria);
+            for(Chat_asesoria item : chat_asesorias_local)
+            {
+                notificationManagerCompat.cancel(item.id_chat_asesoria);
+            }
         }
         super.onDestroy();
     }
