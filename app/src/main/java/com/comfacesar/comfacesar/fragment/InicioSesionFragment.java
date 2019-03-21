@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.ContainerActivity;
+import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
@@ -52,6 +53,7 @@ public class InicioSesionFragment extends Fragment {
     private ProgressDialog dialog;
     private OnFragmentInteractionListener mListener;
     public Activity actividad;
+    private TextView registrarmeTextView;
 
     public InicioSesionFragment() {
         // Required empty public constructor
@@ -95,10 +97,18 @@ public class InicioSesionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
-
+        registrarmeTextView = view_permanente.findViewById(R.id.registrarmeTextView);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
+        registrarmeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ContainertwoActivity.class);
+                intent.putExtra("id",4);
+                startActivity(intent);
+            }
+        });
         iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,17 +180,10 @@ public class InicioSesionFragment extends Fragment {
             }
             }
         });
-
-
         return view_permanente;
 
 
     }
-
-
-
-
-
 
     private void consultar_usuario_y_agregar_online(int id_usuario)
     {

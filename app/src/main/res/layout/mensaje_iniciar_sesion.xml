@@ -14,28 +14,29 @@
         android:orientation="vertical"
         android:paddingBottom="15dp"
         android:padding="10dp">
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="6dp"
-        android:elevation="20dp"
-        app:cardUseCompatPadding="true"
-        >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimaryDark">
-        <TextView
-            android:id="@+id/mensajeTextView"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="10dp"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:textColor="@color/White"/>
-    </LinearLayout>
-    </android.support.v7.widget.CardView>
+            android:elevation="20dp"
+            app:cardCornerRadius="6dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark">
+
+                <TextView
+                    android:id="@+id/mensajeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/White"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

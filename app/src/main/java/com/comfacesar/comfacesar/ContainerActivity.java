@@ -9,8 +9,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -24,21 +22,17 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.ChatAsesoria;
+import com.comfacesar.comfacesar.Dialog.MensajeUsuarioSaliendo;
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
-import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.example.extra.Calculo;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
@@ -52,8 +46,6 @@ import com.example.modelo.Administrador;
 import com.example.modelo.Chat_asesoria;
 import com.example.modelo.Especialidad;
 import com.example.modelo.Usuario;
-import com.github.clans.fab.FloatingActionMenu;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -76,7 +68,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_container2);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,11 +108,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
             }
         });
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
         if(Gestion_usuario.escuchadorParaActivityPrincipal == null)
         {
-
             Gestion_usuario.escuchadorParaActivityPrincipal = new EscuchadorUsuario() {
                 @Override
                 public void usuarioCambiado(Usuario usuario) {
@@ -135,8 +125,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                         hilo_notificaciones_activo = false;
                         if(chat_asesorias_local != null)
                         {
+                            notificationManagerCompat = NotificationManagerCompat.from(ContainerActivity.this);
                             for(Chat_asesoria item : chat_asesorias_local)
                             {
+
                                 notificationManagerCompat.cancel(item.id_chat_asesoria);
                             }
                             chat_asesorias_local.clear();
@@ -161,10 +153,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int time = 10000;
+                int time = 3000;
                 while (hilo_notificaciones_activo)
                 {
-                    if(time >= 10000)
+                    if(time >= 3000)
                     {
                         time = 0;
                         runOnUiThread(new Runnable() {
@@ -204,7 +196,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                             chat_asesorias_local.addAll(chat_asesorias_remoto);
                             for(Chat_asesoria item :  chat_asesorias_remoto)
                             {
-                                createNotificationChanel();
                                 ArrayList<Administrador> administradors = new Gestion_administrador().generar_json(item.administrador);
                                 ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(item.especialidad);
                                 String titulo = "";
@@ -217,42 +208,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                                 chat_asesorias_local.add(item);
                                 if(!administradors.isEmpty() && !especialidads.isEmpty())
                                 {
-                                    boolean valido = false;
-                                    if(!item.ultima_fecha_administrador_chat_asesoria.equals("-1"))
-                                    {
-                                        if(!item.ultima_fecha_vista_usuario_chat_asesoria.equals("-1"))
-                                        {
-                                            valido = true;
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                        if(!valido)
-                                        {
-                                            reemplazar_chat_local(item);
-                                            createNotificationChanel();
-                                            createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
-                                        }
-                                        else
-                                        {
-                                            String date1 = item.ultima_fecha_administrador_chat_asesoria;
-                                            String time1 = item.ultima_hora_administrador_chat_asesoria;
-                                            String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
-                                            String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
-                                            Calendar calendar = Calculo.String_a_Date( date1, time1);
-                                            Calendar calendar2 = Calculo.String_a_Date(date2, time2);
-                                            if(!(date1 + time1).equals(date2+time2))
-                                            {
-                                                if(Calculo.compararCalendar(calendar,calendar2) == 1)
-                                                {
-                                                    reemplazar_chat_local(item);
-                                                    createNotificationChanel();
-                                                    createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
-                                                }
-                                            }
-                                        }
-                                    }
+                                    aux(item, titulo);
                                 }
                             }
                         }
@@ -261,8 +217,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                             for(Chat_asesoria item :  chat_asesorias_remoto)
                             {
                                 Chat_asesoria chat_asesoria = chat_asesoria_por_id(item.id_chat_asesoria);
-                                ArrayList<Administrador> administradors = new Gestion_administrador().generar_json(chat_asesoria.administrador);
-                                ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
+                                ArrayList<Administrador> administradors = new Gestion_administrador().generar_json(item.administrador);
+                                ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(item.especialidad);
                                 String titulo = "";
                                 if(!administradors.isEmpty() && !especialidads.isEmpty())
                                 {
@@ -275,84 +231,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                                     chat_asesorias_local.add(item);
                                     if(!administradors.isEmpty() && !especialidads.isEmpty())
                                     {
-                                        boolean valido = false;
-                                        if(!item.ultima_fecha_administrador_chat_asesoria.equals("-1"))
-                                        {
-                                            if(!item.ultima_fecha_vista_usuario_chat_asesoria.equals("-1"))
-                                            {
-                                                valido = true;
-                                            }
-                                            else
-                                            {
-
-                                            }
-                                            if(!valido)
-                                            {
-                                                reemplazar_chat_local(item);
-                                                createNotificationChanel();
-                                                createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
-                                            }
-                                            else
-                                            {
-                                                String date1 = item.ultima_fecha_administrador_chat_asesoria;
-                                                String time1 = item.ultima_hora_administrador_chat_asesoria;
-                                                String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
-                                                String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
-                                                Calendar calendar = Calculo.String_a_Date( date1, time1);
-                                                Calendar calendar2 = Calculo.String_a_Date(date2, time2);
-                                                if(!(date1 + time1).equals(date2+time2))
-                                                {
-                                                    if(Calculo.compararCalendar(calendar,calendar2) == 1)
-                                                    {
-                                                        reemplazar_chat_local(item);
-                                                        createNotificationChanel();
-                                                        createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        aux(item, titulo);
                                     }
                                 }
                                 else
                                 {
                                     if(!(item.ultima_fecha_administrador_chat_asesoria + item.ultima_hora_administrador_chat_asesoria).equals(chat_asesoria.ultima_fecha_administrador_chat_asesoria + chat_asesoria.ultima_hora_administrador_chat_asesoria))
                                     {
-                                        boolean valido = false;
-                                        if(!item.ultima_fecha_administrador_chat_asesoria.equals("-1"))
-                                        {
-                                            if(!item.ultima_fecha_vista_usuario_chat_asesoria.equals("-1"))
-                                            {
-                                                valido = true;
-                                            }
-                                            else
-                                            {
-
-                                            }
-                                            if(!valido)
-                                            {
-                                                reemplazar_chat_local(item);
-                                                createNotificationChanel();
-                                                createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
-                                            }
-                                            else
-                                            {
-                                                String date1 = item.ultima_fecha_administrador_chat_asesoria;
-                                                String time1 = item.ultima_hora_administrador_chat_asesoria;
-                                                String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
-                                                String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
-                                                Calendar calendar = Calculo.String_a_Date( date1, time1);
-                                                Calendar calendar2 = Calculo.String_a_Date(date2, time2);
-                                                if(!(date1 + time1).equals(date2+time2))
-                                                {
-                                                    if(Calculo.compararCalendar(calendar,calendar2) == 1)
-                                                    {
-                                                        reemplazar_chat_local(item);
-                                                        createNotificationChanel();
-                                                        createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        aux(item, titulo);
                                     }
                                 }
                             }
@@ -363,6 +249,45 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
             MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
         }
+    }
+
+    private void aux(Chat_asesoria item, String titulo)
+    {
+        boolean valido = false;
+        if(!item.ultima_fecha_administrador_chat_asesoria.equals("-1"))
+        {
+            if(!item.ultima_fecha_vista_usuario_chat_asesoria.equals("-1"))
+            {
+                valido = true;
+            }
+            if(!valido)
+            {
+                agregar_notificacion(item, titulo);
+            }
+            else
+            {
+                String date1 = item.ultima_fecha_administrador_chat_asesoria;
+                String time1 = item.ultima_hora_administrador_chat_asesoria;
+                String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
+                String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
+                Calendar calendar = Calculo.String_a_Date( date1, time1);
+                Calendar calendar2 = Calculo.String_a_Date(date2, time2);
+                if(!(date1 + time1).equals(date2+time2))
+                {
+                    if(Calculo.compararCalendar(calendar,calendar2) == 1)
+                    {
+                        agregar_notificacion(item, titulo);
+                    }
+                }
+            }
+        }
+    }
+
+    private void agregar_notificacion(Chat_asesoria item, String titulo)
+    {
+        reemplazar_chat_local(item);
+        createNotificationChanel();
+        createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
     }
 
     public static Chat_asesoria chat_asesoria_por_id(int id)
@@ -409,8 +334,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
 // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANEL_ID);
         builder.setSmallIcon(R.drawable.ic_launcher_background);
@@ -421,9 +345,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         builder.setLights(Color.RED, 1000, 1000);
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setAutoCancel(true);
-        builder.setContentIntent(resultPendingIntent);
-        notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(id, builder.build());
+        if(hilo_notificaciones_activo)
+        {
+            builder.setContentIntent(resultPendingIntent);
+            notificationManagerCompat = NotificationManagerCompat.from(this);
+            notificationManagerCompat.notify(id, builder.build());
+        }
     }
 
     @Override
@@ -450,6 +377,16 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 }
             });
         }
+        Gestion_chat_asesoria.chatAbierto = new Gestion_chat_asesoria.ChatAbierto() {
+            @Override
+            public void abierto(int id_chat)
+            {
+                if(notificationManagerCompat != null)
+                {
+                    notificationManagerCompat.cancel(id_chat);
+                }
+            }
+        };
     }
 
     @Override
@@ -555,27 +492,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 }
             });
         }
-        /*searchView = (EditText) searchItem.getActionView();
-        searchView.setSingleLine(true);
-        searchView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER)
-                {
-                    escuchadorCambioFiltro.filtroCambiado(searchView.getText().toString());
-                }
-                return false;
-            }
-        });
-        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus)
-                {
-                    searchView.setSelection(0, searchView.getText().toString().length());
-                }
-            }
-        });*/
 
         this.menu = menu;
         return true;
@@ -640,13 +556,48 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     @Override
     public void onBackPressed() {
-        finish();
-        System.exit(0);
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            MensajeUsuarioSaliendo mensajeUsuarioSaliendo = MensajeUsuarioSaliendo.nuevaUbstancia(new MensajeUsuarioSaliendo.CerrarAplicacion() {
+                @Override
+                public void usuarioAcepto(MensajeUsuarioSaliendo mensajeUsuarioSaliendo) {
+                    mensajeUsuarioSaliendo.dismiss();
+                    moveTaskToBack(true);
+                }
+
+                @Override
+                public void usuarioNoAcepto(MensajeUsuarioSaliendo mensajeUsuarioSaliendo) {
+                    mensajeUsuarioSaliendo.dismiss();
+                    finish();
+                    System.exit(0);
+                }
+            });
+            mensajeUsuarioSaliendo.show(this.getSupportFragmentManager(), "missiles");
+        }
+        else
+        {
+            finish();
+            System.exit(0);
+            super.onBackPressed();
+        }
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(chat_asesorias_local != null)
+        {
+            for(Chat_asesoria item : chat_asesorias_local)
+            {
+                notificationManagerCompat = NotificationManagerCompat.from(this);
+                notificationManagerCompat.cancel(item.id_chat_asesoria);
+            }
+        }
+        super.onDestroy();
     }
 }
 
