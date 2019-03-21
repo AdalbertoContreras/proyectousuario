@@ -108,6 +108,8 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
+
+                intent.putExtra("id_noticia", mItems.get(i).getNoticia().id_notiticia);
                 intent.putExtra("titulo", mItems.get(i).getNoticia().titulo_noticia);
                 intent.putExtra("contenido", mItems.get(i).getNoticia().contenido_noticia);
                 intent.putExtra("fecha", mItems.get(i).getNoticia().fecha_registro_noticia);
