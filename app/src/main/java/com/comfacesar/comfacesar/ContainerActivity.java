@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.ChatAsesoria;
+import com.comfacesar.comfacesar.Dialog.MensajeUsuarioSaliendo;
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
@@ -555,8 +556,30 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     @Override
     public void onBackPressed() {
-        finish();
-        System.exit(0);
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            MensajeUsuarioSaliendo mensajeUsuarioSaliendo = MensajeUsuarioSaliendo.nuevaUbstancia(new MensajeUsuarioSaliendo.CerrarAplicacion() {
+                @Override
+                public void usuarioAcepto(MensajeUsuarioSaliendo mensajeUsuarioSaliendo) {
+                    mensajeUsuarioSaliendo.dismiss();
+                    moveTaskToBack(true);
+                }
+
+                @Override
+                public void usuarioNoAcepto(MensajeUsuarioSaliendo mensajeUsuarioSaliendo) {
+                    mensajeUsuarioSaliendo.dismiss();
+                    finish();
+                    System.exit(0);
+                }
+            });
+            mensajeUsuarioSaliendo.show(this.getSupportFragmentManager(), "missiles");
+        }
+        else
+        {
+            finish();
+            System.exit(0);
+            super.onBackPressed();
+        }
     }
 
     @Override
