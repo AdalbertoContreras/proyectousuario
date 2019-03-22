@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +43,8 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
     private TextView fecha_textView_itemNoticia;
     private int id_noticia;
     private boolean cambiando_estado;
+    private int categoria;
+    private TextView categoriaNoticiaTextView;
 
     public Detalle_Articulo_Activity() {
     }
@@ -51,7 +54,6 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle__articulo_);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_detalle);
         ShowToolbar("",true);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -63,13 +65,41 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         megusta_CheckBox = findViewById(R.id.me_gusta_checkBox_itemNoticia);
         numero_megusta_TextView = findViewById(R.id.me_gusta_textView_itemNoticia);
         fecha_textView_itemNoticia = findViewById(R.id.fecha_textView_itemNoticia);
+        categoriaNoticiaTextView = findViewById(R.id.categoriaTextView);
         id_noticia = getIntent().getExtras().getInt("id_noticia");
         tituto_textview.setText(getIntent().getStringExtra("id_noticia"));
         tituto_textview.setText(getIntent().getStringExtra("titulo"));
         contenido_TextView.setText(getIntent().getStringExtra("contenido"));
         fecha_textView_itemNoticia.setText(getIntent().getStringExtra("fecha") + " " + getIntent().getStringExtra("hora") );
-        Picasso.with(getBaseContext()).load(getIntent().getStringExtra("imagen")).into(imagen_noticiaImageView);
+        String url = getIntent().getStringExtra("imagen");
+        if(url.length() > 1)
+        {
+            Picasso.with(getBaseContext()).load(getIntent().getStringExtra("imagen")).placeholder(R.drawable.perfil2)
+                    .error(R.drawable.perfil2).into(imagen_noticiaImageView);
+        }
+
+        categoria = getIntent().getExtras().getInt("categoria");
+        Toast.makeText(getBaseContext(), categoria+ "", Toast.LENGTH_SHORT).show();
         consultar_noticia();
+        switch (categoria)
+        {
+            case 1:
+                categoriaNoticiaTextView.setBackgroundResource(R.color.colorPrimaryDark);
+                categoriaNoticiaTextView.setText("SEXUALIDAD");
+                break;
+            case 2:
+                categoriaNoticiaTextView.setBackgroundResource(R.color.tipo_one);
+                categoriaNoticiaTextView.setText("EMBARAZO");
+                break;
+            case 3:
+                categoriaNoticiaTextView.setBackgroundResource(R.color.colorPrimaryDark);
+                categoriaNoticiaTextView.setText("MALTRATO");
+                break;
+            case 4:
+                categoriaNoticiaTextView.setBackgroundResource(R.color.Gris3);
+                categoriaNoticiaTextView.setText("IDENTIDAD");
+                break;
+        }
         if(Gestion_usuario.getUsuario_online() != null)
         {
             megusta_CheckBox.setEnabled(true);

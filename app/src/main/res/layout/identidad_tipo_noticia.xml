@@ -69,18 +69,7 @@
                     >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="maltrato"
-                        android:layout_gravity="center"
-                        android:textColor="@color/White"
-                        android:background="@color/Gris"
-                        android:gravity="left"
-                        android:layout_weight="0.01"
-
-                        android:layout_marginLeft="5dp"/>
+                        style="@style/tipoSexualidad.identidadTextView"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
