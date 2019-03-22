@@ -104,32 +104,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         ItemNoticia item = mItems.get(i);
         viewHolder.setDatos(item, fragmentManager);
 
-        viewHolder.imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
-
-                intent.putExtra("id_noticia", mItems.get(i).getNoticia().id_notiticia);
-                intent.putExtra("titulo", mItems.get(i).getNoticia().titulo_noticia);
-                intent.putExtra("contenido", mItems.get(i).getNoticia().contenido_noticia);
-                intent.putExtra("fecha", mItems.get(i).getNoticia().fecha_registro_noticia);
-                intent.putExtra("hora", mItems.get(i).getNoticia().hora_registro_noticia);
-                intent.putExtra("imagen", mItems.get(i).getImagen());
-
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                {
-
-                   Explode explode= new Explode();
-                    explode.setDuration(1000);
-                    actividad.getWindow().setExitTransition(new AutoTransition());
-                    actividad.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(actividad).toBundle());
-
-                }
-                else{
-                actividad.startActivity(intent);
-            }}
-        });
-
     }
     /////////////////////
     @Override
@@ -218,6 +192,49 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                     }
                 }
             });
+            imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrir_nueva_pag(item);
+                }
+            });
+            contenido_TextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrir_nueva_pag(item);
+                }
+            });
+            tituto_textview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrir_nueva_pag(item);
+                }
+            });
+        }
+
+        private void abrir_nueva_pag(ItemNoticia item)
+        {
+            Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
+
+            intent.putExtra("id_noticia", item.getNoticia().id_notiticia);
+            intent.putExtra("titulo", item.getNoticia().titulo_noticia);
+            intent.putExtra("contenido", item.getNoticia().contenido_noticia);
+            intent.putExtra("fecha", item.getNoticia().fecha_registro_noticia);
+            intent.putExtra("hora", item.getNoticia().hora_registro_noticia);
+            intent.putExtra("imagen", item.getImagen());
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            {
+
+                Explode explode= new Explode();
+                explode.setDuration(1000);
+                actividad.getWindow().setExitTransition(new AutoTransition());
+                actividad.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(actividad).toBundle());
+
+            }
+            else{
+                actividad.startActivity(intent);
+            }
         }
 
         private void tengo_me_gusta()

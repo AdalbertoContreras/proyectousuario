@@ -68,7 +68,8 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         tituto_textview.setText(getIntent().getStringExtra("titulo"));
         contenido_TextView.setText(getIntent().getStringExtra("contenido"));
         fecha_textView_itemNoticia.setText(getIntent().getStringExtra("fecha") + " " + getIntent().getStringExtra("hora") );
-        Picasso.with(getBaseContext()).load(getIntent().getStringExtra("imagen")).into(imagen_noticiaImageView);
+        Picasso.with(getBaseContext()).load(getIntent().getStringExtra("imagen")).placeholder(R.drawable.perfil2)
+                .error(R.drawable.perfil2).into(imagen_noticiaImageView);
         consultar_noticia();
         if(Gestion_usuario.getUsuario_online() != null)
         {
