@@ -76,7 +76,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     if(searchView != null)
                     {
-                        Toast.makeText(getBaseContext(), "Toolbar clickeado", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getBaseContext(), "Toolbar clickeado", Toast.LENGTH_SHORT).show();
                         searchView.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -371,6 +371,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
                     intent.putExtra("id",11);
                     startActivity(intent);

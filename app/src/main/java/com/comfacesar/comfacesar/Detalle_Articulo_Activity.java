@@ -23,9 +23,10 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle__articulo_);
-
+        ShowToolbar("jean",true);
         Toolbar toolbar = findViewById(R.id.toolbar_detalle);
-        ShowToolbar("",true);
+
+
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setEnterTransition(new Fade());
@@ -41,6 +42,8 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         contenido_TextView.setText(getIntent().getStringExtra("contenido"));
         fecha_textView_itemNoticia.setText(getIntent().getStringExtra("fecha") + " " + getIntent().getStringExtra("hora"));
         Picasso.with(getBaseContext()).load(getIntent().getStringExtra("contenido")).into(imagen_noticiaImageView);
+
+
     }
 
     public void ShowToolbar(String Tittle, boolean upButton)

@@ -36,7 +36,6 @@
                 android:value=".ContainerActivity" />
         </activity>
 
-
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait">
