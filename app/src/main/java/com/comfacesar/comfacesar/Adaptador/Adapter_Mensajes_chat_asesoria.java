@@ -25,13 +25,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapter_Mensajes_chat_asesoria.ViewHolderDatos> {
     private ArrayList<Mensaje_chat_asesoria> mensaje_chat_asesoriaArrayList;
     private Chat_asesoria chat_asesoria;
-    public ChatAsesoria.CambioEstado cambioEstado;
     private static boolean seguir;
     private static Activity activity;
     public Adapter_Mensajes_chat_asesoria(ArrayList<Mensaje_chat_asesoria> mensaje_chat_asesorias, Chat_asesoria chat_asesoria) {
         this.mensaje_chat_asesoriaArrayList = mensaje_chat_asesorias;
         this.chat_asesoria = chat_asesoria;
-        cambioEstado = new ChatAsesoria.CambioEstado() {
+        ChatAsesoria.cambioEstado = new ChatAsesoria.CambioEstado() {
             @Override
             public void cambio(boolean estado, Activity activity) {
                 Adapter_Mensajes_chat_asesoria.this.seguir = estado;
@@ -241,7 +240,6 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
                         porDia = true;
                     }
                     fechatextView.setText( new Calculo().fechaFormatoHace(inicioCalendar, finCalendar, c));
-                    //contenidoTextView.setText("Ciclo : " + ciclo);
                     ciclo ++;
                 }
             });
@@ -252,6 +250,5 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
             inicioCalendar = new GregorianCalendar();
             inicioCalendar.set(c.get (Calendar.YEAR), c.get (Calendar.MONTH) + 1, c.get (Calendar.DAY_OF_MONTH), c.get (Calendar.HOUR_OF_DAY), c.get (Calendar.MINUTE), c.get (Calendar.SECOND));
         }
-
     }
 }

@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -57,15 +57,11 @@ public class HomeFragment extends Fragment {
     private boolean agregar_noticias_nuevas;
     private boolean generandoConsulta = false;
     private int cont = 0;
-    private String textoFiltroAnterior = "";
+    private String textoFiltroGuardado = "";
     private String textoFiltroNuevo = "";
     private boolean filtrando_noticias = false;
-    public static FragmentAbierto fragmentAbierto;
-    public interface FragmentAbierto
-    {
-        void abierto();
-        void cerrado();
-    }
+    public static int id_articulo_selecionado = -1;
+    private android.support.v7.widget.SearchView searchView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -83,15 +79,13 @@ public class HomeFragment extends Fragment {
         view_permantente = inflater.inflate(R.layout.fragment_home, container, false);
         itemNoticias_filtrada = new ArrayList<>();
         textoFiltroNuevo = ContainerActivity.texto_buscar;
-        textoFiltroAnterior = textoFiltroNuevo;
+        textoFiltroGuardado = textoFiltroNuevo;
         return view_permantente;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-
         cont = 5000;
         fragmentConsultarNoticiasActivo = true;
         noticias_nuevas = new ArrayList<>();
@@ -101,8 +95,6 @@ public class HomeFragment extends Fragment {
             public void usuarioCambiado(Usuario usuario) {
                 usuario_anterior = usuario_nuevo = usuario;
                 agregar_noticias_nuevas = false;
-                //noticias_nuevas = new ArrayList<>();
-                //itemNoticias_general = new ArrayList<>();
                 while(generandoConsulta)
                 {
                     try
@@ -119,8 +111,10 @@ public class HomeFragment extends Fragment {
         };
         ContainerActivity.escuchadorCambioFiltro = new ContainerActivity.escuchador() {
             @Override
-            public void filtroCambiado(String textoNuevo) {
-                textoFiltroAnterior = textoFiltroNuevo = textoNuevo;
+            public void filtroCambiado(String textoNuevo, View view) {
+                searchView =(SearchView) view;
+
+                textoFiltroNuevo = textoNuevo;
                 while(filtrando_noticias)
                 {
                     try {
@@ -132,6 +126,7 @@ public class HomeFragment extends Fragment {
                 filtrando_noticias = true;
                 if(textoFiltroNuevo.equals(""))
                 {
+                    textoFiltroGuardado = "";
                     itemNoticias_filtrada = itemNoticias_general;
                     llenar();
                 }
@@ -144,9 +139,27 @@ public class HomeFragment extends Fragment {
             }
         };
         hilo_consulta_noticias();
-        if(fragmentAbierto != null)
+        if(id_articulo_selecionado >= 0)
         {
-            fragmentAbierto.abierto();
+            int cont = 0;
+            for(ItemNoticia item : itemNoticias_general)
+            {
+                if(item.getNoticia().id_notiticia == id_articulo_selecionado)
+                {
+                    recycle.smoothScrollToPosition(cont);
+                    break;
+                }
+                cont ++;
+            }
+            //id_articulo_selecionado = -1;
+        }
+        if(searchView != null)
+        {
+            if(!textoFiltroGuardado.equals(""))
+            {
+                searchView.setQuery(textoFiltroGuardado, false);
+                searchView.onActionViewExpanded();
+            }
         }
     }
 
@@ -154,18 +167,29 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         fragmentConsultarNoticiasActivo = false;
-        if(fragmentAbierto != null)
-        {
-            fragmentAbierto.cerrado();
-        }
     }
 
     private int aux = 0;
 
     private void llenar()
     {
-        exampleAdapter = new AdapterNoticia(getActivity(),itemNoticias_filtrada, getFragmentManager());
-        recycle.setAdapter(exampleAdapter);
+        if(id_articulo_selecionado < 0)
+        {
+            try
+            {
+                exampleAdapter = new AdapterNoticia(getActivity(),itemNoticias_filtrada, getFragmentManager());
+                recycle.setAdapter(exampleAdapter);
+
+            }
+            catch (NullPointerException exc)
+            {
+
+            }
+        }
+        else
+        {
+            id_articulo_selecionado = -1;
+        }
     }
 
     private void hilo_consulta_noticias()
@@ -177,13 +201,6 @@ public class HomeFragment extends Fragment {
                 {
                     if(cont >= 5000 && !generandoConsulta && getActivity() != null)
                     {
-
-                        /*try {
-                            Thread.sleep(1000);
-                            cont += 100;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }*/
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -285,6 +302,7 @@ public class HomeFragment extends Fragment {
 
     private void filtrar_noticias()
     {
+        textoFiltroGuardado = textoFiltroNuevo;
         ArrayList<ItemNoticia> itemNoticias_aux = new ArrayList<>();
         for(ItemNoticia item : itemNoticias_general)
         {
@@ -337,16 +355,17 @@ public class HomeFragment extends Fragment {
             recycle.setLayoutManager(new GridLayoutManager(getContext(),1));
             recycle.setAdapter(exampleAdapter);
             recycle.setHasFixedSize(true);
+
         }
         else
         {
             if(!noticias.isEmpty())
             {
                 exampleAdapter.notifyItemInserted(0);
-                recycle.smoothScrollToPosition(0);
-
             }
+
         }
+
     }
     private boolean agregado = false;
 }

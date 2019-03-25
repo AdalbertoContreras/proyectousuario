@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,9 +51,10 @@ public class ChatAsesoria extends AppCompatActivity {
     private boolean mensaje_enviado;
     private boolean estoy_activo = false;
     private TextView nombreAdministradorTextView;
-    int id_chat_notificacion = 0;
+    private int id_chat = 0;
+    private int esNotificacion;
     private String titulo2;
-    private CambioEstado cambioEstado;
+    public static CambioEstado cambioEstado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +68,28 @@ public class ChatAsesoria extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_chat);
         toolbar.setBackgroundResource(R.color.Gris3);
 
-        id_chat_notificacion = 0;
+        id_chat = 0;
+        esNotificacion = 0;
         try
         {
-            id_chat_notificacion = getIntent().getExtras().getInt("chat");
-            Gestion_chat_asesoria.chat_abiero(id_chat_notificacion);
+            id_chat = getIntent().getExtras().getInt("chat");
+        }
+        catch (NullPointerException exc)
+        {
+
+        }
+        try
+        {
+            esNotificacion = getIntent().getExtras().getInt("notificacion");
         }
         catch (NullPointerException exc)
         {
 
         }
 
-        if(id_chat_notificacion > 0)
+        if(id_chat > 0)
         {
-            chat_asesoria = ContainerActivity.chat_asesoria_por_id(id_chat_notificacion);
+            chat_asesoria = ContainerActivity.chat_asesoria_por_id(id_chat);
             ArrayList<Administrador> administradors = new Gestion_administrador().generar_json(chat_asesoria.administrador);
             if(!administradors.isEmpty())
             {
@@ -264,7 +272,6 @@ public class ChatAsesoria extends AppCompatActivity {
     private void consultar_mensajes()
     {
         HashMap<String,String> params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
-        Gestion_chat_asesoria.chat_abiero(chat_asesoria.id_chat_asesoria);
         Log.d("Parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
@@ -283,14 +290,12 @@ public class ChatAsesoria extends AppCompatActivity {
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
-    int cont = 0;
     private void cargar_mensajes_de_inicio(String response)
     {
         consultando = true;
         mensaje_chat_asesorias = new Gestion_mensaje_chat_asesoria().generar_json(response);
         //Collections.reverse(mensaje_chat_asesorias);
         adapter_mensajes_chat_asesoria = new Adapter_Mensajes_chat_asesoria(mensaje_chat_asesorias, chat_asesoria);
-        cambioEstado = adapter_mensajes_chat_asesoria.cambioEstado;
         cambioEstado.cambio(true, this);
         if(!mensaje_chat_asesorias.isEmpty())
         {
@@ -362,15 +367,12 @@ public class ChatAsesoria extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //Toast.makeText(getBaseContext())
         super.onBackPressed();
-        /*if(id_chat_notificacion > 0)
+        if(esNotificacion == 1)
         {
             Intent intent = new Intent(getBaseContext(), ContainerActivity.class);
             startActivity(intent);
         }
-        else
-        {
-            super.onBackPressed();
-        }*/
     }
 }

@@ -83,7 +83,6 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         }
 
         categoria = getIntent().getExtras().getInt("categoria");
-        Toast.makeText(getBaseContext(), categoria+ "", Toast.LENGTH_SHORT).show();
         consultar_noticia();
         switch (categoria)
         {
@@ -135,6 +134,7 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
             });
         }
     }
+
     private void consultar_noticia()
     {
         HashMap<String,String> params = new Gestion_noticia().noticia_por_id(id_noticia);

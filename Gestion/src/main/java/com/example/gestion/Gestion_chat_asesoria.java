@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_chat_asesoria {
+    private static ArrayList<Chat_asesoria> chat_asesorias = null;
     private static Chat_asesoria aux = new Chat_asesoria();
     private static String llave_ws = "chat_asesoria";
     private static String fecha1;
@@ -36,21 +37,16 @@ public class Gestion_chat_asesoria {
     private static String ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "R";
     private static String ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA = "S";
     private static String ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA = "T";
-     private static String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
-     private static String ULTIMA_FECHA_CHAT_ASESORIA = "V";
-     private static String ULTIMA_HORA_CHAT_ASESORIA = "X";
+    private static String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
+    private static String ULTIMA_FECHA_CHAT_ASESORIA = "V";
+    private static String ULTIMA_HORA_CHAT_ASESORIA = "X";
     private static String NOMBRE_USUARIO = "NU";
     private static String CONTRASENA_USUARIO = "CU";
     private static String TIPO_CONSULTA = "TC";
-    public  static ChatAbierto chatAbierto;
-    public interface ChatAbierto
+    public static ArrayChatCambiado arrayChatCambiado;
+    public interface ArrayChatCambiado
     {
-        void abierto(int id_chat);
-    }
-
-    public static void chat_abiero(int id_chat)
-    {
-        chatAbierto.abierto(id_chat);
+        void chatCambiado();
     }
 
     private static void iniciar_axu()
@@ -60,11 +56,11 @@ public class Gestion_chat_asesoria {
 
     public HashMap<String, String> consultar_chat_asesoria_por_usuario_administrador_y_especialidad(int administrador, int usuario, int especialidad)
     {
-            aux.administrador_chat_asesoria = administrador;
-            aux.usuario_chat_asesoria = usuario;
-            aux.especializacion_chat_asesoria = especialidad;
-            tipo_consulta = "consultar_chat_asesoria_por_usuario_administrador_y_especialidad";
-            return construir_parametros(aux);
+        aux.administrador_chat_asesoria = administrador;
+        aux.usuario_chat_asesoria = usuario;
+        aux.especializacion_chat_asesoria = especialidad;
+        tipo_consulta = "consultar_chat_asesoria_por_usuario_administrador_y_especialidad";
+        return construir_parametros(aux);
     }
 
     public HashMap<String, String> vista_por_usuario( int id_chat)
@@ -291,5 +287,106 @@ public class Gestion_chat_asesoria {
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("json",obj.toString());
         return hashMap;
+    }
+
+    public static void setChat_asesorias(ArrayList<Chat_asesoria> chat_asesorias_aux)
+    {
+        boolean cambio = false;
+        if(chat_asesorias_aux != null)
+        {
+            if(chat_asesorias != null)
+            {
+                for(Chat_asesoria item :  chat_asesorias_aux)
+                {
+                    Chat_asesoria chat_asesoria = buscarChatAsesoria(item.id_chat_asesoria);
+                    if(chat_asesoria != null)
+                    {
+                        try
+                        {
+                            if(!chat_asesoria.ultima_fecha_chat_asesoria.equals(item.ultima_fecha_chat_asesoria) || !chat_asesoria.ultima_hora_chat_asesoria.equals(item.ultima_hora_chat_asesoria))
+                            {
+                                cambio = true;
+                            }
+                        }
+                        catch(NullPointerException exc)
+                        {
+
+                        }
+
+                    }
+                }
+            }
+
+            chat_asesorias = new ArrayList<>();
+            for(Chat_asesoria item : chat_asesorias_aux)
+            {
+                addChat_asesoria(item);
+            }
+            if(cambio)
+            {
+                if(arrayChatCambiado != null && Gestion_usuario.getUsuario_online() != null)
+                {
+                    arrayChatCambiado.chatCambiado();
+                }
+            }
+        }
+        else
+        {
+            chat_asesorias = null;
+        }
+    }
+
+    public static void addChat_asesoria(Chat_asesoria chat_asesoria) {
+        if (buscarChatAsesoria(chat_asesoria.id_chat_asesoria) == null) {
+            chat_asesorias.add(chat_asesoria);
+        }
+    }
+
+    public static void addChat_asesoriaPosicion(Chat_asesoria chat_asesoria, int pos)
+    {
+        chat_asesorias.set(pos,chat_asesoria);
+    }
+
+    public static ArrayList<Chat_asesoria> getChat_asesorias()
+    {
+        return chat_asesorias;
+    }
+
+    public static void limpiarChatAsesoria()
+    {
+        chat_asesorias.clear();
+        chat_asesorias = null;
+    }
+
+    private static Chat_asesoria buscarChatAsesoria(int id)
+    {
+        if(chat_asesorias != null)
+        {
+            for(Chat_asesoria item : chat_asesorias)
+            {
+                if(item.id_chat_asesoria == id)
+                {
+                    return item;
+                }
+            }
+        }
+        return  null;
+    }
+
+    private static int buscarPosChatAsesoria(int id)
+    {
+        int cont = 0;
+        if(chat_asesorias != null)
+        {
+            for(Chat_asesoria item : chat_asesorias)
+            {
+                if(item.id_chat_asesoria == id)
+                {
+                    return cont;
+                }
+                cont ++;
+            }
+        }
+        return  -1;
     }
 }

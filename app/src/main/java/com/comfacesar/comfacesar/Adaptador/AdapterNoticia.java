@@ -37,6 +37,7 @@ import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.Interface.ListItem;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_me_gusta_noticia;
@@ -225,6 +226,8 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             intent.putExtra("hora", itemNoticia.getNoticia().hora_registro_noticia);
             intent.putExtra("imagen", itemNoticia.getImagen());
             intent.putExtra("categoria", itemNoticia.getNoticia().categoria_noticia_manual_noticia);
+            HomeFragment.id_articulo_selecionado = itemNoticia.getNoticia().id_notiticia;
+
             Detalle_Articulo_Activity.escuchadoMeGusta = new Detalle_Articulo_Activity.EscuchadoMeGusta() {
                 @Override
                 public void meMeGusta() {
@@ -235,7 +238,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             {
-
                 Explode explode= new Explode();
                 explode.setDuration(1000);
                 actividad.getWindow().setExitTransition(new AutoTransition());
