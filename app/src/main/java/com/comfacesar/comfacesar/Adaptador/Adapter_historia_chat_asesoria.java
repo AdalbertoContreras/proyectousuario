@@ -81,8 +81,8 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
             {
                 tipo_asesoriaTextView.setText(especialidades.get(0).nombre_especialidad);
             }
-            ultimo_mensajeTextView.setText(chat_asesoria.ultimo_mensaje_administrador_chat_asesoria);
-            fecha_ultimo_mensajeTextView.setText(chat_asesoria.ultima_fecha_vista_usuario_chat_asesoria + " " + chat_asesoria.ultima_hora_vista_usuario_chat_asesoria);
+            ultimo_mensajeTextView.setText(chat_asesoria.ultimo_mensaje_chat_asesoria);
+            fecha_ultimo_mensajeTextView.setText(chat_asesoria.ultima_fecha_chat_asesoria + " " + chat_asesoria.ultima_hora_chat_asesoria);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,6 +95,8 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
                         ChatAsesoria.administrador = administradores.get(0);
                         ChatActivosFragment.tipoAsesoria = especialidades.get(0).id_especialidad;
                         Intent intent = new Intent(view.getContext(), ChatAsesoria.class);
+
+                        intent.putExtra("chat", chat_asesoria.id_chat_asesoria);
                         (view.getContext()).startActivity(intent);
                     }
                 }

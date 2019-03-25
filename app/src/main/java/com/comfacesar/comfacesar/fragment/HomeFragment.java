@@ -177,12 +177,13 @@ public class HomeFragment extends Fragment {
                 {
                     if(cont >= 5000 && !generandoConsulta && getActivity() != null)
                     {
-                        try {
+
+                        /*try {
                             Thread.sleep(1000);
                             cont += 100;
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

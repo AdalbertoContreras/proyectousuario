@@ -146,14 +146,14 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
             }
-            megusta_CheckBox.setEnabled(false);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                megusta_CheckBox.setEnabled(true);
                 tengo_me_gusta();
-                megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            }
+
+            megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
                     {
                         HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
@@ -173,9 +173,13 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
                         MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
                     }
+                    if(Gestion_usuario.getUsuario_online() == null)
+                    {
+                        //Toast toast = new Toast(view.getContext());
+                        Toast.makeText(view.getContext(), "Inicie sesion ", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
+                }
+            });
             if(item.getImagen() != "")
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
@@ -221,7 +225,13 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             intent.putExtra("hora", itemNoticia.getNoticia().hora_registro_noticia);
             intent.putExtra("imagen", itemNoticia.getImagen());
             intent.putExtra("categoria", itemNoticia.getNoticia().categoria_noticia_manual_noticia);
-
+            Detalle_Articulo_Activity.escuchadoMeGusta = new Detalle_Articulo_Activity.EscuchadoMeGusta() {
+                @Override
+                public void meMeGusta() {
+                    tengo_me_gusta();
+                    consultar_noticia();
+                }
+            };
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             {

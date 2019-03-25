@@ -26,9 +26,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.ChatAsesoria;
+import com.comfacesar.comfacesar.Activities.HistorialAlertaVacioActivity;
+import com.comfacesar.comfacesar.Activities.HistorialChatVacioActivity;
 import com.comfacesar.comfacesar.Dialog.MensajeUsuarioSaliendo;
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
@@ -39,6 +43,7 @@ import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Escuchadores.EscuchadorUsuario;
 import com.example.gestion.Gestion_administrador;
+import com.example.gestion.Gestion_alerta_temprana;
 import com.example.gestion.Gestion_chat_asesoria;
 import com.example.gestion.Gestion_especialidad;
 import com.example.gestion.Gestion_usuario;
@@ -62,7 +67,9 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     private NotificationManagerCompat notificationManagerCompat;
     private static ArrayList<Chat_asesoria> chat_asesorias_local;
     private ArrayList<Chat_asesoria> chat_asesorias_remoto;
-
+    public static int id = 0;
+    private MyPagerAdapter myPagerAdapter;
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +92,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         toolbar.setTitle("ServiAmigo");
         toolbar.setBackgroundResource(R.color.Gris3);
         setSupportActionBar(toolbar);
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -144,6 +151,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             onCreateOptionsMenu(menu);
         }
         fragmentManager = getSupportFragmentManager();
+        if(id > 0)
+        {
+            if(id == 3)
+            {
+                viewPager.setCurrentItem(2);
+            }
+            id = 0;
+        }
     }
 
     private void iniciar_hilo_notificaciones()
@@ -270,8 +285,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 String time1 = item.ultima_hora_administrador_chat_asesoria;
                 String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
                 String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
-                Calendar calendar = Calculo.String_a_Date( date1, time1);
-                Calendar calendar2 = Calculo.String_a_Date(date2, time2);
+                Calendar calendar = new Calculo().String_a_Date( date1, time1);
+                Calendar calendar2 = new Calculo().String_a_Date(date2, time2);
                 if(!(date1 + time1).equals(date2+time2))
                 {
                     if(Calculo.compararCalendar(calendar,calendar2) == 1)
@@ -516,12 +531,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         switch (item.getItemId())
         {
             case R.id.historialAlertasMenu:
-                intent.putExtra("id",1);
-                selecionado = true;
+                tengoAlertaTempranas();
                 break;
             case  R.id.historialAsesoriasMenu:
-                intent.putExtra("id",2);
-                selecionado = true;
+                tengoChat();
                 break;
             case  R.id.iniciarSesionMenu:
                 intent.putExtra("id",3);
@@ -553,6 +566,125 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             startActivity(intent);
         }
         return true;
+    }
+
+    private void tengoAlertaTempranas()
+    {
+        HashMap<String,String> params = new Gestion_alerta_temprana().consultar_num_alertas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Intent intent;
+                try
+                {
+                    int val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                        intent.putExtra("id",1);
+                    }
+                    else
+                    {
+                        intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                        HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                            @Override
+                            public void enviarAlerta() {
+                                viewPager.setCurrentItem(2,true);
+                            }
+                        };
+                    }
+                }
+                catch(NumberFormatException exc)
+                {
+                    intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                    HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                        @Override
+                        public void enviarAlerta() {
+                            viewPager.setCurrentItem(2,true);
+                        }
+                    };
+                }
+                startActivity(intent);
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Reponse.Error",error.toString());
+                Intent intent;
+                intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                    @Override
+                    public void enviarAlerta() {
+                        viewPager.setCurrentItem(2,true);
+                    }
+                };
+                startActivity(intent);
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void tengoChat()
+    {
+        HashMap<String,String> params = new Gestion_chat_asesoria().numero_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Intent intent;
+                try
+                {
+                    int val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                        intent.putExtra("id",11);
+                    }
+                    else
+                    {
+                        intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                        HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                            @Override
+                            public void enviarAlerta() {
+                                viewPager.setCurrentItem(1,true);
+                            }
+                        };
+                    }
+                }
+                catch(NumberFormatException exc)
+                {
+                    intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                    HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
+
+                        @Override
+                        public void enviarAsesoria() {
+
+                        }
+                    };
+                }
+                startActivity(intent);
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Reponse.Error",error.toString());
+                Intent intent;
+                intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                    @Override
+                    public void enviarAlerta() {
+                        viewPager.setCurrentItem(1,true);
+                    }
+                };
+                startActivity(intent);
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
     @Override

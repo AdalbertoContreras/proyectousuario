@@ -27,6 +27,9 @@
             android:name=".Activities.Detalle_Articulo_Activity"
             android:parentActivityName=".ContainerActivity"></activity>
         <activity
+            android:name=".Activities.HistorialAlertaVacioActivity"
+            android:parentActivityName=".ContainerActivity"></activity>
+        <activity
             android:name=".ContainertwoActivity"
             android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".ContainerActivity"

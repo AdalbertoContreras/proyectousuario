@@ -86,6 +86,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
             getSupportFragmentManager().beginTransaction().replace(R.id.container2,mifragment).commit();
         }
     }
+
     public void ShowToolbar(String Tittle, boolean upButton)
     {
         Toolbar toolbar = findViewById(R.id.toolbar);

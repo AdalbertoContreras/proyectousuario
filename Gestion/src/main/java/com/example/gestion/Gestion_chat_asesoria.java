@@ -36,6 +36,9 @@ public class Gestion_chat_asesoria {
     private static String ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "R";
     private static String ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA = "S";
     private static String ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA = "T";
+     private static String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
+     private static String ULTIMA_FECHA_CHAT_ASESORIA = "V";
+     private static String ULTIMA_HORA_CHAT_ASESORIA = "X";
     private static String NOMBRE_USUARIO = "NU";
     private static String CONTRASENA_USUARIO = "CU";
     private static String TIPO_CONSULTA = "TC";
@@ -75,6 +78,13 @@ public class Gestion_chat_asesoria {
     {
         aux.usuario_chat_asesoria = usuario;
         tipo_consulta = "consultar_por_usuario";
+        return construir_parametros(aux);
+    }
+
+    public HashMap<String, String> numero_por_usuario( int usuario)
+    {
+        aux.usuario_chat_asesoria = usuario;
+        tipo_consulta = "numero_por_usuario";
         return construir_parametros(aux);
     }
 
@@ -213,6 +223,15 @@ public class Gestion_chat_asesoria {
                 if(!jsonObject.get("especialidad").isJsonNull())
                 {
                     especialidad = jsonObject.get("especialidad").getAsString();
+                }if(!jsonObject.get(ULTIMO_MENSAJE_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultimo_mensaje_chat_asesoria = jsonObject.get(ULTIMO_MENSAJE_CHAT_ASESORIA).getAsString();
+                }if(!jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_fecha_chat_asesoria = jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).getAsString();
+                }if(!jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).isJsonNull())
+                {
+                    ultima_hora_chat_asesoria = jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).getAsString();
                 }
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();

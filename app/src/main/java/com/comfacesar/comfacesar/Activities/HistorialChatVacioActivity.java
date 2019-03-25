@@ -1,58 +1,36 @@
 package com.comfacesar.comfacesar.Activities;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.R;
-import com.example.extra.MySocialMediaSingleton;
-import com.example.extra.WebService;
-import com.example.gestion.Gestion_me_gusta_noticia;
-import com.example.gestion.Gestion_noticia;
-import com.example.gestion.Gestion_usuario;
-import com.example.modelo.Me_gusta_noticia;
-import com.example.modelo.Noticia;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class HistorialAlertaVacioActivity extends AppCompatActivity {
+public class HistorialChatVacioActivity extends AppCompatActivity {
 
     private Button enviarAlertaButton;
-    public static EnviarAlerta enviarAlerta;
-    public interface EnviarAlerta
+    public static EnviarAsesoria enviarAsesoria;
+    public interface EnviarAsesoria
     {
-        void enviarAlerta();
+        void enviarAsesoria();
     }
-    public HistorialAlertaVacioActivity() {
+    public HistorialChatVacioActivity() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.historial_alerta_vacio);
+        setContentView(R.layout.chat_vacio);
 
-        enviarAlertaButton = findViewById(R.id.enviarAlertaButton);
+        enviarAlertaButton = findViewById(R.id.irAsesoriaButton);
         enviarAlertaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                enviarAlerta.enviarAlerta();
+                enviarAsesoria.enviarAsesoria();
             }
         });
     }

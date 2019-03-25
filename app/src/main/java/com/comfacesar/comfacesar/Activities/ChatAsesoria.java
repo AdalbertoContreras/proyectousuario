@@ -1,5 +1,6 @@
 package com.comfacesar.comfacesar.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,9 +54,7 @@ public class ChatAsesoria extends AppCompatActivity {
     private TextView nombreAdministradorTextView;
     int id_chat_notificacion = 0;
     private String titulo2;
-
-
-
+    private CambioEstado cambioEstado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,7 @@ public class ChatAsesoria extends AppCompatActivity {
         {
 
         }
+
         if(id_chat_notificacion > 0)
         {
             chat_asesoria = ContainerActivity.chat_asesoria_por_id(id_chat_notificacion);
@@ -136,7 +136,6 @@ public class ChatAsesoria extends AppCompatActivity {
                         Response.ErrorListener errorListener = new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                consultando = false;
                                 Log.d("Reponse.Error",error.toString());
                             }
                         };
@@ -147,10 +146,7 @@ public class ChatAsesoria extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
 
     public void ShowToolbar(String Tittle, boolean upButton)
     {
@@ -188,14 +184,27 @@ public class ChatAsesoria extends AppCompatActivity {
         super.onPause();
         estoy_activo = false;
         chatVisto();
+        chat_asesoria = null;
+        if(cambioEstado != null)
+        {
+            cambioEstado.cambio(false, this);
+        }
     }
 
+    public interface CambioEstado
+    {
+        void cambio(boolean estado, Activity activity);
+    }
     @Override
     public void onResume() {
         super.onResume();
         estoy_activo = true;
         mensaje_enviado = false;
         iniciar_conexion_chat();
+        if(cambioEstado != null)
+        {
+            cambioEstado.cambio(true, this);
+        }
     }
 
     public void hilo_actualizacion_mensajes()
@@ -205,11 +214,6 @@ public class ChatAsesoria extends AppCompatActivity {
             public void run() {
                 while(estoy_activo)
                 {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     if(!consultando)
                     {
                         consultando = true;
@@ -219,6 +223,11 @@ public class ChatAsesoria extends AppCompatActivity {
                                 consultar_mensajes_nuevos();
                             }
                         });
+                    }
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -274,13 +283,15 @@ public class ChatAsesoria extends AppCompatActivity {
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
-
+    int cont = 0;
     private void cargar_mensajes_de_inicio(String response)
     {
         consultando = true;
         mensaje_chat_asesorias = new Gestion_mensaje_chat_asesoria().generar_json(response);
         //Collections.reverse(mensaje_chat_asesorias);
         adapter_mensajes_chat_asesoria = new Adapter_Mensajes_chat_asesoria(mensaje_chat_asesorias, chat_asesoria);
+        cambioEstado = adapter_mensajes_chat_asesoria.cambioEstado;
+        cambioEstado.cambio(true, this);
         if(!mensaje_chat_asesorias.isEmpty())
         {
             recyclerView_chat_asesoria.smoothScrollToPosition(mensaje_chat_asesorias.size() - 1);
@@ -295,32 +306,40 @@ public class ChatAsesoria extends AppCompatActivity {
 
     private void consultar_mensajes_nuevos()
     {
-        HashMap<String,String> params;
-        if(!mensaje_chat_asesorias.isEmpty())
+        try
         {
-            params = new Gestion_mensaje_chat_asesoria().mensaje_chat_asesoria_por_chat_mayor(ultima_fecha, ultima_hora, chat_asesoria.id_chat_asesoria);
-        }
-        else
-        {
-            params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
-        }
-        Log.d("parametros", params.toString());
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                cargar_mensajes_nuevo(response);
+            HashMap<String,String> params;
+            if(!mensaje_chat_asesorias.isEmpty())
+            {
+                params = new Gestion_mensaje_chat_asesoria().mensaje_chat_asesoria_por_chat_mayor(ultima_fecha, ultima_hora, chat_asesoria.id_chat_asesoria);
             }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                consultando = false;
-                Log.d("Reponse.Error",error.toString());
+            else
+            {
+                params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
             }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+            Log.d("parametros", params.toString());
+            Response.Listener<String> stringListener = new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response) {
+                    cargar_mensajes_nuevo(response);
+                }
+            };
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    consultando = false;
+                    Log.d("Reponse.Error",error.toString());
+                }
+            };
+            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+            MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+        }
+        catch(NullPointerException exc)
+        {
+
+        }
+
     }
 
     private void cargar_mensajes_nuevo(String response)
@@ -343,7 +362,8 @@ public class ChatAsesoria extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(id_chat_notificacion > 0)
+        super.onBackPressed();
+        /*if(id_chat_notificacion > 0)
         {
             Intent intent = new Intent(getBaseContext(), ContainerActivity.class);
             startActivity(intent);
@@ -351,6 +371,6 @@ public class ChatAsesoria extends AppCompatActivity {
         else
         {
             super.onBackPressed();
-        }
+        }*/
     }
 }

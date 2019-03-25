@@ -45,7 +45,11 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
     private boolean cambiando_estado;
     private int categoria;
     private TextView categoriaNoticiaTextView;
-
+    public static EscuchadoMeGusta escuchadoMeGusta;
+    public interface EscuchadoMeGusta
+    {
+        void meMeGusta();
+    }
     public Detalle_Articulo_Activity() {
     }
 
@@ -115,6 +119,7 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 consultar_noticia();
+                                escuchadoMeGusta.meMeGusta();
                             }
                         };
                         Response.ErrorListener errorListener = new Response.ErrorListener() {
