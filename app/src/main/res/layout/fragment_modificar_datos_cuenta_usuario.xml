@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.ModificarDatosCuentaUsuarioFragment">
     <ScrollView
         android:layout_width="match_parent"
@@ -107,18 +108,36 @@
                     android:inputType="textPassword"
                     android:textSize="14sp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"/>
-
-
-                <Button
-                    android:id="@+id/modificarUsuarioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:text="MODIFICAR"
-                    android:theme="@style/Button"
-                    android:layout_gravity="center"
-
                     />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    app:cardCornerRadius="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+
+                    >
+                    <LinearLayout
+                        android:layout_width="300dp"
+                        android:layout_height="60dp"
+                        android:background="@color/colorAccent"
+                        android:layout_gravity="center"
+                        >
+                        <Button
+                            android:id="@+id/modificarUsuarioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Modificar"
+                            tools:ignore="MissingConstraints"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:theme="@style/Button"
+                            android:textSize="18sp"
+                            />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
 
             </LinearLayout>
 

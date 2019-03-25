@@ -7,16 +7,19 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Adaptador.Adapter_Mensajes_chat_asesoria;
 import com.comfacesar.comfacesar.ContainerActivity;
+import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.example.extra.MySocialMediaSingleton;
@@ -50,6 +53,9 @@ public class ChatAsesoria extends AppCompatActivity {
     private TextView nombreAdministradorTextView;
     int id_chat_notificacion = 0;
     private String titulo2;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +100,16 @@ public class ChatAsesoria extends AppCompatActivity {
             nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
             titulo2= nombreAdministradorTextView.getText().toString();
             ShowToolbar(titulo2,true);
-        }
 
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), ContainertwoActivity.class);
+                    intent.putExtra("id",10);
+                    startActivity(intent);
+                }
+            });
+        }
         mensajeEditText = findViewById(R.id.mensajeEdittextChatAsesoria);
         enviarButton = findViewById(R.id.enviarButton_chatAesoria);
 
@@ -133,7 +147,10 @@ public class ChatAsesoria extends AppCompatActivity {
                 }
             }
         });
+
+
     }
+
 
     public void ShowToolbar(String Tittle, boolean upButton)
     {
@@ -141,6 +158,7 @@ public class ChatAsesoria extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Tittle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
+
     }
 
     private void chatVisto()

@@ -103,7 +103,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         ItemNoticia item = mItems.get(i);
         viewHolder.setDatos(item, fragmentManager);
-
     }
     /////////////////////
     @Override
@@ -195,33 +194,34 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    abrir_nueva_pag(item);
-                }
-            });
-            contenido_TextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    abrir_nueva_pag(item);
+                    abrirArticulo();
                 }
             });
             tituto_textview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    abrir_nueva_pag(item);
+                    abrirArticulo();
+                }
+            });
+            contenido_TextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirArticulo();
                 }
             });
         }
 
-        private void abrir_nueva_pag(ItemNoticia item)
+        private void abrirArticulo()
         {
             Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
+            intent.putExtra("id_noticia", itemNoticia.getNoticia().id_notiticia);
+            intent.putExtra("titulo", itemNoticia.getNoticia().titulo_noticia);
+            intent.putExtra("contenido", itemNoticia.getNoticia().contenido_noticia);
+            intent.putExtra("fecha", itemNoticia.getNoticia().fecha_registro_noticia);
+            intent.putExtra("hora", itemNoticia.getNoticia().hora_registro_noticia);
+            intent.putExtra("imagen", itemNoticia.getImagen());
+            intent.putExtra("categoria", itemNoticia.getNoticia().categoria_noticia_manual_noticia);
 
-            intent.putExtra("id_noticia", item.getNoticia().id_notiticia);
-            intent.putExtra("titulo", item.getNoticia().titulo_noticia);
-            intent.putExtra("contenido", item.getNoticia().contenido_noticia);
-            intent.putExtra("fecha", item.getNoticia().fecha_registro_noticia);
-            intent.putExtra("hora", item.getNoticia().hora_registro_noticia);
-            intent.putExtra("imagen", item.getImagen());
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             {
