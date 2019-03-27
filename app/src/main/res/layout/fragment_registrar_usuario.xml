@@ -50,6 +50,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="identificacion:"
+                            android:inputType="number"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -183,6 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="telefono:"
+                            android:inputType="phone"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -208,6 +210,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="direccion:"
+                            android:inputType="textWebEmailAddress"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 

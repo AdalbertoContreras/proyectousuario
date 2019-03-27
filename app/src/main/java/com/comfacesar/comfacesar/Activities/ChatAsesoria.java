@@ -67,7 +67,12 @@ public class ChatAsesoria extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_chat);
         toolbar.setBackgroundResource(R.color.Gris3);
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //onBackPressed();
+            }
+        });
         id_chat = 0;
         esNotificacion = 0;
         try
@@ -95,7 +100,7 @@ public class ChatAsesoria extends AppCompatActivity {
             {
                 administrador = administradors.get(0);
                 nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
-
+                ShowToolbar(administrador.nombre_cuenta_administrador,true);
             }
             ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
             if(!especialidads.isEmpty())
@@ -107,7 +112,7 @@ public class ChatAsesoria extends AppCompatActivity {
         {
             nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
             titulo2= nombreAdministradorTextView.getText().toString();
-            ShowToolbar(titulo2,true);
+            ShowToolbar(administrador.nombre_cuenta_administrador,true);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

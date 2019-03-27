@@ -204,22 +204,26 @@ public class RegistrarUsuarioFragment extends Fragment {
         {
             @Override
             public void onResponse(String response) {
-                int val = 0;
-                try
+                if(getContext() != null)
                 {
-                    val = Integer.parseInt(response);
-                }
-                catch(NumberFormatException exc)
-                {
+                    int val = 0;
+                    try
+                    {
+                        val = Integer.parseInt(response);
+                    }
+                    catch(NumberFormatException exc)
+                    {
 
-                }
-                if(val > 0)
-                {
-                    numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.rojo));
-                }
-                else
-                {
-                    numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
+                    }
+                    if(val > 0)
+                    {
+
+                        numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.rojo));
+                    }
+                    else
+                    {
+                        numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
+                    }
                 }
             }
         };
@@ -241,22 +245,25 @@ public class RegistrarUsuarioFragment extends Fragment {
         {
             @Override
             public void onResponse(String response) {
-                int val = 0;
-                try
+                if(getContext() != null)
                 {
-                    val = Integer.parseInt(response);
-                }
-                catch(NumberFormatException exc)
-                {
+                    int val = 0;
+                    try
+                    {
+                        val = Integer.parseInt(response);
+                    }
+                    catch(NumberFormatException exc)
+                    {
 
-                }
-                if(val > 0)
-                {
-                    nombreCuentaEditText.setTextColor(getResources().getColor(R.color.rojo));
-                }
-                else
-                {
-                    nombreCuentaEditText.setTextColor(getResources().getColor(R.color.Black));
+                    }
+                    if(val > 0)
+                    {
+                        nombreCuentaEditText.setTextColor(getResources().getColor(R.color.rojo));
+                    }
+                    else
+                    {
+                        nombreCuentaEditText.setTextColor(getResources().getColor(R.color.Black));
+                    }
                 }
             }
         };
@@ -415,7 +422,7 @@ public class RegistrarUsuarioFragment extends Fragment {
                     val = Integer.parseInt(response);
                     if(val > 0)
                     {
-                        registrar_movil_registro(val);
+                        limpiarDatos();
                         Toast.makeText(view_permanente.getContext(),"Usuario registrado con exito", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -433,6 +440,19 @@ public class RegistrarUsuarioFragment extends Fragment {
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void limpiarDatos()
+    {
+        numeroIdentificacionEditText.setText("");
+        nombreUsuarioEditText.setText("");
+        apellidoEditText.setText("");
+        fecha_nacimientoEditText.setText("");
+        telefonoEditText.setText("");
+        direccionEditText.setText("");
+        nombreCuentaEditText.setText("");
+        contraseñaCuentaEditText.setText("");
+        bitmap = null;
     }
 
     private void openGallery(){
@@ -503,7 +523,8 @@ public class RegistrarUsuarioFragment extends Fragment {
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response)
+            {
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {

@@ -126,7 +126,16 @@ public class HistorialAsesoriasFragment extends Fragment {
 
     private void generar_consulta(final String response)
     {
-        ArrayList<Chat_asesoria> list = Gestion_chat_asesoria.getChat_asesorias();
+        ArrayList<Chat_asesoria> list;
+
+        if(Gestion_chat_asesoria.getChat_asesorias() != null)
+        {
+            list = Gestion_chat_asesoria.getChat_asesorias();
+        }
+        else
+        {
+            list = new ArrayList<>();
+        }
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),1));
         Adapter_historia_chat_asesoria adapter_historia_chat_asesoria = new Adapter_historia_chat_asesoria(list, getFragmentManager(), getActivity());
         recyclerView.setAdapter(adapter_historia_chat_asesoria);
