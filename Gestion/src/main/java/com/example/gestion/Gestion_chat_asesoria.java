@@ -219,13 +219,16 @@ public class Gestion_chat_asesoria {
                 if(!jsonObject.get("especialidad").isJsonNull())
                 {
                     especialidad = jsonObject.get("especialidad").getAsString();
-                }if(!jsonObject.get(ULTIMO_MENSAJE_CHAT_ASESORIA).isJsonNull())
+                }
+                if(!jsonObject.get(ULTIMO_MENSAJE_CHAT_ASESORIA).isJsonNull())
                 {
                     ultimo_mensaje_chat_asesoria = jsonObject.get(ULTIMO_MENSAJE_CHAT_ASESORIA).getAsString();
-                }if(!jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).isJsonNull())
+                }
+                if(!jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).isJsonNull())
                 {
                     ultima_fecha_chat_asesoria = jsonObject.get(ULTIMA_FECHA_CHAT_ASESORIA).getAsString();
-                }if(!jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).isJsonNull())
+                }
+                if(!jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).isJsonNull())
                 {
                     ultima_hora_chat_asesoria = jsonObject.get(ULTIMA_HORA_CHAT_ASESORIA).getAsString();
                 }

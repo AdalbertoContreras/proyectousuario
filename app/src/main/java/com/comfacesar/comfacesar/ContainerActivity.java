@@ -382,11 +382,9 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
-                    Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                    intent.putExtra("id",11);
-                    startActivity(intent);
+                public void onClick(View v)
+                {
+                    tengoChat();
                 }
             });
         }
@@ -640,10 +638,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     }
                     else
                     {
-                        intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
-                        HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                        intent = new Intent(ContainerActivity.this, HistorialChatVacioActivity.class);
+                        HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
                             @Override
-                            public void enviarAlerta() {
+                            public void enviarAsesoria() {
                                 viewPager.setCurrentItem(1,true);
                             }
                         };
@@ -653,10 +651,9 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
                     HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
-
                         @Override
                         public void enviarAsesoria() {
-
+                            viewPager.setCurrentItem(1,true);
                         }
                     };
                 }
@@ -672,7 +669,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
                     @Override
                     public void enviarAlerta() {
-                        viewPager.setCurrentItem(1,true);
+                        viewPager.setCurrentItem(11,true);
                     }
                 };
                 startActivity(intent);

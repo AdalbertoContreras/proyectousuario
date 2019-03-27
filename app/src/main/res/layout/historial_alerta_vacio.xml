@@ -30,7 +30,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                app:lottie_fileName="2118-funky-chicken.json"
+                app:lottie_fileName="2708-red-alert.json"
                 tools:ignore="MissingConstraints"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"

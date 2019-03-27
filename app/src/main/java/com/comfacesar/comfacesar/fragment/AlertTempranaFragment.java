@@ -111,13 +111,13 @@ public class AlertTempranaFragment extends Fragment {
         {
             alerta_temprana.asunto_alerta_temprana = 2;
         }
-        if(acosoRadioButton.isChecked())
+        if(abusoRadioButton.isChecked())
         {
-            alerta_temprana.asunto_alerta_temprana = 3;
+            alerta_temprana.asunto_alerta_temprana = 4;
         }
         if(violenciaRadioButton.isChecked())
         {
-            alerta_temprana.asunto_alerta_temprana = 4;
+            alerta_temprana.asunto_alerta_temprana = 3;
         }
         if(descripcionTextView.getText().toString().isEmpty())
         {

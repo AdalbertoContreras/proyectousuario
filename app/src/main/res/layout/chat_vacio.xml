@@ -30,7 +30,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                app:lottie_fileName="5081-empty-box.json"
+                app:lottie_fileName="3603-chat-animation.json"
                 tools:ignore="MissingConstraints"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"/>

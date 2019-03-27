@@ -199,10 +199,7 @@ public class ChatAsesoria extends AppCompatActivity {
         }
     }
 
-    public interface CambioEstado
-    {
-        void cambio(boolean estado, Activity activity);
-    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -375,4 +372,10 @@ public class ChatAsesoria extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public interface CambioEstado
+    {
+        void cambio(boolean estado, Activity activity);
+    }
+
 }

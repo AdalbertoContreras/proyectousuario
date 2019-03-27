@@ -92,7 +92,6 @@ public class HistorialAsesoriasFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_historial_asesorias, container, false);
         recyclerView = view.findViewById(R.id.historial_asesoriasRecyclerView);
-        generar_consulta("");
         Gestion_chat_asesoria.arrayChatCambiado = new Gestion_chat_asesoria.ArrayChatCambiado() {
             @Override
             public void chatCambiado() {
@@ -105,7 +104,8 @@ public class HistorialAsesoriasFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        consultar_chats();
+        //consultar_chats();
+        generar_consulta("");
     }
 
     private void consultar_chats()
