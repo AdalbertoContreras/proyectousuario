@@ -39,7 +39,7 @@ import java.util.HashMap;
  * A simple {@link Fragment} subclass.
  */
 public class AlertTempranaFragment extends Fragment {
-    private EditText nombreTextView, apellidoTextView, direccionTextView, telefonoTextView, descripcionTextView;
+    private EditText descripcionTextView;
     private Button enviar_alerta_tempranaButton;
     private View view;
     private ArrayList<Asunto> asuntoArrayList;

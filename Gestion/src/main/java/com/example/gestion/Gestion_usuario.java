@@ -171,7 +171,10 @@ public class Gestion_usuario{
 
     public static void setUsuario_online(Usuario usuario_online) {
         Gestion_usuario.usuario_online = usuario_online;
-        escuchadorParaActivityPrincipal.usuarioCambiado(usuario_online);
-        escuchadorParaHome.usuarioCambiado(usuario_online);
+        if(Gestion_usuario.getUsuario_online() != usuario_online)
+        {
+            escuchadorParaActivityPrincipal.usuarioCambiado(usuario_online);
+            escuchadorParaHome.usuarioCambiado(usuario_online);
+        }
     }
 }

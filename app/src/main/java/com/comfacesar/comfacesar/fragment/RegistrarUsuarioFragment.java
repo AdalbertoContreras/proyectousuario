@@ -125,6 +125,32 @@ public class RegistrarUsuarioFragment extends Fragment {
         subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
         eliminarFotoButton = view_permanente.findViewById(R.id.eliminar_imagenButton);
         fotoPerfilCircleImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
+        numeroIdentificacionEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
+                }
+                else
+                {
+                    existeNumeroIdentificacion();
+                }
+            }
+        });
+        nombreCuentaEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    nombreCuentaEditText.setTextColor(getResources().getColor(R.color.Black));
+                }
+                else
+                {
+                    existeNombreCuenta();
+                }
+            }
+        });
         subirFotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +194,80 @@ public class RegistrarUsuarioFragment extends Fragment {
             }
         });
         return view_permanente;
+    }
+
+    private void existeNumeroIdentificacion()
+    {
+        HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
+        Log.d("parametros", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                }
+                catch(NumberFormatException exc)
+                {
+
+                }
+                if(val > 0)
+                {
+                    numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.rojo));
+                }
+                else
+                {
+                    numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void existeNombreCuenta()
+    {
+        HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
+        Log.d("parametros", hashMap.toString());
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                }
+                catch(NumberFormatException exc)
+                {
+
+                }
+                if(val > 0)
+                {
+                    nombreCuentaEditText.setTextColor(getResources().getColor(R.color.rojo));
+                }
+                else
+                {
+                    nombreCuentaEditText.setTextColor(getResources().getColor(R.color.Black));
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                nombreCuentaEditText.setTextColor(getResources().getColor(R.color.Black));
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     private void validar_numero_identificacion()
