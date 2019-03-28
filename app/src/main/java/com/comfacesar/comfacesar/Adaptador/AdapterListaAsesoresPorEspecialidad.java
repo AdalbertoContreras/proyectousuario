@@ -66,6 +66,7 @@ public class AdapterListaAsesoresPorEspecialidad extends  RecyclerView.Adapter<A
                 public void onClick(View v) {
                     ChatAsesoria.administrador = administrador;
                     Intent intent = new Intent(view.getContext(), ChatAsesoria.class);
+
                     (view.getContext()).startActivity(intent);
                 }
             });

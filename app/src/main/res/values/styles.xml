@@ -29,6 +29,38 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="tipoSexualidad">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:background">@color/White</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">0.01</item>
+    </style>
+
+    <style name="tipoSexualidad.maltratoTexView">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:text">"MALTRATO"</item>
+    </style>
+
+    <style name="tipoSexualidad.sexualidadTexView">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:text">"SEXUALIDAD"</item>
+    </style>
+
+    <style name="tipoSexualidad.identidadTextView">
+        <item name="android:background">@color/Gris</item>
+        <item name="android:text">"IDENTIDAD"</item>
+    </style>
+
+    <style name="tipoSexualidad.embarazoTextView">
+        <item name="android:background">@color/tipo_one</item>
+        <item name="android:text">"EMBARAZO"</item>
+    </style>
+
 
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

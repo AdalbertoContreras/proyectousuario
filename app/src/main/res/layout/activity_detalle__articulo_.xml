@@ -25,7 +25,7 @@
                 android:id="@+id/imagen_imageView_itemNoticia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/imagen_2"
+                android:background="@drawable/perfil2"
                 android:scaleType="centerCrop"
                 android:transitionName="transicion_imagen"
                 app:layout_collapseMode="parallax" />
@@ -64,17 +64,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.01"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="left"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="maltrato"
-            android:textColor="@color/White"
-            />
+            android:id="@+id/categoriaTextView"
+            style="@style/tipoSexualidad" />
 
         <LinearLayout
             android:layout_width="wrap_content"

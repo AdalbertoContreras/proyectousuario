@@ -80,19 +80,32 @@ public class HistorialAsesoriasFragment extends Fragment {
         }
     }
 
+    public static EscuchaorOnBackPressed escuchaorOnBackPressed;
+    public interface EscuchaorOnBackPressed
+    {
+        void onBackPressed();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_historial_asesorias, container, false);
         recyclerView = view.findViewById(R.id.historial_asesoriasRecyclerView);
+        Gestion_chat_asesoria.arrayChatCambiado = new Gestion_chat_asesoria.ArrayChatCambiado() {
+            @Override
+            public void chatCambiado() {
+                generar_consulta("");
+            }
+        };
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        consultar_chats();
+        //consultar_chats();
+        generar_consulta("");
     }
 
     private void consultar_chats()
@@ -113,10 +126,19 @@ public class HistorialAsesoriasFragment extends Fragment {
 
     private void generar_consulta(final String response)
     {
-        ArrayList<Chat_asesoria> list = new Gestion_chat_asesoria().generar_json(response);
+        ArrayList<Chat_asesoria> list;
+
+        if(Gestion_chat_asesoria.getChat_asesorias() != null)
+        {
+            list = Gestion_chat_asesoria.getChat_asesorias();
+        }
+        else
+        {
+            list = new ArrayList<>();
+        }
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),1));
-        Adapter_historia_chat_asesoria adapterItemCliente = new Adapter_historia_chat_asesoria(list, getFragmentManager());
-        recyclerView.setAdapter(adapterItemCliente);
+        Adapter_historia_chat_asesoria adapter_historia_chat_asesoria = new Adapter_historia_chat_asesoria(list, getFragmentManager(), getActivity());
+        recyclerView.setAdapter(adapter_historia_chat_asesoria);
         recyclerView.setHasFixedSize(true);
     }
 

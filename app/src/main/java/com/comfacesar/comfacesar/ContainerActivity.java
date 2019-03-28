@@ -22,13 +22,18 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.ChatAsesoria;
+import com.comfacesar.comfacesar.Activities.HistorialAlertaVacioActivity;
+import com.comfacesar.comfacesar.Activities.HistorialChatVacioActivity;
 import com.comfacesar.comfacesar.Dialog.MensajeUsuarioSaliendo;
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
@@ -39,6 +44,7 @@ import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Escuchadores.EscuchadorUsuario;
 import com.example.gestion.Gestion_administrador;
+import com.example.gestion.Gestion_alerta_temprana;
 import com.example.gestion.Gestion_chat_asesoria;
 import com.example.gestion.Gestion_especialidad;
 import com.example.gestion.Gestion_usuario;
@@ -60,9 +66,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     private static boolean hilo_notificaciones_activo = false;
     private final String CHANEL_ID = "NOTIFICACION";
     private NotificationManagerCompat notificationManagerCompat;
-    private static ArrayList<Chat_asesoria> chat_asesorias_local;
     private ArrayList<Chat_asesoria> chat_asesorias_remoto;
-
+    public static int id = 0;
+    private MyPagerAdapter myPagerAdapter;
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +92,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         toolbar.setTitle("ServiAmigo");
         toolbar.setBackgroundResource(R.color.Gris3);
         setSupportActionBar(toolbar);
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -123,16 +130,15 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     else
                     {
                         hilo_notificaciones_activo = false;
-                        if(chat_asesorias_local != null)
+                        if(Gestion_chat_asesoria.getChat_asesorias() != null)
                         {
                             notificationManagerCompat = NotificationManagerCompat.from(ContainerActivity.this);
-                            for(Chat_asesoria item : chat_asesorias_local)
+                            for(Chat_asesoria item : Gestion_chat_asesoria.getChat_asesorias())
                             {
 
                                 notificationManagerCompat.cancel(item.id_chat_asesoria);
                             }
-                            chat_asesorias_local.clear();
-                            chat_asesorias_local = null;
+                            Gestion_chat_asesoria.limpiarChatAsesoria();
                         }
                     }
                 }
@@ -144,11 +150,19 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             onCreateOptionsMenu(menu);
         }
         fragmentManager = getSupportFragmentManager();
+        if(id > 0)
+        {
+            if(id == 3)
+            {
+                viewPager.setCurrentItem(2);
+            }
+            id = 0;
+        }
     }
 
     private void iniciar_hilo_notificaciones()
     {
-        chat_asesorias_local = null;
+        Gestion_chat_asesoria.setChat_asesorias(null);
         actualizar_notificaciones_chat();
         new Thread(new Runnable() {
             @Override
@@ -188,12 +202,11 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 @Override
                 public void onResponse(String response) {
                     chat_asesorias_remoto = new Gestion_chat_asesoria().generar_json(response);
-                    if(chat_asesorias_remoto != null)
+                    if(!chat_asesorias_remoto.isEmpty())
                     {
-                        if(chat_asesorias_local == null)
+                        if(Gestion_chat_asesoria.getChat_asesorias() == null)
                         {
-                            chat_asesorias_local = new ArrayList<>();
-                            chat_asesorias_local.addAll(chat_asesorias_remoto);
+                            //Gestion_chat_asesoria.setChat_asesorias(chat_asesorias_remoto);
                             for(Chat_asesoria item :  chat_asesorias_remoto)
                             {
                                 ArrayList<Administrador> administradors = new Gestion_administrador().generar_json(item.administrador);
@@ -205,7 +218,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                                     Especialidad especialidad = especialidads.get(0);
                                     titulo = administrador.nombre_cuenta_administrador + " <<" + especialidad.nombre_especialidad + ">>";
                                 }
-                                chat_asesorias_local.add(item);
+                                //Gestion_chat_asesoria.addChat_asesoria(item);
                                 if(!administradors.isEmpty() && !especialidads.isEmpty())
                                 {
                                     aux(item, titulo);
@@ -228,7 +241,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                                 }
                                 if(chat_asesoria == null)
                                 {
-                                    chat_asesorias_local.add(item);
+                                    Gestion_chat_asesoria.addChat_asesoria(item);
                                     if(!administradors.isEmpty() && !especialidads.isEmpty())
                                     {
                                         aux(item, titulo);
@@ -243,6 +256,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                                 }
                             }
                         }
+                        Gestion_chat_asesoria.setChat_asesorias(chat_asesorias_remoto);
                     }
                 }
             };
@@ -270,8 +284,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 String time1 = item.ultima_hora_administrador_chat_asesoria;
                 String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
                 String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
-                Calendar calendar = Calculo.String_a_Date( date1, time1);
-                Calendar calendar2 = Calculo.String_a_Date(date2, time2);
+                Calendar calendar = new Calculo().String_a_Date( date1, time1);
+                Calendar calendar2 = new Calculo().String_a_Date(date2, time2);
                 if(!(date1 + time1).equals(date2+time2))
                 {
                     if(Calculo.compararCalendar(calendar,calendar2) == 1)
@@ -285,14 +299,13 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     private void agregar_notificacion(Chat_asesoria item, String titulo)
     {
-        reemplazar_chat_local(item);
         createNotificationChanel();
         createNotification(item.ultimo_mensaje_administrador_chat_asesoria, titulo, item.id_chat_asesoria);
     }
 
     public static Chat_asesoria chat_asesoria_por_id(int id)
     {
-        for(Chat_asesoria item : chat_asesorias_local)
+        for(Chat_asesoria item : Gestion_chat_asesoria.getChat_asesorias())
         {
             if(item.id_chat_asesoria == id)
             {
@@ -300,18 +313,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         }
         return null;
-    }
-
-    public void reemplazar_chat_local(Chat_asesoria chat_asesoria)
-    {
-        int tam = chat_asesorias_local.size();
-        for(int i = 0; i < tam; i ++)
-        {
-            if(chat_asesorias_local.get(i).id_chat_asesoria == chat_asesoria.id_chat_asesoria)
-            {
-                chat_asesorias_local.add(i, chat_asesoria);
-            }
-        }
     }
 
     private void createNotificationChanel()
@@ -329,7 +330,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     {
         Intent resultIntent = new Intent(this, ChatAsesoria.class);
         resultIntent.putExtra("chat", id);
-
+        resultIntent.putExtra("notificacion", 1);
 // Create the TaskStackBuilder and add the intent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
@@ -370,24 +371,16 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
-                    Intent intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
-                    intent.putExtra("id",11);
-                    startActivity(intent);
+                public void onClick(View v)
+                {
+                    tengoChat();
                 }
             });
         }
-        Gestion_chat_asesoria.chatAbierto = new Gestion_chat_asesoria.ChatAbierto() {
-            @Override
-            public void abierto(int id_chat)
-            {
-                if(notificationManagerCompat != null)
-                {
-                    notificationManagerCompat.cancel(id_chat);
-                }
-            }
-        };
+        if(escuchadorCambioFiltro != null)
+        {
+            escuchadorCambioFiltro.filtroCambiado("", searchView);
+        }
     }
 
     @Override
@@ -469,7 +462,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         }
         if(pageSelecionado == 0)
         {
-            MenuItem searchItem = menu.findItem(R.id.action_buscar);
+            final MenuItem searchItem = menu.findItem(R.id.action_buscar);
             searchView = (SearchView) searchItem.getActionView();
             searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -488,10 +481,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    escuchadorCambioFiltro.filtroCambiado(s);
+                    escuchadorCambioFiltro.filtroCambiado(s, searchItem.getActionView());
                     return false;
                 }
             });
+        }
+        else
+        {
+            //escuchadorCambioFiltro.filtroCambiado("");
         }
 
         this.menu = menu;
@@ -499,7 +496,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     }
 
     public interface escuchador{
-        void filtroCambiado(String textoNuevo);
+        void filtroCambiado(String textoNuevo, View view);
     }
 
     public static escuchador escuchadorCambioFiltro;
@@ -516,12 +513,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         switch (item.getItemId())
         {
             case R.id.historialAlertasMenu:
-                intent.putExtra("id",1);
-                selecionado = true;
+                tengoAlertaTempranas();
                 break;
             case  R.id.historialAsesoriasMenu:
-                intent.putExtra("id",2);
-                selecionado = true;
+                tengoChat();
                 break;
             case  R.id.iniciarSesionMenu:
                 intent.putExtra("id",3);
@@ -553,6 +548,124 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             startActivity(intent);
         }
         return true;
+    }
+
+    private void tengoAlertaTempranas()
+    {
+        HashMap<String,String> params = new Gestion_alerta_temprana().consultar_num_alertas_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Intent intent;
+                try
+                {
+                    int val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                        intent.putExtra("id",1);
+                    }
+                    else
+                    {
+                        intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                        HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                            @Override
+                            public void enviarAlerta() {
+                                viewPager.setCurrentItem(2,true);
+                            }
+                        };
+                    }
+                }
+                catch(NumberFormatException exc)
+                {
+                    intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                    HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                        @Override
+                        public void enviarAlerta() {
+                            viewPager.setCurrentItem(2,true);
+                        }
+                    };
+                }
+                startActivity(intent);
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Reponse.Error",error.toString());
+                Intent intent;
+                intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                    @Override
+                    public void enviarAlerta() {
+                        viewPager.setCurrentItem(2,true);
+                    }
+                };
+                startActivity(intent);
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void tengoChat()
+    {
+        HashMap<String,String> params = new Gestion_chat_asesoria().numero_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                Intent intent;
+                try
+                {
+                    int val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        intent = new Intent(ContainerActivity.this, ContainertwoActivity.class);
+                        intent.putExtra("id",11);
+                    }
+                    else
+                    {
+                        intent = new Intent(ContainerActivity.this, HistorialChatVacioActivity.class);
+                        HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
+                            @Override
+                            public void enviarAsesoria() {
+                                viewPager.setCurrentItem(1,true);
+                            }
+                        };
+                    }
+                }
+                catch(NumberFormatException exc)
+                {
+                    intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                    HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
+                        @Override
+                        public void enviarAsesoria() {
+                            viewPager.setCurrentItem(1,true);
+                        }
+                    };
+                }
+                startActivity(intent);
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Reponse.Error",error.toString());
+                Intent intent;
+                intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                    @Override
+                    public void enviarAlerta() {
+                        viewPager.setCurrentItem(11,true);
+                    }
+                };
+                startActivity(intent);
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
     @Override
@@ -590,9 +703,9 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     @Override
     protected void onDestroy() {
-        if(chat_asesorias_local != null)
+        if(Gestion_chat_asesoria.getChat_asesorias() != null)
         {
-            for(Chat_asesoria item : chat_asesorias_local)
+            for(Chat_asesoria item : Gestion_chat_asesoria.getChat_asesorias())
             {
                 notificationManagerCompat = NotificationManagerCompat.from(this);
                 notificationManagerCompat.cancel(item.id_chat_asesoria);

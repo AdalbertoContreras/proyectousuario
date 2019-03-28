@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.Util.Util;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
@@ -78,12 +80,13 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
 
     private static View view_permanente;
     private EditText nombreCuentaEditText;
-    private EditText contraseñaCuentaEditText;
+    private EditText contraseñaNuevaEditText;
     private EditText contraseñaCuentaAnteriorEditText;
     private EditText contraseñaCuentaVerificadaEditText;
     private Button modificar_usuario;
     private Usuario usuario_espejo;
     private String contraseña_anterior;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,8 +94,8 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_modificar_datos_cuenta_usuario, container, false);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaUsuarioEditText);
-        contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaUsuarioEditText);
-        contraseñaCuentaAnteriorEditText = view_permanente.findViewById(R.id.contraseñaCuentaAnteriorUsuarioEditText);
+        contraseñaCuentaAnteriorEditText = view_permanente.findViewById(R.id.contraseñaCuentaUsuarioEditText);
+        contraseñaNuevaEditText = view_permanente.findViewById(R.id.contraseñaCuentaNuevaUsuarioEditText);
         contraseñaCuentaVerificadaEditText = view_permanente.findViewById(R.id.contraseñaCuentaVerificadaUsuarioEditText);
         modificar_usuario = view_permanente.findViewById(R.id.modificarUsuarioButton);
         usuario_espejo = new Usuario();
@@ -107,13 +110,17 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         modificar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alertDialog = new Util().getProgressDialog(view_permanente, "Actualizando datos");
+                alertDialog.show();
                 if(Config.getImei() == null)
                 {
+                    alertDialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos de su cuenta.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(contraseñaCuentaAnteriorEditText.getText().toString().isEmpty())
                 {
+                    alertDialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de esta cuenta.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -141,18 +148,21 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
                     val = Integer.parseInt(response);
                     if(val > 0)
                     {
-                        if(contraseñaCuentaEditText.getText().toString().isEmpty())
+                        if(contraseñaNuevaEditText.getText().toString().isEmpty())
                         {
+                            alertDialog.dismiss();
                             Toast.makeText(view_permanente.getContext(), "Ingrese la nueva contraseña de su cuenta.", Toast.LENGTH_LONG).show();
                             return;
                         }
                         if(contraseñaCuentaVerificadaEditText.getText().toString().isEmpty())
                         {
+                            alertDialog.dismiss();
                             Toast.makeText(view_permanente.getContext(), "Ingrese de nuevo la nueva contraseña.", Toast.LENGTH_LONG).show();
                             return;
                         }
-                        if(!contraseñaCuentaEditText.getText().toString().equals(contraseñaCuentaVerificadaEditText.getText().toString()))
+                        if(!contraseñaNuevaEditText.getText().toString().equals(contraseñaCuentaVerificadaEditText.getText().toString()))
                         {
+                            alertDialog.dismiss();
                             Toast.makeText(view_permanente.getContext(), "Las contraseñas ingresadas no coinciden.", Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -163,12 +173,14 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
                     }
                     else
                     {
+                        alertDialog.dismiss();
                         Toast.makeText(view_permanente.getContext(), "No cuenta con acceso a cambiar la contraseña de esta cuenta", Toast.LENGTH_LONG).show();
                         Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
                     }
                 }
                 catch (NumberFormatException exc)
                 {
+                    alertDialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "No cuenta con acceso a cambiar la contraseña de esta cuenta", Toast.LENGTH_LONG).show();
                     Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
                 }
@@ -177,6 +189,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                alertDialog.dismiss();
                 Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
                 Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
             }
@@ -187,7 +200,9 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
 
     public void actualizar_contraseña()
     {
-        usuario_espejo.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
+
+        alertDialog.setMessage("Actualizando datos");
+        usuario_espejo.contrasena_usuario = contraseñaNuevaEditText.getText().toString();
         Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
         HashMap<String, String> hashMap = new Gestion_usuario().actualizar_contrasena_usuario(usuario_espejo);
         Log.d("parametros", hashMap.toString());
@@ -202,12 +217,15 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
                     val = Integer.parseInt(response);
                     if(val > 0)
                     {
+                        limpiar();
+                        alertDialog.dismiss();
                         Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
                         Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (NumberFormatException exc)
                 {
+                    alertDialog.dismiss();
                     Toast.makeText(view_permanente.getContext(),"Error al actualizar datos de la cuenta", Toast.LENGTH_LONG).show();
                 }
             }
@@ -215,6 +233,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                alertDialog.dismiss();
                 Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
             }
         };
@@ -222,10 +241,17 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
+    private void limpiar()
+    {
+        contraseñaCuentaAnteriorEditText.setText("");
+        contraseñaNuevaEditText.setText("");
+        contraseñaCuentaVerificadaEditText.setText("");
+    }
+
     private void cargar_datos_usuario()
     {
         nombreCuentaEditText.setText(Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-        contraseñaCuentaEditText.setText("");
+        contraseñaNuevaEditText.setText("");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

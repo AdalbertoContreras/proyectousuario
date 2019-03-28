@@ -91,7 +91,7 @@ public class HistorialAlertasFragment extends Fragment {
     private boolean seguir;
     private int id_max;
     private boolean agregando_nuevas_alertas;
-    AdapterAlerta adapterItemCliente;
+    private AdapterAlerta adapterItemCliente;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

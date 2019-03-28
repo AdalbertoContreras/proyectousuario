@@ -33,9 +33,7 @@
                 app:lottie_fileName="3603-chat-animation.json"
                 tools:ignore="MissingConstraints"
                 app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-
-                />
+                app:lottie_autoPlay="true"/>
         </LinearLayout>
 
         <android.support.v7.widget.CardView
@@ -52,6 +50,7 @@
                 android:background="@color/colorAccent"
                 >
                 <Button
+                    android:id="@+id/irAsesoriaButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Ir a asesorias"

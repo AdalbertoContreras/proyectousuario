@@ -37,6 +37,7 @@ import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.Interface.ListItem;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.fragment.HomeFragment;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_me_gusta_noticia;
@@ -103,33 +104,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         ItemNoticia item = mItems.get(i);
         viewHolder.setDatos(item, fragmentManager);
-
-        viewHolder.imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
-
-                intent.putExtra("id_noticia", mItems.get(i).getNoticia().id_notiticia);
-                intent.putExtra("titulo", mItems.get(i).getNoticia().titulo_noticia);
-                intent.putExtra("contenido", mItems.get(i).getNoticia().contenido_noticia);
-                intent.putExtra("fecha", mItems.get(i).getNoticia().fecha_registro_noticia);
-                intent.putExtra("hora", mItems.get(i).getNoticia().hora_registro_noticia);
-                intent.putExtra("imagen", mItems.get(i).getImagen());
-
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                {
-
-                   Explode explode= new Explode();
-                    explode.setDuration(1000);
-                    actividad.getWindow().setExitTransition(new AutoTransition());
-                    actividad.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(actividad).toBundle());
-
-                }
-                else{
-                actividad.startActivity(intent);
-            }}
-        });
-
     }
     /////////////////////
     @Override
@@ -173,14 +147,14 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
             }
-            megusta_CheckBox.setEnabled(false);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                megusta_CheckBox.setEnabled(true);
                 tengo_me_gusta();
-                megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            }
+
+            megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
                     {
                         HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
@@ -200,9 +174,13 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
                         MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
                     }
+                    if(Gestion_usuario.getUsuario_online() == null)
+                    {
+                        //Toast toast = new Toast(view.getContext());
+                        Toast.makeText(view.getContext(), "Inicie sesion ", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
+                }
+            });
             if(item.getImagen() != "")
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
@@ -218,6 +196,57 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                     }
                 }
             });
+            imagen_noticiaImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirArticulo();
+                }
+            });
+            tituto_textview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirArticulo();
+                }
+            });
+            contenido_TextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrirArticulo();
+                }
+            });
+        }
+
+        private void abrirArticulo()
+        {
+            Intent intent= new Intent(actividad, Detalle_Articulo_Activity.class);
+            intent.putExtra("id_noticia", itemNoticia.getNoticia().id_notiticia);
+            intent.putExtra("titulo", itemNoticia.getNoticia().titulo_noticia);
+            intent.putExtra("contenido", itemNoticia.getNoticia().contenido_noticia);
+            intent.putExtra("fecha", itemNoticia.getNoticia().fecha_registro_noticia);
+            intent.putExtra("hora", itemNoticia.getNoticia().hora_registro_noticia);
+            intent.putExtra("imagen", itemNoticia.getImagen());
+            intent.putExtra("categoria", itemNoticia.getNoticia().categoria_noticia_manual_noticia);
+            HomeFragment.id_articulo_selecionado = itemNoticia.getNoticia().id_notiticia;
+
+            Detalle_Articulo_Activity.escuchadoMeGusta = new Detalle_Articulo_Activity.EscuchadoMeGusta() {
+                @Override
+                public void meMeGusta() {
+                    tengo_me_gusta();
+                    consultar_noticia();
+                }
+            };
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            {
+                Explode explode= new Explode();
+                explode.setDuration(1000);
+                actividad.getWindow().setExitTransition(new AutoTransition());
+                actividad.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(actividad).toBundle());
+
+            }
+            else{
+                actividad.startActivity(intent);
+            }
         }
 
         private void tengo_me_gusta()
