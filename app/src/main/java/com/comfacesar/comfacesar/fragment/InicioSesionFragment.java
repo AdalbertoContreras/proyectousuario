@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -55,6 +56,7 @@ public class InicioSesionFragment extends Fragment {
     public Activity actividad;
     private TextView registrarmeTextView;
 
+
     public InicioSesionFragment() {
         // Required empty public constructor
     }
@@ -81,7 +83,6 @@ public class InicioSesionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -101,7 +102,11 @@ public class InicioSesionFragment extends Fragment {
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
-        registrarmeTextView.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+                registrarmeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ContainertwoActivity.class);

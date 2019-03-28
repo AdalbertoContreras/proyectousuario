@@ -18,4 +18,5 @@
     <color name="fondo_chat">#F3F3F3</color>
     <color name="item_enviado">#FAE6BE</color>
     <color name="color_fecha_chat">#CFCECE</color>
+    <color name="VERDE">#4CAF50</color>
 </resources>
