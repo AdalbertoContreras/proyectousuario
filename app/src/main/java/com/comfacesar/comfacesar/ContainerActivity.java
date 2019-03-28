@@ -26,6 +26,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -483,6 +486,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     }
                 }
             });
+            ImageView icon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String s) {

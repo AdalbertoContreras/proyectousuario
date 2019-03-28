@@ -91,7 +91,8 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
             if(!administradores.isEmpty())
             {
                 nombre_asesorTextView.setText(administradores.get(0).nombres_administrador + " " + administradores.get(0).apellidos_administrador);
-                Picasso.with(view.getContext()).load(administradores.get(0).url_foto_perfil_administrador).into(foto_perfil_asesorImageView);
+                Picasso.with(view.getContext()).load(administradores.get(0).url_foto_perfil_administrador).placeholder(R.drawable.ic_iconousuario)
+                        .error(R.drawable.ic_iconousuario).into(foto_perfil_asesorImageView);
             }
             if(!especialidades.isEmpty())
             {

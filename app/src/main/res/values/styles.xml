@@ -46,6 +46,18 @@
         <item name="android:text">"MALTRATO"</item>
     </style>
 
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
+        <!-- Text Size -->
+        <item name="android:textSize">12dp</item>
+        <!-- Query Text Color -->
+        <item name="android:textColorPrimary">@color/Black</item>
+        <!-- Hint Color -->
+        <item name="android:textColorHint">@color/Gris3</item>
+        <!-- Icon Color -->
+        <item name="android:tint">@color/Black</item>
+    </style>
+
+
     <style name="tipoSexualidad.sexualidadTexView">
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:text">"SEXUALIDAD"</item>

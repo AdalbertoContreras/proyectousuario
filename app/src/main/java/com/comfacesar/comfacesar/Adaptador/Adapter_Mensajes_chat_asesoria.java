@@ -123,7 +123,8 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
                 if(!administradores.isEmpty())
                 {
                     Administrador administrador = administradores.get(0);
-                    Picasso.with(view.getContext()).load(administrador.url_foto_perfil_administrador).into(fotoPerfilCircleImageView);
+                    Picasso.with(view.getContext()).load(administrador.url_foto_perfil_administrador).placeholder(R.drawable.ic_iconousuario)
+                            .error(R.drawable.ic_iconousuario).into(fotoPerfilCircleImageView);
                 }
             }
         }

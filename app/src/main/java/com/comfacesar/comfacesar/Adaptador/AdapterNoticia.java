@@ -3,19 +3,15 @@ package com.comfacesar.comfacesar.Adaptador;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.transition.AutoTransition;
 import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,16 +20,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.Detalle_Articulo_Activity;
-import com.comfacesar.comfacesar.ClaseAbstracta.ViewHolder;
-import com.comfacesar.comfacesar.ContainerActivity;
-import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.Interface.ListItem;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
@@ -46,7 +39,6 @@ import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Me_gusta_noticia;
 import com.example.modelo.Noticia;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -202,13 +194,8 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                     abrirArticulo();
                 }
             });
-            tituto_textview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    abrirArticulo();
-                }
-            });
-            contenido_TextView.setOnClickListener(new View.OnClickListener() {
+            LinearLayout linearLayout = view.findViewById(R.id.cuerpo1LinearLayout);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     abrirArticulo();

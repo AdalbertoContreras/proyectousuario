@@ -1,5 +1,6 @@
 package com.comfacesar.comfacesar;
 
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -45,24 +46,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int cadena = getIntent().getExtras().getInt("id");
         String aux = Integer.toString(cadena);
 
-       // Toast.makeText(MapsActivity.this,aux, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(MapsActivity.this,aux, Toast.LENGTH_SHORT).show();
 
         switch (aux)
         {
             case "1":
-            LatLng SedeAdministrativa = new LatLng(10.474032, -73.246280);
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.logocomfacesarnew)).position(SedeAdministrativa).title("SedeAdministrativa"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SedeAdministrativa, 18));
+                LatLng SedeAdministrativa = new LatLng(10.474032, -73.246280);
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.logocomfacesarnew)).position(SedeAdministrativa).title("SedeAdministrativa"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SedeAdministrativa, 18));
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-            break;
+                break;
 
             case"2":
-            LatLng CentroIntegralServicios = new LatLng(10.473988,  -73.253233);
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.logocomfacesarnew)).position(CentroIntegralServicios).title("CentroIntegralServicios"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CentroIntegralServicios, 18));
+                LatLng CentroIntegralServicios = new LatLng(10.473988,  -73.253233);
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.logocomfacesarnew)).position(CentroIntegralServicios).title("CentroIntegralServicios"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CentroIntegralServicios, 18));
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            break;
+                break;
 
             case"3":
                 LatLng CrispinVillazon = new LatLng(10.499886,   -73.278124);

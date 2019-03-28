@@ -60,7 +60,8 @@ public class AdapterListaAsesoresPorEspecialidad extends  RecyclerView.Adapter<A
 
         public void setDatos(final Administrador administrador, final FragmentManager fragmentManager) {
             nombre_administrador_TextView.setText(administrador.nombres_administrador + " " + administrador.apellidos_administrador);
-            Picasso.with(view.getContext()).load(administrador.url_foto_perfil_administrador).into(fotoPerfilCircleImageView);
+            Picasso.with(view.getContext()).load(administrador.url_foto_perfil_administrador).placeholder(R.drawable.ic_iconousuario)
+                    .error(R.drawable.ic_iconousuario).into(fotoPerfilCircleImageView);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
