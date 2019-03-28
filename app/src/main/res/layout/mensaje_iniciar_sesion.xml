@@ -18,13 +18,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/Gris3"
                 android:paddingVertical="5dp">
                 <TextView
                     android:id="@+id/mensajeTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/Gris2"
                     android:textSize="16sp"

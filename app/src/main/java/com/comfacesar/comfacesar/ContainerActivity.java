@@ -93,7 +93,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         });
         toolbar.setTitle("ServiAmigo");
-        toolbar.setBackgroundResource(R.color.Gris3);
+        toolbar.setBackgroundResource(R.color.colorPrimaryDark);
         setSupportActionBar(toolbar);
         myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
         viewPager = (ViewPager) findViewById(R.id.pager);
