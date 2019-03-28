@@ -67,12 +67,7 @@ public class ChatAsesoria extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_chat);
         toolbar.setBackgroundResource(R.color.Gris3);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //onBackPressed();
-            }
-        });
+
         id_chat = 0;
         esNotificacion = 0;
         try
@@ -91,7 +86,6 @@ public class ChatAsesoria extends AppCompatActivity {
         {
 
         }
-
         if(id_chat > 0)
         {
             chat_asesoria = ContainerActivity.chat_asesoria_por_id(id_chat);
@@ -100,7 +94,6 @@ public class ChatAsesoria extends AppCompatActivity {
             {
                 administrador = administradors.get(0);
                 nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
-                ShowToolbar(administrador.nombre_cuenta_administrador,true);
             }
             ArrayList<Especialidad> especialidads = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
             if(!especialidads.isEmpty())
@@ -112,17 +105,14 @@ public class ChatAsesoria extends AppCompatActivity {
         {
             nombreAdministradorTextView.setText(administrador.nombre_cuenta_administrador);
             titulo2= nombreAdministradorTextView.getText().toString();
-            ShowToolbar(administrador.nombre_cuenta_administrador,true);
-
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getBaseContext(), ContainertwoActivity.class);
-                    intent.putExtra("id",10);
-                    startActivity(intent);
-                }
-            });
         }
+        ShowToolbar(administrador.nombre_cuenta_administrador,true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         mensajeEditText = findViewById(R.id.mensajeEdittextChatAsesoria);
         enviarButton = findViewById(R.id.enviarButton_chatAesoria);
 
@@ -167,7 +157,6 @@ public class ChatAsesoria extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Tittle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
-
     }
 
     private void chatVisto()
@@ -292,6 +281,7 @@ public class ChatAsesoria extends AppCompatActivity {
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
+
     private void cargar_mensajes_de_inicio(String response)
     {
         consultando = true;
@@ -370,11 +360,15 @@ public class ChatAsesoria extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Toast.makeText(getBaseContext())
-        super.onBackPressed();
+        /*super.onBackPressed();*/
         if(esNotificacion == 1)
         {
             Intent intent = new Intent(getBaseContext(), ContainerActivity.class);
             startActivity(intent);
+        }
+        else
+        {
+            finish();
         }
     }
 

@@ -1,28 +1,38 @@
 package com.comfacesar.comfacesar.fragment;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.Util.Util;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
@@ -105,6 +115,7 @@ public class RegistrarUsuarioFragment extends Fragment {
     private boolean imagen_modificada;
     private boolean imagen_eliminada = true;
     private CircleImageView fotoPerfilCircleImageView;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -196,6 +207,52 @@ public class RegistrarUsuarioFragment extends Fragment {
         return view_permanente;
     }
 
+    public void setProgressDialog()
+    {
+        int llPadding = 30;
+        LinearLayout ll = new LinearLayout(view_permanente.getContext());
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        ll.setPadding(llPadding, llPadding, llPadding, llPadding);
+        ll.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams llParam = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        llParam.gravity = Gravity.CENTER;
+        ll.setLayoutParams(llParam);
+
+        ProgressBar progressBar = new ProgressBar(view_permanente.getContext());
+        progressBar.setIndeterminate(true);
+        progressBar.setPadding(0, 0, llPadding, 0);
+        progressBar.setLayoutParams(llParam);
+
+        llParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        llParam.gravity = Gravity.CENTER;
+        TextView tvText = new TextView(view_permanente.getContext());
+        tvText.setText("Loading ...");
+        tvText.setTextColor(Color.parseColor("#000000"));
+        tvText.setTextSize(20);
+        tvText.setLayoutParams(llParam);
+
+        ll.addView(progressBar);
+        ll.addView(tvText);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view_permanente.getContext());
+        builder.setCancelable(true);
+        builder.setView(ll);
+
+        alertDialog = builder.create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
+            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            alertDialog.getWindow().setAttributes(layoutParams);
+        }
+    }
+
     private void existeNumeroIdentificacion()
     {
         HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
@@ -279,6 +336,7 @@ public class RegistrarUsuarioFragment extends Fragment {
 
     private void validar_numero_identificacion()
     {
+        alertDialog = new Util().getProgressDialog(view_permanente, "Registrando usuario");
         HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
         Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
@@ -301,6 +359,7 @@ public class RegistrarUsuarioFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+                alertDialog.dismiss();
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
@@ -331,6 +390,7 @@ public class RegistrarUsuarioFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
+                alertDialog.dismiss();
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
@@ -342,46 +402,55 @@ public class RegistrarUsuarioFragment extends Fragment {
         if(Config.getImei() == null)
         {
             Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de registrar un nuevo usuario.", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(numeroIdentificacionEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su numero de identificacion", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(existe_numero_identificacion)
         {
             Toast.makeText(view_permanente.getContext(), "Este numero de identifacion esta siendo utilizado por otro usuario", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(nombreUsuarioEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su nombres", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(apellidoEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(nombreCuentaEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de cuenta para iniciar sesion", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(existe_nombre_cuenta)
         {
             Toast.makeText(view_permanente.getContext(), "Este nombre de cuenta esta siendo utilizado por otro usuario", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(contraseñaCuentaEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de la cuenta", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         if(fecha_nacimientoEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
             return;
         }
         Usuario usuario = new Usuario();
@@ -423,12 +492,14 @@ public class RegistrarUsuarioFragment extends Fragment {
                     if(val > 0)
                     {
                         limpiarDatos();
+                        alertDialog.dismiss();
                         Toast.makeText(view_permanente.getContext(),"Usuario registrado con exito", Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (NumberFormatException exc)
                 {
                     Toast.makeText(view_permanente.getContext(),"Usuario no registrado", Toast.LENGTH_LONG).show();
+                    alertDialog.dismiss();
                 }
             }
         };
@@ -436,6 +507,7 @@ public class RegistrarUsuarioFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
+                alertDialog.dismiss();
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
@@ -452,6 +524,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         direccionEditText.setText("");
         nombreCuentaEditText.setText("");
         contraseñaCuentaEditText.setText("");
+        fotoPerfilCircleImageView.setImageDrawable(getResources().getDrawable(R.drawable.perfil2));
         bitmap = null;
     }
 

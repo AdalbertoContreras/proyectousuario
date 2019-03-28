@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
+import com.comfacesar.comfacesar.Util.Util;
 import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
@@ -110,6 +112,7 @@ public class ModificarUsuarioFragment extends Fragment {
     private int REQUEST_IMAGE_CAPTURE = 1;
     private Uri imageUri;
     private boolean imagen_modificada;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,6 +149,7 @@ public class ModificarUsuarioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 imagen_eliminada = true;
+                imagen_modificada = false;
                 bitmap = null;
                 fotoPerfilImageView.setImageBitmap(null);
             }
@@ -221,22 +225,27 @@ public class ModificarUsuarioFragment extends Fragment {
 
     private void evento_modificar_usuario()
     {
+
         modificar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                alertDialog = new Util().getProgressDialog(view_permanente, "Actualizando datos");
+                alertDialog.show();
             if(Config.getImei() == null)
             {
+                alertDialog.dismiss();
                 Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos personales de su cuenta.", Toast.LENGTH_LONG).show();
                 return;
             }
             if(nombreUsuarioEditText.getText().toString().isEmpty())
             {
+                alertDialog.dismiss();
                 Toast.makeText(view_permanente.getContext(), "Ingrese su nombres", Toast.LENGTH_LONG).show();
                 return;
             }
             if(apellidoEditText.getText().toString().isEmpty())
             {
+                alertDialog.dismiss();
                 Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -257,6 +266,10 @@ public class ModificarUsuarioFragment extends Fragment {
                     usuario_espejo.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
                 }
             }
+            if(imagen_eliminada)
+            {
+                usuario_espejo.foto_perfil_usuario = "-1";
+            }
             usuario_espejo.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
             usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
             usuario_espejo.apellidos_usuario = apellidoEditText.getText().toString();
@@ -276,6 +289,7 @@ public class ModificarUsuarioFragment extends Fragment {
                         if(val > 0)
                         {
                             actualizar_perfil();
+                            alertDialog.dismiss();
                             Gestion_usuario.getUsuario_online().nombres_usuario = usuario_espejo.nombres_usuario;
                             Gestion_usuario.getUsuario_online().apellidos_usuario = usuario_espejo.apellidos_usuario;
                             Gestion_usuario.getUsuario_online().direccion_usuario = usuario_espejo.direccion_usuario;
@@ -283,11 +297,13 @@ public class ModificarUsuarioFragment extends Fragment {
                             Gestion_usuario.getUsuario_online().correo_usuario = usuario_espejo.correo_usuario;
                             Gestion_usuario.getUsuario_online().sexo_usuario = usuario_espejo.sexo_usuario;
                             Gestion_usuario.getUsuario_online().fecha_nacimiento = usuario_espejo.fecha_nacimiento;
+                            cargar_datos_usuario();
                             Toast.makeText(view_permanente.getContext(),"Datos personales actualizados", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (NumberFormatException exc)
                     {
+                        alertDialog.dismiss();
                         Toast.makeText(view_permanente.getContext(),"Error al actualizar datos personales", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -295,6 +311,7 @@ public class ModificarUsuarioFragment extends Fragment {
             Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    alertDialog.dismiss();
                     Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
                 }
             };
@@ -351,6 +368,8 @@ public class ModificarUsuarioFragment extends Fragment {
         {
             femeninoRadioButton.setChecked(true);
         }
+        imagen_eliminada = false;
+        imagen_modificada = false;
         telefonoEditText.setText(usuario_espejo.telefono_usuario);
         direccionEditText.setText(usuario_espejo.direccion_usuario);
         correo_electronicoEditText.setText(usuario_espejo.correo_usuario);

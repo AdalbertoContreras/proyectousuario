@@ -29,11 +29,11 @@ public class Gestion_usuario{
 
     public HashMap<String, String> modificar_datos_personales(Usuario usuario)
     {
-        if(usuario.foto_perfil_usuario.equals(usuario.foto_perfil_anterior))
+        if(usuario.foto_perfil_usuario.contains("http://31.220.63.102/WScomfacesar/"))
         {
             usuario.foto_perfil_usuario = usuario.foto_perfil_usuario.replace("http://31.220.63.102/WScomfacesar/", "");
         }
-        if(usuario.foto_perfil_anterior != null)
+        if(usuario.foto_perfil_anterior.contains("http://31.220.63.102/WScomfacesar/"))
         {
             usuario.foto_perfil_anterior = usuario.foto_perfil_anterior.replace("http://31.220.63.102/WScomfacesar/", "");
         }

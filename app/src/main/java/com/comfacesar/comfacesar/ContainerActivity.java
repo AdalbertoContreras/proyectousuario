@@ -315,18 +315,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         return null;
     }
 
-    /*public void reemplazar_chat_local(Chat_asesoria chat_asesoria)
-    {
-        int tam = Gestion_chat_asesoria.getChat_asesorias().size();
-        for(int i = 0; i < tam; i ++)
-        {
-            if(Gestion_chat_asesoria.getChat_asesorias().get(i).id_chat_asesoria == chat_asesoria.id_chat_asesoria)
-            {
-                Gestion_chat_asesoria.addChat_asesoriaPosicion(chat_asesoria, i);
-            }
-        }
-    }*/
-
     private void createNotificationChanel()
     {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
