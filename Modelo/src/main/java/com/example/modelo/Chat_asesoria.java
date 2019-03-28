@@ -29,4 +29,5 @@ public class Chat_asesoria implements Serializable {
     public String usuario;
     public String administrador;
     public String especialidad;
+    public boolean mensajeNuevo;
 }

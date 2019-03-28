@@ -13,6 +13,7 @@ import com.comfacesar.comfacesar.Activities.ChatAsesoria;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
+import com.example.extra.Calculo;
 import com.example.gestion.Gestion_administrador;
 import com.example.gestion.Gestion_chat_asesoria;
 import com.example.gestion.Gestion_especialidad;
@@ -21,6 +22,8 @@ import com.example.modelo.Chat_asesoria;
 import com.example.modelo.Especialidad;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter_historia_chat_asesoria.ViewHolderDatos> {
@@ -87,12 +90,20 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
             final ArrayList<Especialidad> especialidades = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
             if(!administradores.isEmpty())
             {
-                nombre_asesorTextView.setText(administradores.get(0).nombre_cuenta_administrador);
+                nombre_asesorTextView.setText(administradores.get(0).nombres_administrador + " " + administradores.get(0).apellidos_administrador);
                 Picasso.with(view.getContext()).load(administradores.get(0).url_foto_perfil_administrador).into(foto_perfil_asesorImageView);
             }
             if(!especialidades.isEmpty())
             {
                 tipo_asesoriaTextView.setText(especialidades.get(0).nombre_especialidad);
+            }
+            if(new Calculo().String_a_Date(chat_asesoria.ultima_fecha_administrador_chat_asesoria, chat_asesoria.ultima_hora_administrador_chat_asesoria).compareTo(new Calculo().String_a_Date(chat_asesoria.ultima_fecha_vista_usuario_chat_asesoria, chat_asesoria.ultima_hora_vista_usuario_chat_asesoria)) == 1)
+            {
+                ultimo_mensajeTextView.setTextColor(view.getResources().getColor(R.color.verde));
+            }
+            else
+            {
+                ultimo_mensajeTextView.setTextColor(view.getResources().getColor(R.color.Gris));
             }
             ultimo_mensajeTextView.setText(chat_asesoria.ultimo_mensaje_chat_asesoria);
             fecha_ultimo_mensajeTextView.setText(chat_asesoria.ultima_fecha_chat_asesoria + " " + chat_asesoria.ultima_hora_chat_asesoria);
@@ -110,6 +121,7 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
                         Intent intent = new Intent(view.getContext(), ChatAsesoria.class);
                         intent.putExtra("chat", chat_asesoria.id_chat_asesoria);
                         (view.getContext()).startActivity(intent);
+                        ultimo_mensajeTextView.setTextColor(view.getResources().getColor(R.color.Gris));
                     }
                 }
             });

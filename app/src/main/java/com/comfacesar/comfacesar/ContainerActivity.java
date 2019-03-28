@@ -158,6 +158,16 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
             id = 0;
         }
+        Gestion_chat_asesoria.setChatAbierto(new Gestion_chat_asesoria.ChatAbierto() {
+            @Override
+            public void abierto(int id_chat) {
+                /***
+                 * Cierra la notificacion segun el chat abierto por el usuario
+                 */
+                notificationManagerCompat = NotificationManagerCompat.from(ContainerActivity.this);
+                notificationManagerCompat.cancel(id_chat);
+            }
+        });
     }
 
     private void iniciar_hilo_notificaciones()
