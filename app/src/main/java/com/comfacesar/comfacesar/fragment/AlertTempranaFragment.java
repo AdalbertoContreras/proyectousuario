@@ -3,33 +3,24 @@ package com.comfacesar.comfacesar.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.MensajeInicioSesionDialog;
 import com.comfacesar.comfacesar.R;
-import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_alerta_temprana;
-import com.example.gestion.Gestion_asunto;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Alerta_temprana;
 import com.example.modelo.Asunto;
-import com.example.modelo.Movil;
-import com.example.modelo.Usuario;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,8 +60,6 @@ public class AlertTempranaFragment extends Fragment {
         enviar_alerta_tempranaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(Config.getImei() != null)
-            {
                 if(Gestion_usuario.getUsuario_online() != null)
                 {
                     registrar_alerta_temprana(validar_alerta_temprana());
@@ -84,12 +73,6 @@ public class AlertTempranaFragment extends Fragment {
 
                     }
                 }
-
-            }
-            else
-            {
-                Toast.makeText(view.getContext(),"Acepte los permisos primero", Toast.LENGTH_LONG).show();
-            }
             }
         });
         descripcionTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {

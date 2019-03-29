@@ -65,7 +65,6 @@ public class MySocialMediaSingleton
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Reponse.Error",error.toString());
-                //Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
             }
         };
     }

@@ -307,7 +307,6 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     generandoConsulta = false;
-                    Log.d("Reponse.Error",error.toString());
                 }
             };
             StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);

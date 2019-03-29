@@ -39,7 +39,7 @@ import java.util.HashMap;
 
 public class ChatAsesoria extends AppCompatActivity {
     public static Administrador administrador;
-    private Chat_asesoria chat_asesoria;
+    public static Chat_asesoria chat_asesoria;
     private RecyclerView recyclerView_chat_asesoria;
     private EditText mensajeEditText;
     private Button enviarButton;
@@ -139,7 +139,6 @@ public class ChatAsesoria extends AppCompatActivity {
                         Response.ErrorListener errorListener = new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("Reponse.Error",error.toString());
                             }
                         };
                         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
@@ -174,7 +173,6 @@ public class ChatAsesoria extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 consultando = false;
-                Log.d("Reponse.Error",error.toString());
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
@@ -237,7 +235,6 @@ public class ChatAsesoria extends AppCompatActivity {
     private void iniciar_conexion_chat()
     {
         HashMap<String,String> params = new Gestion_chat_asesoria().consultar_chat_asesoria_por_usuario_administrador_y_especialidad(administrador.id_administrador, Gestion_usuario.getUsuario_online().id_usuario, ChatActivosFragment.tipoAsesoria);
-        Log.d("Parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -254,7 +251,6 @@ public class ChatAsesoria extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 consultando = false;
-                Log.d("Reponse.Error",error.toString());
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
@@ -264,7 +260,6 @@ public class ChatAsesoria extends AppCompatActivity {
     private void consultar_mensajes()
     {
         HashMap<String,String> params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
-        Log.d("Parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -276,7 +271,6 @@ public class ChatAsesoria extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 consultando = false;
-                Log.d("Reponse.Error",error.toString());
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
@@ -315,7 +309,6 @@ public class ChatAsesoria extends AppCompatActivity {
             {
                 params = new Gestion_mensaje_chat_asesoria().mensajes_asesoria_por_asesoria(chat_asesoria.id_chat_asesoria);
             }
-            Log.d("parametros", params.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
@@ -327,7 +320,6 @@ public class ChatAsesoria extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     consultando = false;
-                    Log.d("Reponse.Error",error.toString());
                 }
             };
             StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);

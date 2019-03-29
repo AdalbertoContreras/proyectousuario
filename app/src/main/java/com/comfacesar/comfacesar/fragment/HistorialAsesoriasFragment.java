@@ -112,7 +112,6 @@ public class HistorialAsesoriasFragment extends Fragment {
     {
         //tomo los parametros del controlador
         HashMap<String,String> params = new Gestion_chat_asesoria().consultar_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
-        Log.d("parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override

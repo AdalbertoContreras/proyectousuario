@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +26,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.Util.Util;
-import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
-import com.example.gestion.Gestion_administrador;
-import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
-import com.example.modelo.Administrador;
-import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
 import com.squareup.picasso.Picasso;
 
@@ -231,12 +225,6 @@ public class ModificarUsuarioFragment extends Fragment {
             public void onClick(View v) {
                 alertDialog = new Util().getProgressDialog(view_permanente, "Actualizando datos");
                 alertDialog.show();
-            if(Config.getImei() == null)
-            {
-                alertDialog.dismiss();
-                Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos personales de su cuenta.", Toast.LENGTH_LONG).show();
-                return;
-            }
             if(nombreUsuarioEditText.getText().toString().isEmpty())
             {
                 alertDialog.dismiss();
@@ -324,13 +312,11 @@ public class ModificarUsuarioFragment extends Fragment {
     private void actualizar_perfil()
     {
         HashMap<String,String> params = new Gestion_usuario().consultar_usuario_por_id(Gestion_usuario.getUsuario_online());
-        Log.d("parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
                 //aqui llega la respuesta, dependiendo del tipo de la consulta la proceso
-                Log.d("response", response);
                 if(!response.equals(""))
                 {
                     ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
@@ -346,7 +332,6 @@ public class ModificarUsuarioFragment extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.w("Response.error", error.toString());
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);

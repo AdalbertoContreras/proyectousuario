@@ -21,14 +21,10 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -42,7 +38,6 @@ import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.example.extra.Calculo;
-import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Escuchadores.EscuchadorUsuario;
@@ -73,10 +68,13 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     public static int id = 0;
     private MyPagerAdapter myPagerAdapter;
     private ViewPager viewPager;
+    private boolean mostrar_mensaje_conexion = false;
+    //este id contara las veces que se le ha advertido al usuario cuando se halla perdio la conexion
+    private int contador_perdida_conexion = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mostrar_mensaje_conexion = true;
         setContentView(R.layout.activity_container2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +123,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             Gestion_usuario.escuchadorParaActivityPrincipal = new EscuchadorUsuario() {
                 @Override
                 public void usuarioCambiado(Usuario usuario) {
+                        contador_perdida_conexion = 0;
                     if(usuario != null)
                     {
                         hilo_notificaciones_activo = true;
@@ -171,6 +170,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 notificationManagerCompat.cancel(id_chat);
             }
         });
+        iniciar_hilo_aviso_conexion();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mostrar_mensaje_conexion = false;
     }
 
     private void iniciar_hilo_notificaciones()
@@ -185,10 +192,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     if(time >= 3000)
                     {
+
                         time = 0;
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                comprobar_conexion();
                                 actualizar_notificaciones_chat();
                             }
                         });
@@ -204,12 +213,68 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         }).start();
     }
 
+    private void iniciar_hilo_aviso_conexion()
+    {
+        Gestion_chat_asesoria.setChat_asesorias(null);
+        actualizar_notificaciones_chat();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int time = 3000;
+                while (true)
+                {
+                    if(time >= 5000)
+                    {
+
+                        time = 0;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(mostrar_mensaje_conexion)
+                                {
+                                    comprobar_conexion();
+                                }
+                            }
+                        });
+                    }
+                    try {
+                        Thread.sleep(100);
+                        time += 100;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private void comprobar_conexion()
+    {
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(contador_perdida_conexion < 15 && (contador_perdida_conexion%3) == 0)
+                {
+                    Toast.makeText(getBaseContext(),"Se ha perdido la conexion con el servidor", Toast.LENGTH_LONG).show();
+                }
+                contador_perdida_conexion ++;
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),new HashMap<String, String>(),stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+    }
+
     private void actualizar_notificaciones_chat()
     {
         if(Gestion_usuario.getUsuario_online() != null)
         {
             HashMap<String,String> params = new Gestion_chat_asesoria().consultar_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
-            Log.d("parametros", params.toString());
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
@@ -318,11 +383,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     public static Chat_asesoria chat_asesoria_por_id(int id)
     {
-        for(Chat_asesoria item : Gestion_chat_asesoria.getChat_asesorias())
+        if(Gestion_chat_asesoria.getChat_asesorias() != null)
         {
-            if(item.id_chat_asesoria == id)
+            for(Chat_asesoria item : Gestion_chat_asesoria.getChat_asesorias())
             {
-                return item;
+                if(item.id_chat_asesoria == id)
+                {
+                    return item;
+                }
             }
         }
         return null;
@@ -370,7 +438,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     @Override
     protected void onResume() {
         super.onResume();
-        new Config().iniciar_config(this);
+        mostrar_mensaje_conexion = true;
+        contador_perdida_conexion = 0;
         if(menu != null)
         {
             onCreateOptionsMenu(menu);
@@ -607,7 +676,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Reponse.Error",error.toString());
                 Intent intent;
                 intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
                 HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
@@ -666,7 +734,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Reponse.Error",error.toString());
                 Intent intent;
                 intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
                 HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
@@ -708,6 +775,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             System.exit(0);
             super.onBackPressed();
         }
+        mostrar_mensaje_conexion = false;
     }
 
     @Override

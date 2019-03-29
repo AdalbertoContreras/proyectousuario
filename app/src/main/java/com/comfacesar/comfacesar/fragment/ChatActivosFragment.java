@@ -103,7 +103,6 @@ public class ChatActivosFragment extends Fragment {
     {
         //tomo los parametros del controlador
         HashMap<String,String> params = new Gestion_administrador().consultar_administradores_por_especialidad(tipoAsesoria);
-        Log.d("parametros", params.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -119,7 +118,7 @@ public class ChatActivosFragment extends Fragment {
     {
         ArrayList<Administrador> list = new Gestion_administrador().generar_json(response);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),1));
-        AdapterListaAsesoresPorEspecialidad adapterItemCliente = new AdapterListaAsesoresPorEspecialidad(list, fragmentManager);
+        AdapterListaAsesoresPorEspecialidad adapterItemCliente = new AdapterListaAsesoresPorEspecialidad(list, fragmentManager, tipoAsesoria);
         recyclerView.setAdapter(adapterItemCliente);
         recyclerView.setHasFixedSize(true);
     }

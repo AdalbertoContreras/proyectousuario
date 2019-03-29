@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.Util.Util;
-import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
@@ -112,12 +110,6 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
             public void onClick(View v) {
                 alertDialog = new Util().getProgressDialog(view_permanente, "Actualizando datos");
                 alertDialog.show();
-                if(Config.getImei() == null)
-                {
-                    alertDialog.dismiss();
-                    Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de modificar los datos de su cuenta.", Toast.LENGTH_LONG).show();
-                    return;
-                }
                 if(contraseñaCuentaAnteriorEditText.getText().toString().isEmpty())
                 {
                     alertDialog.dismiss();
@@ -136,12 +128,10 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         usuario_con_contraseña_validad.contrasena_usuario = contraseñaCuentaAnteriorEditText.getText().toString();
         Gestion_usuario.setUsuario_online(usuario_con_contraseña_validad);
         HashMap<String, String> hashMap = new Gestion_usuario().validar_usuario(usuario_con_contraseña_validad);
-        Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
-                Log.d("Response : ", response);
                 int val = 0;
                 try
                 {
@@ -205,12 +195,10 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         usuario_espejo.contrasena_usuario = contraseñaNuevaEditText.getText().toString();
         Gestion_usuario.getUsuario_online().contrasena_usuario = contraseña_anterior;
         HashMap<String, String> hashMap = new Gestion_usuario().actualizar_contrasena_usuario(usuario_espejo);
-        Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
-                Log.d("Response : ", response);
                 int val = 0;
                 try
                 {

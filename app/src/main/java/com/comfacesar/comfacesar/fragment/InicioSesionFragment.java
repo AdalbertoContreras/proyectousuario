@@ -5,10 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +20,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
-import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,8 +115,6 @@ public class InicioSesionFragment extends Fragment {
                 dialog = new ProgressDialog(view_permanente.getContext());
                 dialog.show();
                 dialog.setCancelable(false);
-            if(Config.getImei() != null)
-            {
                 if(nombreCuentaEditText.getText().toString().isEmpty())
                 {
                     Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de su cuenta de usuario", Toast.LENGTH_LONG).show();
@@ -145,44 +138,39 @@ public class InicioSesionFragment extends Fragment {
                 {
                     @Override
                     public void onResponse(String response) {
-                        int val = 0;
-                        try
-                        {
-                            val = Integer.parseInt(response);
-                            if(val == 0)
-                            {
-                                dialog.dismiss();
-                                Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
-                                        "incorrecto", Toast.LENGTH_LONG).show();
-                            }
-                            else
-                            {
-                                consultar_usuario_y_agregar_online(val);
-                            }
-                        }
-                        catch(NumberFormatException exc)
+                    int val = 0;
+                    try
+                    {
+                        val = Integer.parseInt(response);
+                        if(val == 0)
                         {
                             dialog.dismiss();
                             Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                                     "incorrecto", Toast.LENGTH_LONG).show();
                         }
+                        else
+                        {
+                            consultar_usuario_y_agregar_online(val);
+                        }
                     }
-                };
-                Response.ErrorListener errorListener = new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    catch(NumberFormatException exc)
+                    {
                         dialog.dismiss();
                         Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                                 "incorrecto", Toast.LENGTH_LONG).show();
                     }
-                };
-                StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-                MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
-            }
-            else
-            {
-                Toast.makeText(view_permanente.getContext(), "Acepte los permisos para poder iniciar sesion en este dispositivo", Toast.LENGTH_LONG).show();
-            }
+                }
+            };
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dialog.dismiss();
+                    Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
+                            "incorrecto", Toast.LENGTH_LONG).show();
+                }
+            };
+            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
             }
         });
         return view_permanente;

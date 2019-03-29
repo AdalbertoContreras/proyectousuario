@@ -1,7 +1,6 @@
 package com.comfacesar.comfacesar.fragment;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,17 +31,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.Util.Util;
-import com.example.extra.Config;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
-import com.example.gestion.Gestion_movil_registro;
 import com.example.gestion.Gestion_usuario;
-import com.example.modelo.Movil_registro;
 import com.example.modelo.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -256,7 +250,6 @@ public class RegistrarUsuarioFragment extends Fragment {
     private void existeNumeroIdentificacion()
     {
         HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
-        Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -297,7 +290,6 @@ public class RegistrarUsuarioFragment extends Fragment {
     private void existeNombreCuenta()
     {
         HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
-        Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -338,7 +330,6 @@ public class RegistrarUsuarioFragment extends Fragment {
     {
         alertDialog = new Util().getProgressDialog(view_permanente, "Registrando usuario");
         HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
-        Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -369,7 +360,6 @@ public class RegistrarUsuarioFragment extends Fragment {
     private void validar_nombre_cuenta(final Boolean numero_identificacion_vaido)
     {
         HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
-        Log.d("parametros", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -399,12 +389,6 @@ public class RegistrarUsuarioFragment extends Fragment {
 
     private void registrar_usuario(Boolean existe_nombre_cuenta, Boolean existe_numero_identificacion)
     {
-        if(Config.getImei() == null)
-        {
-            Toast.makeText(view_permanente.getContext(), "Acepte los permiso primero antes de registrar un nuevo usuario.", Toast.LENGTH_LONG).show();
-            alertDialog.dismiss();
-            return;
-        }
         if(numeroIdentificacionEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su numero de identificacion", Toast.LENGTH_LONG).show();
@@ -479,12 +463,10 @@ public class RegistrarUsuarioFragment extends Fragment {
         usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
         usuario.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
         HashMap<String, String> hashMap = new Gestion_usuario().registrar_usuario(usuario);
-        Log.d("Parametros : ", hashMap.toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
-                Log.d("Response : ", response);
                 int val = 0;
                 try
                 {
@@ -584,30 +566,6 @@ public class RegistrarUsuarioFragment extends Fragment {
             }
         });
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-
-    private void registrar_movil_registro(int id_registrado)
-    {
-        Movil_registro movil_registro = new Movil_registro();
-        movil_registro.id_registrado_movil_registro = id_registrado;
-        movil_registro.tipo_registro_movil_registro = 2;
-        movil_registro.imei_movil_registro = Config.getImei();
-        HashMap<String, String> hashMap = new Gestion_movil_registro().registrar_movil_registro(movil_registro);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response)
-            {
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(view_permanente.getContext(),"Error en el servidor", Toast.LENGTH_LONG).show();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
