@@ -26,6 +26,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -90,7 +93,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         });
         toolbar.setTitle("ServiAmigo");
-        toolbar.setBackgroundResource(R.color.Gris3);
+        toolbar.setBackgroundResource(R.color.colorPrimaryDark);
         setSupportActionBar(toolbar);
         myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -158,6 +161,16 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
             id = 0;
         }
+        Gestion_chat_asesoria.setChatAbierto(new Gestion_chat_asesoria.ChatAbierto() {
+            @Override
+            public void abierto(int id_chat) {
+                /***
+                 * Cierra la notificacion segun el chat abierto por el usuario
+                 */
+                notificationManagerCompat = NotificationManagerCompat.from(ContainerActivity.this);
+                notificationManagerCompat.cancel(id_chat);
+            }
+        });
     }
 
     private void iniciar_hilo_notificaciones()
@@ -473,6 +486,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     }
                 }
             });
+            ImageView icon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String s) {

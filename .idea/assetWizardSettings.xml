@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_icono_chat_ok" />
-                            <entry key="sourceFile" value="C:\Users\usuario\Pictures\icono_chat_ok.svg" />
+                            <entry key="outputName" value="ic_telefono" />
+                            <entry key="sourceFile" value="C:\Users\usuario\Pictures\telefono.svg" />
                           </map>
                         </option>
                       </PersistentState>

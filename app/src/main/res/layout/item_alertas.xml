@@ -15,11 +15,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             tools:ignore="MissingConstraints"
-            android:background="@color/colorPrimaryDark"
-            android:weightSum="1">
+            >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:weightSum="1">
             <TextView
                 android:id="@+id/asuntoTextViewAlertaTempranaItem"
                 android:layout_width="match_parent"
@@ -39,9 +44,10 @@
                 android:gravity="center"
                 android:text=" 10/08/09"
                 android:background="@color/White"
-                android:paddingRight="15dp"
                 android:layout_weight="0.7"
-                android:paddingVertical="10dp"/>
+                />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

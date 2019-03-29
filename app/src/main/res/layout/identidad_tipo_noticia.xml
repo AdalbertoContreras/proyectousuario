@@ -104,6 +104,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/cuerpo1LinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -157,6 +158,15 @@
                                 android:layout_marginBottom="5dp"
                                 android:maxHeight="120dp"
                                 android:text="" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:gravity="right"
+                                android:layout_marginBottom="5dp"
+                                android:textSize="12sp"
+                                android:text="Leer mas..."
+                                android:layout_marginRight="5dp"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="8dp"

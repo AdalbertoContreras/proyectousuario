@@ -99,7 +99,7 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                 categoriaNoticiaTextView.setText("MALTRATO");
                 break;
             case 4:
-                categoriaNoticiaTextView.setBackgroundResource(R.color.Gris3);
+                categoriaNoticiaTextView.setBackgroundResource(R.color.Gris);
                 categoriaNoticiaTextView.setText("IDENTIDAD");
                 break;
         }

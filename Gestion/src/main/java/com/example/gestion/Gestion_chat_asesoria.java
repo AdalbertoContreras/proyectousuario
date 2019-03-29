@@ -48,6 +48,21 @@ public class Gestion_chat_asesoria {
     {
         void chatCambiado();
     }
+    private  static ChatAbierto chatAbierto;
+    public interface ChatAbierto
+    {
+        void abierto(int id_chat);
+    }
+
+    public static void chat_abiero(int id_chat)
+    {
+        chatAbierto.abierto(id_chat);
+    }
+
+    public static void setChatAbierto(ChatAbierto chatAbierto) {
+        Gestion_chat_asesoria.chatAbierto = chatAbierto;
+    }
+
 
     private static void iniciar_axu()
     {
@@ -315,11 +330,9 @@ public class Gestion_chat_asesoria {
                         {
 
                         }
-
                     }
                 }
             }
-
             chat_asesorias = new ArrayList<>();
             for(Chat_asesoria item : chat_asesorias_aux)
             {
@@ -344,12 +357,6 @@ public class Gestion_chat_asesoria {
             chat_asesorias.add(chat_asesoria);
         }
     }
-
-    public static void addChat_asesoriaPosicion(Chat_asesoria chat_asesoria, int pos)
-    {
-        chat_asesorias.set(pos,chat_asesoria);
-    }
-
     public static ArrayList<Chat_asesoria> getChat_asesorias()
     {
         return chat_asesorias;
@@ -374,22 +381,5 @@ public class Gestion_chat_asesoria {
             }
         }
         return  null;
-    }
-
-    private static int buscarPosChatAsesoria(int id)
-    {
-        int cont = 0;
-        if(chat_asesorias != null)
-        {
-            for(Chat_asesoria item : chat_asesorias)
-            {
-                if(item.id_chat_asesoria == id)
-                {
-                    return cont;
-                }
-                cont ++;
-            }
-        }
-        return  -1;
     }
 }

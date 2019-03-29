@@ -149,6 +149,7 @@ public class ChatAsesoria extends AppCompatActivity {
                 }
             }
         });
+        Gestion_chat_asesoria.chat_abiero(chat_asesoria.id_chat_asesoria);
     }
 
     public void ShowToolbar(String Tittle, boolean upButton)
