@@ -41,8 +41,6 @@ public class AlertTempranaFragment extends Fragment {
     private RadioButton violenciaRadioButton;
     public AlertTempranaFragment() {
         // Required empty public constructor
-
-
     }
 
     @Override

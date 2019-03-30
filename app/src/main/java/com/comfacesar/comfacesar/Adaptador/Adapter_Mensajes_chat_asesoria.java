@@ -114,7 +114,15 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
                 if(!usuarios.isEmpty())
                 {
                     Usuario usuario = usuarios.get(0);
-                    Picasso.with(view.getContext()).load(usuario.foto_perfil_usuario).into(fotoPerfilCircleImageView);
+                    Picasso.with(view.getContext())
+                            .load(usuario.foto_perfil_usuario)
+                            .placeholder(R.drawable.ic_iconousuario)
+                            .error(R.drawable.ic_iconousuario)
+                            .into(fotoPerfilCircleImageView);
+                }
+                else
+                {
+                    Picasso.with(view.getContext()).load(R.drawable.ic_iconousuario).into(fotoPerfilCircleImageView);
                 }
             }
             else
@@ -123,8 +131,17 @@ public class Adapter_Mensajes_chat_asesoria extends  RecyclerView.Adapter<Adapte
                 if(!administradores.isEmpty())
                 {
                     Administrador administrador = administradores.get(0);
-                    Picasso.with(view.getContext()).load(administrador.url_foto_perfil_administrador).placeholder(R.drawable.ic_iconousuario)
-                            .error(R.drawable.ic_iconousuario).into(fotoPerfilCircleImageView);
+                    Picasso.with(view.getContext())
+                            .load(administrador.url_foto_perfil_administrador)
+                            .placeholder(R.drawable.ic_iconousuario)
+                            .error(R.drawable.ic_iconousuario)
+                            .into(fotoPerfilCircleImageView);
+                }
+                else
+                {
+                    Picasso.with(view.getContext())
+                            .load(R.drawable.ic_iconousuario)
+                            .into(fotoPerfilCircleImageView);
                 }
             }
         }

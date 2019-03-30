@@ -33,7 +33,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoPerfilImageView"
-            android:layout_width="55dp"
+            android:layout_width="60dp"
             android:layout_height="55dp"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
@@ -67,9 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="7dp"
-                        android:textSize="13dp"
-                        android:text="@string/textoprueba"
-                        />
+                        android:textSize="13dp" />
 
                 </LinearLayout>
             </LinearLayout>

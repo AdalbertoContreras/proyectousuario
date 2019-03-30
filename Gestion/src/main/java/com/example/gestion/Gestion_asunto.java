@@ -16,18 +16,7 @@ public class Gestion_asunto {
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
-
-    private static void iniciar_axu()
-    {
-        aux = new Asunto();
-    }
-
-    public HashMap<String, String> consultar_asuntos()
-    {
-        tipo_consulta = "consultar_asuntos";
-        return construir_parametros(aux);
-    }
-
+    private JsonObject obj;
     public ArrayList<Asunto> generar_json(String respuesta)
     {
         ArrayList<Asunto> lista_elementos = new ArrayList<>();
@@ -80,7 +69,7 @@ public class Gestion_asunto {
 
     private HashMap<String,String> construir_parametros(Asunto elemento)
     {
-        JsonObject obj = new JsonObject();
+        obj = new JsonObject();
         try {
             obj.addProperty("id_asunto", elemento.id_asunto);
             obj.addProperty("nombre_asunto", elemento.nombre_asunto);
@@ -88,11 +77,21 @@ public class Gestion_asunto {
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
+            adjuntarAceso();
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("json",obj.toString());
         return hashMap;
+    }
+
+    private void adjuntarAceso()
+    {
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            obj.addProperty("NU",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+            obj.addProperty("CU",Gestion_usuario.getUsuario_online().contrasena_usuario);
+        }
     }
 }

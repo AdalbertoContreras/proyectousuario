@@ -73,14 +73,14 @@
 
 
             <TextView
-                android:textSize="12sp"
-                android:textColor="@color/GrisOscuro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ultimo mensaje"
-                android:layout_marginBottom="10dp"
                 android:id="@+id/ultimo_mensajeTextView"
-                android:paddingLeft="2dp"/>
+                android:layout_width="323dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="2dp"
+                android:text="Ultimo mensaje"
+                android:textColor="@color/GrisOscuro"
+                android:textSize="12sp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

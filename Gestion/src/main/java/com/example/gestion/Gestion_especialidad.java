@@ -16,12 +16,7 @@ public class Gestion_especialidad {
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
-
-    public HashMap<String, String> consultar_especialidades()
-    {
-        tipo_consulta = "consultar_especialidades";
-        return construir_parametros(aux);
-    }
+    private JsonObject obj;
 
     public ArrayList<Especialidad> generar_json(String respuesta)
     {
@@ -78,7 +73,7 @@ public class Gestion_especialidad {
 
     private HashMap<String,String> construir_parametros(Especialidad elemento)
     {
-        JsonObject obj = new JsonObject();
+        obj = new JsonObject();
         try {
             obj.addProperty("id_especialidad", elemento.id_especialidad);
             obj.addProperty("nombre_especialidad", elemento.nombre_especialidad);
@@ -86,11 +81,21 @@ public class Gestion_especialidad {
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
+            adjuntarAceso();
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("json",obj.toString());
         return hashMap;
+    }
+
+    private void adjuntarAceso()
+    {
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            obj.addProperty("NU",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+            obj.addProperty("CU",Gestion_usuario.getUsuario_online().contrasena_usuario);
+        }
     }
 }

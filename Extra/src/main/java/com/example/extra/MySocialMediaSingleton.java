@@ -64,7 +64,6 @@ public class MySocialMediaSingleton
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Reponse.Error",error.toString());
             }
         };
     }

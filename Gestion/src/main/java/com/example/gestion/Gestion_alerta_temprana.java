@@ -16,6 +16,7 @@ public class Gestion_alerta_temprana {
     private static String fecha1;
     private static String fecha2;
     private static String tipo_consulta;
+    private JsonObject obj;
 
     public HashMap<String, String> consultar_alerta_temprana()
     {
@@ -111,7 +112,7 @@ public class Gestion_alerta_temprana {
 
     private HashMap<String,String> construir_parametros(Alerta_temprana elemento)
     {
-        JsonObject obj = new JsonObject();
+        obj = new JsonObject();
         try {
             obj.addProperty("id_alerta_temprana", elemento.id_alerta_temprana);
             obj.addProperty("asunto_alerta_temprana", elemento.asunto_alerta_temprana);
@@ -128,16 +129,7 @@ public class Gestion_alerta_temprana {
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
-            if(Gestion_usuario.getUsuario_online() != null)
-            {
-                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
-            }
-            else
-            {
-                obj.addProperty("usuario_ol","");
-                obj.addProperty("contrasena_ol","");
-            }
+            adjuntarAceso();
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
@@ -148,23 +140,14 @@ public class Gestion_alerta_temprana {
 
     private HashMap<String,String> construir_parametros()
     {
-        JsonObject obj = new JsonObject();
+        obj = new JsonObject();
         try {
             /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
-            if(Gestion_usuario.getUsuario_online() != null)
-            {
-                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
-            }
-            else
-            {
-                obj.addProperty("usuario_ol","");
-                obj.addProperty("contrasena_ol","");
-            }
+            adjuntarAceso();
 
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
@@ -172,5 +155,14 @@ public class Gestion_alerta_temprana {
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("json",obj.toString());
         return hashMap;
+    }
+
+    private void adjuntarAceso()
+    {
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            obj.addProperty("NU",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+            obj.addProperty("CU",Gestion_usuario.getUsuario_online().contrasena_usuario);
+        }
     }
 }

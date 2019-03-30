@@ -149,13 +149,8 @@ public class Gestion_usuario{
             obj.addProperty("llave_ws",llave_ws);
             if(usuario_online != null)
             {
-                obj.addProperty("usuario_ol",usuario_online.nombre_cuenta_usuario);
-                obj.addProperty("contrasena_ol",usuario_online.contrasena_usuario);
-            }
-            else
-            {
-                obj.addProperty("usuario_ol","");
-                obj.addProperty("contrasena_ol","");
+                obj.addProperty("NU",usuario_online.nombre_cuenta_usuario);
+                obj.addProperty("CU",usuario_online.contrasena_usuario);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

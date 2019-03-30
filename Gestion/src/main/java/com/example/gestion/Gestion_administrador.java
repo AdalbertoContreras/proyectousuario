@@ -19,6 +19,7 @@ public class Gestion_administrador{
     private String fecha2;
     private int especialidad;
     private String tipo_consulta;
+    JsonObject obj;
 
     public HashMap<String, String> consultar_administradores_por_especialidad(int _especialidad)
     {
@@ -86,7 +87,7 @@ public class Gestion_administrador{
 
     private HashMap<String,String> construir_parametros(Administrador elemento)
     {
-        JsonObject obj = new JsonObject();
+        obj = new JsonObject();
         try {
             obj.addProperty("id_administrador", elemento.id_administrador);
             obj.addProperty("nombre_cuenta_administrador",elemento.nombre_cuenta_administrador);
@@ -103,6 +104,7 @@ public class Gestion_administrador{
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
+            adjuntarAcceso();
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
@@ -113,7 +115,7 @@ public class Gestion_administrador{
 
     private HashMap<String,String> construir_parametros()
     {
-        JsonObject obj = new JsonObject();
+        obj = new JsonObject();
         try {
             /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
             obj.addProperty("fecha1",fecha1);
@@ -121,11 +123,21 @@ public class Gestion_administrador{
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
             obj.addProperty("especialidad",especialidad);
+            adjuntarAcceso();
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("json",obj.toString());
         return hashMap;
+    }
+
+    private void adjuntarAcceso()
+    {
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            obj.addProperty("NU",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+            obj.addProperty("CU",Gestion_usuario.getUsuario_online().contrasena_usuario);
+        }
     }
 }

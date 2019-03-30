@@ -239,7 +239,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         private void tengo_me_gusta()
         {
             HashMap<String,String> params = new Gestion_me_gusta_noticia().me_gusta_por_noticia_y_usuario(Gestion_usuario.getUsuario_online().id_usuario, itemNoticia.getNoticia().id_notiticia);
-            Log.d("Response", params.toString());
 
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
