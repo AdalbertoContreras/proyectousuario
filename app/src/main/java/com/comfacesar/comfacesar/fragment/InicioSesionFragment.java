@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,9 @@ import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
+import com.example.gestion.Gestion_administrador;
 import com.example.gestion.Gestion_usuario;
+import com.example.modelo.Administrador;
 import com.example.modelo.Usuario;
 
 import java.util.ArrayList;
@@ -97,10 +100,6 @@ public class InicioSesionFragment extends Fragment {
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
-
-
-
-
                 registrarmeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,49 +132,52 @@ public class InicioSesionFragment extends Fragment {
                 }};
                 usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
                 usuario.contrasena_usuario = contraseñaEditText.getText().toString();
-                HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
-                Response.Listener<String> stringListener = new Response.Listener<String>()
+                validarUsuario(usuario);
+            }
+        });
+        return view_permanente;
+    }
+
+    private void validarUsuario(Usuario usuario)
+    {
+        HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                int val = 0;
+                try
                 {
-                    @Override
-                    public void onResponse(String response) {
-                    int val = 0;
-                    try
-                    {
-                        val = Integer.parseInt(response);
-                        if(val == 0)
-                        {
-                            dialog.dismiss();
-                            Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
-                                    "incorrecto", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            consultar_usuario_y_agregar_online(val);
-                        }
-                    }
-                    catch(NumberFormatException exc)
+                    val = Integer.parseInt(response);
+                    if(val == 0)
                     {
                         dialog.dismiss();
                         Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                                 "incorrecto", Toast.LENGTH_LONG).show();
                     }
+                    else
+                    {
+                        consultar_usuario_y_agregar_online(val);
+                    }
                 }
-            };
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                catch(NumberFormatException exc)
+                {
                     dialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                             "incorrecto", Toast.LENGTH_LONG).show();
                 }
-            };
-            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
             }
-        });
-        return view_permanente;
-
-
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
+                        "incorrecto", Toast.LENGTH_LONG).show();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     private void consultar_usuario_y_agregar_online(int id_usuario)
@@ -184,6 +186,7 @@ public class InicioSesionFragment extends Fragment {
         usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
         usuario.contrasena_usuario = contraseñaEditText.getText().toString();
         usuario.id_usuario = id_usuario;
+        Gestion_usuario.setUsuario_online(usuario);
         HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(usuario);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
@@ -204,6 +207,7 @@ public class InicioSesionFragment extends Fragment {
                     Toast.makeText(view_permanente.getContext(), "Logueado",
                             Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getActivity(), ContainerActivity.class);
+                    salvarSesion();
                     startActivity(intent);
                 }
             }
@@ -261,4 +265,12 @@ public class InicioSesionFragment extends Fragment {
     }
 
 
+    private void salvarSesion()
+    {
+        SharedPreferences prefs = getActivity().getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = prefs.edit();
+        myEditor.putString("USER", Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+        myEditor.putString("PASS", Gestion_usuario.getUsuario_online().contrasena_usuario);
+        myEditor.commit();
+    }
 }

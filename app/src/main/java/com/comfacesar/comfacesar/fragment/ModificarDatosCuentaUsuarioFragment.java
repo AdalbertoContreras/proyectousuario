@@ -1,6 +1,7 @@
 package com.comfacesar.comfacesar.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -208,6 +209,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
                         limpiar();
                         alertDialog.dismiss();
                         Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
+                        salvarSesion();
                         Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -227,6 +229,15 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void salvarSesion()
+    {
+        SharedPreferences prefs = getActivity().getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = prefs.edit();
+        myEditor.putString("USER", Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+        myEditor.putString("PASS", Gestion_usuario.getUsuario_online().contrasena_usuario);
+        myEditor.commit();
     }
 
     private void limpiar()

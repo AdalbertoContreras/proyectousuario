@@ -41,24 +41,10 @@ public class Gestion_usuario{
         return construir_parametros(usuario);
     }
 
-    public HashMap<String, String> consultar_por_nombre_cuenta(String nombre_cuenta)
-    {
-        tipo_consulta = "consultar_por_nombre_cuenta";
-        aux.nombre_cuenta_usuario = nombre_cuenta;
-        return construir_parametros(aux);
-    }
-
     public HashMap<String, String> existe_nombre_cuenta(String nombre_cuenta)
     {
         tipo_consulta = "existe_nombre_cuenta";
         aux.nombre_cuenta_usuario = nombre_cuenta;
-        return construir_parametros(aux);
-    }
-
-    public HashMap<String, String> consultar_por_numero_identificacion(String numero_identificacion)
-    {
-        tipo_consulta = "consultar_por_numero_identificacion";
-        aux.numero_identificacion_usuario = numero_identificacion;
         return construir_parametros(aux);
     }
 
@@ -147,6 +133,7 @@ public class Gestion_usuario{
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
+
             if(usuario_online != null)
             {
                 obj.addProperty("NU",usuario_online.nombre_cuenta_usuario);
@@ -160,15 +147,22 @@ public class Gestion_usuario{
         return hashMap;
     }
 
-    public static Usuario getUsuario_online() {
+    public static Usuario getUsuario_online()
+    {
         return usuario_online;
     }
 
     public static void setUsuario_online(Usuario usuario_online) {
         if(Gestion_usuario.getUsuario_online() != usuario_online)
         {
-            escuchadorParaActivityPrincipal.usuarioCambiado(usuario_online);
-            escuchadorParaHome.usuarioCambiado(usuario_online);
+            if(escuchadorParaActivityPrincipal != null)
+            {
+                escuchadorParaActivityPrincipal.usuarioCambiado(usuario_online);
+            }
+            if(escuchadorParaHome != null)
+            {
+                escuchadorParaHome.usuarioCambiado(usuario_online);
+            }
         }
         Gestion_usuario.usuario_online = usuario_online;
     }

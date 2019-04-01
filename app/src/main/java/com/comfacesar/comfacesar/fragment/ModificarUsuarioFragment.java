@@ -246,7 +246,7 @@ public class ModificarUsuarioFragment extends Fragment {
                 usuario_espejo.sexo_usuario = 1;
             }
             usuario_espejo.foto_perfil_usuario = Gestion_usuario.getUsuario_online().foto_perfil_usuario;
-            usuario_espejo.foto_perfil_anterior = Gestion_usuario.getUsuario_online().foto_perfil_usuario;
+            usuario_espejo.foto_perfil_anterior = usuario_espejo.foto_perfil_usuario;
             if(imagen_modificada)
             {
                 if(bitmap != null)
@@ -257,6 +257,7 @@ public class ModificarUsuarioFragment extends Fragment {
             if(imagen_eliminada)
             {
                 usuario_espejo.foto_perfil_usuario = "-1";
+                usuario_espejo.foto_perfil_anterior = "-1";
             }
             usuario_espejo.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
             usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
