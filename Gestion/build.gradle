@@ -4,6 +4,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.google.code.gson:gson:2.3.1'
     implementation project(':Modelo')
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }
 
 sourceCompatibility = "7"

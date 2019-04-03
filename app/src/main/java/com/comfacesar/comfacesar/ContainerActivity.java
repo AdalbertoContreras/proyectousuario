@@ -4,7 +4,9 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -123,7 +125,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             Gestion_usuario.escuchadorParaActivityPrincipal = new EscuchadorUsuario() {
                 @Override
                 public void usuarioCambiado(Usuario usuario) {
-                        contador_perdida_conexion = 0;
+                    contador_perdida_conexion = 0;
                     if(usuario != null)
                     {
                         hilo_notificaciones_activo = true;
@@ -171,6 +173,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         });
         iniciar_hilo_aviso_conexion();
+
     }
 
 
@@ -438,6 +441,19 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(Gestion_usuario.getUsuario_online() == null)
+        {
+            recuperarSesion();
+        }
+        else
+        {
+            aux();
+        }
+    }
+
+    private void aux()
+    {
         mostrar_mensaje_conexion = true;
         contador_perdida_conexion = 0;
         if(menu != null)
@@ -464,7 +480,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             escuchadorCambioFiltro.filtroCambiado("", searchView);
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -476,8 +491,13 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        //añadir color  a menu
-        int item_agregado = 0;
+        this.menu = menu;
+        cambaiarMenu();
+        return true;
+    }
+
+    private void cambaiarMenu()
+    {
         menu.removeItem(R.id.registrarmeMenu);
         menu.removeItem(R.id.iniciarSesionMenu);
         menu.removeItem(R.id.cerrarSesionMenu);
@@ -572,9 +592,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         {
             //escuchadorCambioFiltro.filtroCambiado("");
         }
-
-        this.menu = menu;
-        return true;
     }
 
     public interface escuchador{
@@ -610,6 +627,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 break;
             case  R.id.cerrarSesionMenu:
                 Gestion_usuario.setUsuario_online(null);
+                SharedPreferences.Editor myEditor = prefs.edit();
+                myEditor.putString("USER", "-1");
+                myEditor.putString("PASS", "-1");
+                myEditor.commit();
                 recreate();
                 break;
             case  R.id.acercaDeMenu:
@@ -793,6 +814,96 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         }
         super.onDestroy();
+    }
+
+    private SharedPreferences prefs;
+    private void recuperarSesion()
+    {
+        prefs = getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
+        String user = prefs.getString("USER", "-1");
+        String pass = prefs.getString("PASS", "-1");
+        if(!user.equals("-1") && !pass.equals("-1"))
+        {
+            Usuario usuario = new Usuario();
+            usuario.nombre_cuenta_usuario = user;
+            usuario.contrasena_usuario = pass;
+            validarUsuario(usuario);
+        }
+        else
+        {
+            aux();
+        }
+    }
+
+    private void validarUsuario(Usuario usuario)
+    {
+        HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                int val = 0;
+                try
+                {
+                    val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        consultar_usuario_y_agregar_online(val);
+                    }
+                    else
+                    {
+                        aux();
+                    }
+                }
+                catch(NumberFormatException exc)
+                {
+                    aux();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                aux();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void consultar_usuario_y_agregar_online(int id_usuario)
+    {
+        Usuario usuario = new Usuario();
+        usuario.nombre_cuenta_usuario = prefs.getString("USER", "-1");
+        usuario.contrasena_usuario = prefs.getString("PASS", "-1");
+        usuario.id_usuario = id_usuario;
+        Gestion_usuario.setUsuario_online(usuario);
+        HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(usuario);
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                if(!usuarios.isEmpty())
+                {
+                    usuarios.get(0).contrasena_usuario = prefs.getString("PASS", "-1");
+                    Gestion_usuario.setUsuario_online(usuarios.get(0));
+                    cambaiarMenu();
+                }
+                else
+                {
+                    aux();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                aux();
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 }
 

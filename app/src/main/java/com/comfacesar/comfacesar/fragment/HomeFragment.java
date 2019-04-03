@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment {
         itemNoticias_filtrada = new ArrayList<>();
         textoFiltroNuevo = ContainerActivity.texto_buscar;
         textoFiltroGuardado = textoFiltroNuevo;
+        recycle = view_permantente.findViewById(R.id.Recycle_IdHome);
         return view_permantente;
     }
 
@@ -97,15 +98,6 @@ public class HomeFragment extends Fragment {
             public void usuarioCambiado(Usuario usuario) {
                 usuario_anterior = usuario_nuevo = usuario;
                 agregar_noticias_nuevas = false;
-                while(generandoConsulta)
-                {
-                    try
-                    {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
                 consultar_noticias();
                 exampleAdapter = new AdapterNoticia(getActivity(),itemNoticias_filtrada, getFragmentManager());
                 recycle.setAdapter(exampleAdapter);
@@ -142,28 +134,6 @@ public class HomeFragment extends Fragment {
             }
         };
         hilo_consulta_noticias();
-        /*if(id_articulo_selecionado >= 0)
-        {
-            int cont = 0;
-            for(ItemNoticia item : itemNoticias_general)
-            {
-                if(item.getNoticia().id_notiticia == id_articulo_selecionado)
-                {
-                    recycle.smoothScrollToPosition(cont);
-                    break;
-                }
-                cont ++;
-            }
-            id_articulo_selecionado = -1;
-        }
-        /*if(searchView != null)
-        {
-            if(!textoFiltroGuardado.equals(""))
-            {
-                searchView.setQuery(textoFiltroGuardado, false);
-                searchView.onActionViewExpanded();
-            }
-        }*/
     }
 
     @Override
@@ -380,6 +350,7 @@ public class HomeFragment extends Fragment {
             }
 
         }
+        generandoConsulta = false;
 
     }
     private boolean agregado = false;
