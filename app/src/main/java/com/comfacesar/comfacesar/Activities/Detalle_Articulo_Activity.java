@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.Dialog.MensajeDarMeGustaDialog;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
@@ -103,15 +104,13 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                 categoriaNoticiaTextView.setText("IDENTIDAD");
                 break;
         }
-        if(Gestion_usuario.getUsuario_online() != null)
-        {
-            megusta_CheckBox.setEnabled(true);
-            tengo_me_gusta();
             megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
                     {
+                        megusta_CheckBox.setEnabled(true);
+                        tengo_me_gusta();
                         HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(id_noticia, Gestion_usuario.getUsuario_online().id_usuario);
                         Response.Listener<String> stringListener = new Response.Listener<String>()
                         {
@@ -130,9 +129,13 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
                         MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
                     }
+                    else
+                    {
+                        MensajeDarMeGustaDialog mensajeUsuarioSaliendo = MensajeDarMeGustaDialog.nuevaUbstancia("Para indicar que te gusta este articulo inicia sesion");
+                        mensajeUsuarioSaliendo.show(getSupportFragmentManager(), "missiles");
+                    }
                 }
             });
-        }
     }
 
     private void consultar_noticia()

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.transition.AutoTransition;
 import android.transition.Explode;
 import android.util.Log;
@@ -27,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.Detalle_Articulo_Activity;
+import com.comfacesar.comfacesar.Dialog.MensajeDarMeGustaDialog;
+import com.comfacesar.comfacesar.Dialog.MensajeUsuarioSaliendo;
 import com.comfacesar.comfacesar.Interface.ListItem;
 import com.comfacesar.comfacesar.Item.ItemNoticia;
 import com.comfacesar.comfacesar.R;
@@ -129,7 +132,7 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
 
         }
 
-        public void setDatos(final ItemNoticia item, FragmentManager fragmentManager)
+        public void setDatos(final ItemNoticia item, final FragmentManager fragmentManager)
         {
             this.itemNoticia = item;
             tituto_textview.setText(item.getNoticia().titulo_noticia);
@@ -168,8 +171,9 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                     }
                     if(Gestion_usuario.getUsuario_online() == null)
                     {
+                        MensajeDarMeGustaDialog mensajeUsuarioSaliendo = MensajeDarMeGustaDialog.nuevaUbstancia("Para indicar que te gusta este articulo inicia sesion");
+                        mensajeUsuarioSaliendo.show(fragmentManager, "missiles");
                         //Toast toast = new Toast(view.getContext());
-                        Toast.makeText(view.getContext(), "Inicie sesion ", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
