@@ -96,7 +96,7 @@ public class Gestion_usuario{
         return new Usuario(){{
             try {
                 id_usuario = jsonObject.get("id_usuario").getAsInt();
-                numero_identificacion_usuario = jsonObject.get("numero_identificacion_usuario").getAsString();
+                //numero_identificacion_usuario = jsonObject.get("numero_identificacion_usuario").getAsString();
                 nombres_usuario = jsonObject.get("nombres_usuario").getAsString();
                 apellidos_usuario = jsonObject.get("apellidos_usuario").getAsString();
                 direccion_usuario = jsonObject.get("direccion_usuario").getAsString();
@@ -117,7 +117,7 @@ public class Gestion_usuario{
         JsonObject obj = new JsonObject();
         try {
             obj.addProperty("id_usuario", elemento.id_usuario);
-            obj.addProperty("numero_identificacion_usuario", elemento.numero_identificacion_usuario);
+            //obj.addProperty("numero_identificacion_usuario", elemento.numero_identificacion_usuario);
             obj.addProperty("nombres_usuario", elemento.nombres_usuario);
             obj.addProperty("apellidos_usuario", elemento.apellidos_usuario);
             obj.addProperty("direccion_usuario", elemento.direccion_usuario);

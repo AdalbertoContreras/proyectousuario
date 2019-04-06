@@ -83,7 +83,6 @@ public class ModificarUsuarioFragment extends Fragment {
     }
 
     private static View view_permanente;
-    private EditText numeroIdentificacionEditText;
     private EditText nombreUsuarioEditText;
     private EditText apellidoEditText;
     private EditText nombreCuentaEditText;
@@ -112,7 +111,6 @@ public class ModificarUsuarioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view_permanente = inflater.inflate(R.layout.fragment_modificar_datos_personales_usuario, container, false);
-        numeroIdentificacionEditText = view_permanente.findViewById(R.id.numeroIdentificacionUsuarioEditText);
         nombreUsuarioEditText = view_permanente.findViewById(R.id.nombresUsuarioEditText);
         apellidoEditText = view_permanente.findViewById(R.id.apellidosUsuarioEditText);
         masculinoRadioButton = view_permanente.findViewById(R.id.masculinoUsuarioRadioButton);
@@ -259,7 +257,6 @@ public class ModificarUsuarioFragment extends Fragment {
                 usuario_espejo.foto_perfil_usuario = "-1";
                 usuario_espejo.foto_perfil_anterior = "-1";
             }
-            usuario_espejo.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
             usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
             usuario_espejo.apellidos_usuario = apellidoEditText.getText().toString();
             usuario_espejo.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
@@ -286,7 +283,8 @@ public class ModificarUsuarioFragment extends Fragment {
                             Gestion_usuario.getUsuario_online().correo_usuario = usuario_espejo.correo_usuario;
                             Gestion_usuario.getUsuario_online().sexo_usuario = usuario_espejo.sexo_usuario;
                             Gestion_usuario.getUsuario_online().fecha_nacimiento = usuario_espejo.fecha_nacimiento;
-                            cargar_datos_usuario();
+                            //cargar_datos_usuario();
+                            getActivity().finish();
                             Toast.makeText(view_permanente.getContext(),"Datos personales actualizados", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -341,7 +339,6 @@ public class ModificarUsuarioFragment extends Fragment {
 
     private void cargar_datos_usuario()
     {
-        numeroIdentificacionEditText.setText(usuario_espejo.numero_identificacion_usuario);
         nombreUsuarioEditText.setText(usuario_espejo.nombres_usuario);
         apellidoEditText.setText(usuario_espejo.apellidos_usuario);
         fecha_nacimientoEditText.setText(usuario_espejo.fecha_nacimiento);

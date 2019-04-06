@@ -113,7 +113,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
         private final ImageView imagen_noticiaImageView;
         private final TextView contenido_TextView;
         private final CheckBox megusta_CheckBox;
-        private final TextView numero_megusta_TextView;
         private boolean comprobando_usuario = false;
         private ItemNoticia itemNoticia;
         private View view;
@@ -126,7 +125,6 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             contenido_TextView = itemView.findViewById(R.id.contenido_textView_itemNoticia);
             megusta_CheckBox = itemView.findViewById(R.id.me_gusta_checkBox_itemNoticia);
             megusta_CheckBox.setChecked(false);
-            numero_megusta_TextView = itemView.findViewById(R.id.me_gusta_textView_itemNoticia);
             view = itemView;
             this.frameLayout = frameLayout;
 
@@ -137,7 +135,7 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             this.itemNoticia = item;
             tituto_textview.setText(item.getNoticia().titulo_noticia);
             contenido_TextView.setText(item.getNoticia().contenido_noticia);
-            numero_megusta_TextView.setText(item.getNoticia().numero_me_gusta + " me gusta");
+            megusta_CheckBox.setText(item.getNoticia().numero_me_gusta + " me gusta");
             if(item.getImagen() !="")
             {
                 Picasso.with(view.getContext()).load(item.getImagen()).into(imagen_noticiaImageView);
@@ -150,6 +148,7 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
             megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    megusta_CheckBox.setEnabled(false);
                     if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
                     {
                         HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(item.getNoticia().id_notiticia, Gestion_usuario.getUsuario_online().id_usuario);
@@ -171,10 +170,15 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                     }
                     if(Gestion_usuario.getUsuario_online() == null)
                     {
-                        MensajeDarMeGustaDialog mensajeUsuarioSaliendo = MensajeDarMeGustaDialog.nuevaUbstancia("Para indicar que te gusta este articulo inicia sesion");
-                        mensajeUsuarioSaliendo.show(fragmentManager, "missiles");
-                        //Toast toast = new Toast(view.getContext());
+
+                        if(megusta_CheckBox.isChecked())
+                        {
+                            MensajeDarMeGustaDialog mensajeUsuarioSaliendo = MensajeDarMeGustaDialog.nuevaUbstancia("Para indicar que te gusta este articulo inicia sesion");
+                            mensajeUsuarioSaliendo.show(fragmentManager, "missiles");
+                            megusta_CheckBox.setChecked(false);
+                        }
                     }
+                    megusta_CheckBox.setEnabled(true);
                 }
             });
             if(item.getImagen() != "")
@@ -284,7 +288,7 @@ public class AdapterNoticia extends RecyclerView.Adapter<AdapterNoticia.ViewHold
                     if(!noticias.isEmpty())
                     {
                         itemNoticia.setNoticia(noticias.get(0));
-                        numero_megusta_TextView.setText(itemNoticia.getNoticia().numero_me_gusta + " me gusta");
+                        megusta_CheckBox.setText(itemNoticia.getNoticia().numero_me_gusta + " me gusta");
                     }
                 }
                 }

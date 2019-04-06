@@ -90,7 +90,7 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
             final ArrayList<Especialidad> especialidades = new Gestion_especialidad().generar_json(chat_asesoria.especialidad);
             if(!administradores.isEmpty())
             {
-                nombre_asesorTextView.setText(administradores.get(0).nombres_administrador + " " + administradores.get(0).apellidos_administrador);
+                nombre_asesorTextView.setText(administradores.get(0).nombres_administrador);
                 Picasso.with(view.getContext()).load(administradores.get(0).url_foto_perfil_administrador).placeholder(R.drawable.ic_iconousuario)
                         .error(R.drawable.ic_iconousuario).into(foto_perfil_asesorImageView);
             }

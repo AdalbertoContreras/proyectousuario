@@ -77,20 +77,11 @@
 
             <CheckBox
                 android:id="@+id/me_gusta_checkBox_itemNoticia"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checkbox_selector" />
+                android:button="@drawable/checkbox_selector"
+                android:text="120 me gusta" />
 
-            <TextView
-                android:id="@+id/me_gusta_textView_itemNoticia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:gravity="right"
-                android:paddingRight="5dp"
-                android:text="me gusta"
-                android:textColor="@color/Gris"
-                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 

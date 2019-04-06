@@ -17,7 +17,6 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
     private ImageView imagen_noticiaImageView;
     private TextView contenido_TextView;
     private CheckBox megusta_CheckBox;
-    private TextView numero_megusta_TextView;
     private TextView fecha_textView_itemNoticia;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         }
         tituto_textview = findViewById(R.id.titulo_textView_itemNoticia);
         contenido_TextView = findViewById(R.id.contenido_textView_itemNoticia);
-        numero_megusta_TextView = findViewById(R.id.me_gusta_textView_itemNoticia);
         megusta_CheckBox = findViewById(R.id.me_gusta_checkBox_itemNoticia);
         fecha_textView_itemNoticia = findViewById(R.id.fecha_textView_itemNoticia);
         imagen_noticiaImageView = findViewById(R.id.imagen_imageView_itemNoticia);

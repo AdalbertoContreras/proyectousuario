@@ -40,7 +40,6 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
     private ImageView imagen_noticiaImageView;
     private TextView contenido_TextView;
     private CheckBox megusta_CheckBox;
-    private TextView numero_megusta_TextView;
     private TextView fecha_textView_itemNoticia;
     private int id_noticia;
     private boolean cambiando_estado;
@@ -68,7 +67,6 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         imagen_noticiaImageView = findViewById(R.id.imagen_imageView_itemNoticia);
         contenido_TextView = findViewById(R.id.contenido_textView_itemNoticia);
         megusta_CheckBox = findViewById(R.id.me_gusta_checkBox_itemNoticia);
-        numero_megusta_TextView = findViewById(R.id.me_gusta_textView_itemNoticia);
         fecha_textView_itemNoticia = findViewById(R.id.fecha_textView_itemNoticia);
         categoriaNoticiaTextView = findViewById(R.id.categoriaTextView);
         id_noticia = getIntent().getExtras().getInt("id_noticia");
@@ -85,6 +83,7 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
 
         categoria = getIntent().getExtras().getInt("categoria");
         consultar_noticia();
+
         switch (categoria)
         {
             case 1:
@@ -104,13 +103,17 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                 categoriaNoticiaTextView.setText("IDENTIDAD");
                 break;
         }
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            tengo_me_gusta();
+        }
             megusta_CheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(Gestion_usuario.getUsuario_online() != null && !cambiando_estado)
                     {
                         megusta_CheckBox.setEnabled(true);
-                        tengo_me_gusta();
+
                         HashMap<String,String> params = new Gestion_me_gusta_noticia().dar_me_gusta(id_noticia, Gestion_usuario.getUsuario_online().id_usuario);
                         Response.Listener<String> stringListener = new Response.Listener<String>()
                         {
@@ -129,10 +132,14 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
                         MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
                     }
-                    else
+                    if(Gestion_usuario.getUsuario_online() == null)
                     {
-                        MensajeDarMeGustaDialog mensajeUsuarioSaliendo = MensajeDarMeGustaDialog.nuevaUbstancia("Para indicar que te gusta este articulo inicia sesion");
-                        mensajeUsuarioSaliendo.show(getSupportFragmentManager(), "missiles");
+                        if(megusta_CheckBox.isChecked())
+                        {
+                            MensajeDarMeGustaDialog mensajeUsuarioSaliendo = MensajeDarMeGustaDialog.nuevaUbstancia("Para indicar que te gusta este articulo inicia sesion");
+                            mensajeUsuarioSaliendo.show(getSupportFragmentManager(), "missiles");
+                            megusta_CheckBox.setChecked(false);
+                        }
                     }
                 }
             });
@@ -150,7 +157,7 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
                     ArrayList<Noticia> noticias = new Gestion_noticia().generar_json(response);
                     if(!noticias.isEmpty())
                     {
-                        numero_megusta_TextView.setText(noticias.get(0).numero_me_gusta + " me gusta");
+                        megusta_CheckBox.setText(noticias.get(0).numero_me_gusta + " me gusta");
                     }
                 }
             }

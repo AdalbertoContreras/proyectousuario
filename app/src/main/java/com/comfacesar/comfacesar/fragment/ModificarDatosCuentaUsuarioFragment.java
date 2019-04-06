@@ -211,6 +211,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
                         Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
                         salvarSesion();
                         Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
+                        getActivity().finish();
                     }
                 }
                 catch (NumberFormatException exc)

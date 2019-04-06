@@ -3,6 +3,7 @@ package com.comfacesar.comfacesar.fragment;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -38,6 +39,7 @@ import com.example.modelo.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -88,11 +90,11 @@ public class RegistrarUsuarioFragment extends Fragment {
     }
 
     private static View view_permanente;
-    private EditText numeroIdentificacionEditText;
     private EditText nombreUsuarioEditText;
     private EditText apellidoEditText;
     private EditText nombreCuentaEditText;
     private EditText contraseñaCuentaEditText;
+    private EditText verificarContraseñaCuentaEditText;
     private RadioButton masculinoRadioButton;
     private RadioButton femeninoRadioButton;
     private EditText telefonoEditText;
@@ -115,13 +117,13 @@ public class RegistrarUsuarioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view_permanente = inflater.inflate(R.layout.fragment_registrar_usuario, container, false);
-        numeroIdentificacionEditText = view_permanente.findViewById(R.id.numeroIdentificacionEditTextRegistrarUsuario);
         nombreUsuarioEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextRegistrarUsuario);
         apellidoEditText = view_permanente.findViewById(R.id.apellidosEditTextRegistrarUsuario);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextRegistrarUsuario);
         masculinoRadioButton = view_permanente.findViewById(R.id.masculinoRadioButton);
         femeninoRadioButton = view_permanente.findViewById(R.id.femeninoRadioButton);
         contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaEditTextRegistrarUsuario);
+        verificarContraseñaCuentaEditText = view_permanente.findViewById(R.id.verificarContraseñaCuentaEditTextRegistrarUsuario);
         registrar_usuario = view_permanente.findViewById(R.id.registrarmeButtonRegistrarUsuario);
         direccionEditText = view_permanente.findViewById(R.id.direccionEditText);
         telefonoEditText = view_permanente.findViewById(R.id.telefonoEditText);
@@ -130,19 +132,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
         eliminarFotoButton = view_permanente.findViewById(R.id.eliminar_imagenButton);
         fotoPerfilCircleImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
-        numeroIdentificacionEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus)
-                {
-                    numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
-                }
-                else
-                {
-                    existeNumeroIdentificacion();
-                }
-            }
-        });
         nombreCuentaEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -195,7 +184,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         registrar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validar_numero_identificacion();
+                validar_nombre_cuenta();
             }
         });
         return view_permanente;
@@ -247,46 +236,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         }
     }
 
-    private void existeNumeroIdentificacion()
-    {
-        HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                if(getContext() != null)
-                {
-                    int val = 0;
-                    try
-                    {
-                        val = Integer.parseInt(response);
-                    }
-                    catch(NumberFormatException exc)
-                    {
-
-                    }
-                    if(val > 0)
-                    {
-
-                        numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.rojo));
-                    }
-                    else
-                    {
-                        numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
-                    }
-                }
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                numeroIdentificacionEditText.setTextColor(getResources().getColor(R.color.Black));
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
-    }
-
     private void existeNombreCuenta()
     {
         HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
@@ -326,39 +275,11 @@ public class RegistrarUsuarioFragment extends Fragment {
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
-    private void validar_numero_identificacion()
+
+
+    private void validar_nombre_cuenta()
     {
         alertDialog = new Util().getProgressDialog(view_permanente, "Registrando usuario");
-        HashMap<String, String> hashMap = new Gestion_usuario().existe_numero_identificacion(numeroIdentificacionEditText.getText().toString());
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                int val = 0;
-                try
-                {
-                    val = Integer.parseInt(response);
-                }
-                catch(NumberFormatException exc)
-                {
-
-                }
-                validar_nombre_cuenta(val == 1);
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(view_permanente.getContext(),"Ha ocurrido un error en el servidor", Toast.LENGTH_LONG).show();
-                alertDialog.dismiss();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
-    }
-
-    private void validar_nombre_cuenta(final Boolean numero_identificacion_vaido)
-    {
         HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
@@ -373,7 +294,7 @@ public class RegistrarUsuarioFragment extends Fragment {
                 {
 
                 }
-                registrar_usuario(val == 1, numero_identificacion_vaido);
+                registrar_usuario(val == 1);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -387,9 +308,9 @@ public class RegistrarUsuarioFragment extends Fragment {
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
-    private void registrar_usuario(Boolean existe_nombre_cuenta, Boolean existe_numero_identificacion)
+    private void registrar_usuario(Boolean existe_nombre_cuenta)
     {
-        if(numeroIdentificacionEditText.getText().toString().isEmpty())
+        /*if(numeroIdentificacionEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su numero de identificacion", Toast.LENGTH_LONG).show();
             alertDialog.dismiss();
@@ -400,7 +321,7 @@ public class RegistrarUsuarioFragment extends Fragment {
             Toast.makeText(view_permanente.getContext(), "Este numero de identifacion esta siendo utilizado por otro usuario", Toast.LENGTH_LONG).show();
             alertDialog.dismiss();
             return;
-        }
+        }*/
         if(nombreUsuarioEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su nombres", Toast.LENGTH_LONG).show();
@@ -410,6 +331,12 @@ public class RegistrarUsuarioFragment extends Fragment {
         if(apellidoEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
+            return;
+        }
+        if(fecha_nacimientoEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
             alertDialog.dismiss();
             return;
         }
@@ -431,14 +358,20 @@ public class RegistrarUsuarioFragment extends Fragment {
             alertDialog.dismiss();
             return;
         }
-        if(fecha_nacimientoEditText.getText().toString().isEmpty())
+        if(verificarContraseñaCuentaEditText.getText().toString().isEmpty())
         {
-            Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
+            Toast.makeText(view_permanente.getContext(), "Por favor ingrese la contraseña a verificar", Toast.LENGTH_LONG).show();
             alertDialog.dismiss();
             return;
         }
-        Usuario usuario = new Usuario();
-        usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
+        if(!contraseñaCuentaEditText.getText().toString().equals(verificarContraseñaCuentaEditText.getText().toString()))
+        {
+            Toast.makeText(view_permanente.getContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
+            return;
+        }
+        final Usuario usuario = new Usuario();
+        //usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
         usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
@@ -470,12 +403,22 @@ public class RegistrarUsuarioFragment extends Fragment {
                 int val = 0;
                 try
                 {
-                    val = Integer.parseInt(response);
-                    if(val > 0)
+                    ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                    if(!usuarios.isEmpty())
                     {
-                        limpiarDatos();
-                        alertDialog.dismiss();
-                        Toast.makeText(view_permanente.getContext(),"Usuario registrado con exito", Toast.LENGTH_LONG).show();
+                        Gestion_usuario.setUsuario_online(usuarios.get(0));
+                        Gestion_usuario.getUsuario_online().contrasena_usuario = contraseñaCuentaEditText.getText().toString();
+                        Toast.makeText(view_permanente.getContext(),"Usuario registrado con exito, ha iniciado sesion.", Toast.LENGTH_LONG).show();
+                        SharedPreferences prefs = getActivity().getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor myEditor = prefs.edit();
+                        myEditor.putString("USER", Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
+                        myEditor.putString("PASS", Gestion_usuario.getUsuario_online().contrasena_usuario);
+                        myEditor.commit();
+                        getActivity().finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(view_permanente.getContext(),"Usuario no registrado, intente nuevamente.", Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (NumberFormatException exc)
@@ -498,7 +441,6 @@ public class RegistrarUsuarioFragment extends Fragment {
 
     private void limpiarDatos()
     {
-        numeroIdentificacionEditText.setText("");
         nombreUsuarioEditText.setText("");
         apellidoEditText.setText("");
         fecha_nacimientoEditText.setText("");

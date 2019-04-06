@@ -96,6 +96,7 @@ public class InicioSesionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+
         registrarmeTextView = view_permanente.findViewById(R.id.registrarmeTextView);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
@@ -272,5 +273,14 @@ public class InicioSesionFragment extends Fragment {
         myEditor.putString("USER", Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
         myEditor.putString("PASS", Gestion_usuario.getUsuario_online().contrasena_usuario);
         myEditor.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(Gestion_usuario.getUsuario_online() != null)
+        {
+            getActivity().finish();
+        }
     }
 }
