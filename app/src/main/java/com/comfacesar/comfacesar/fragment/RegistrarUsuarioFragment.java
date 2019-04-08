@@ -117,7 +117,7 @@ public class RegistrarUsuarioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view_permanente = inflater.inflate(R.layout.fragment_registrar_usuario, container, false);
-        nombreUsuarioEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextRegistrarUsuario);
+        nombreUsuarioEditText = view_permanente.findViewById(R.id.nombresEditTextRegistrarUsuario);
         apellidoEditText = view_permanente.findViewById(R.id.apellidosEditTextRegistrarUsuario);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextRegistrarUsuario);
         masculinoRadioButton = view_permanente.findViewById(R.id.masculinoRadioButton);
@@ -238,7 +238,8 @@ public class RegistrarUsuarioFragment extends Fragment {
 
     private void existeNombreCuenta()
     {
-        HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
+        String cuenta = nombreCuentaEditText.getText().toString().toLowerCase();
+        HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(cuenta);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -280,7 +281,8 @@ public class RegistrarUsuarioFragment extends Fragment {
     private void validar_nombre_cuenta()
     {
         alertDialog = new Util().getProgressDialog(view_permanente, "Registrando usuario");
-        HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(nombreCuentaEditText.getText().toString());
+        String cuenta = nombreCuentaEditText.getText().toString().toLowerCase();
+        HashMap<String, String> hashMap = new Gestion_usuario().existe_nombre_cuenta(cuenta);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -310,18 +312,6 @@ public class RegistrarUsuarioFragment extends Fragment {
 
     private void registrar_usuario(Boolean existe_nombre_cuenta)
     {
-        /*if(numeroIdentificacionEditText.getText().toString().isEmpty())
-        {
-            Toast.makeText(view_permanente.getContext(), "Ingrese su numero de identificacion", Toast.LENGTH_LONG).show();
-            alertDialog.dismiss();
-            return;
-        }
-        if(existe_numero_identificacion)
-        {
-            Toast.makeText(view_permanente.getContext(), "Este numero de identifacion esta siendo utilizado por otro usuario", Toast.LENGTH_LONG).show();
-            alertDialog.dismiss();
-            return;
-        }*/
         if(nombreUsuarioEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su nombres", Toast.LENGTH_LONG).show();
@@ -371,7 +361,6 @@ public class RegistrarUsuarioFragment extends Fragment {
             return;
         }
         final Usuario usuario = new Usuario();
-        //usuario.numero_identificacion_usuario = numeroIdentificacionEditText.getText().toString();
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
         usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
@@ -393,7 +382,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         {
             usuario.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
         }
-        usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+        usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString().toLowerCase();
         usuario.contrasena_usuario = contraseñaCuentaEditText.getText().toString();
         HashMap<String, String> hashMap = new Gestion_usuario().registrar_usuario(usuario);
         Response.Listener<String> stringListener = new Response.Listener<String>()

@@ -127,11 +127,8 @@ public class InicioSesionFragment extends Fragment {
                     dialog.dismiss();
                     return;
                 }
-                final Usuario usuario = new Usuario(){{
-                    nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
-                    contrasena_usuario = contraseñaEditText.getText().toString();
-                }};
-                usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
+                final Usuario usuario = new Usuario();
+                usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString().toLowerCase();
                 usuario.contrasena_usuario = contraseñaEditText.getText().toString();
                 validarUsuario(usuario);
             }

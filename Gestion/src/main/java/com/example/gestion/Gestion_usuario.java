@@ -96,7 +96,6 @@ public class Gestion_usuario{
         return new Usuario(){{
             try {
                 id_usuario = jsonObject.get("id_usuario").getAsInt();
-                //numero_identificacion_usuario = jsonObject.get("numero_identificacion_usuario").getAsString();
                 nombres_usuario = jsonObject.get("nombres_usuario").getAsString();
                 apellidos_usuario = jsonObject.get("apellidos_usuario").getAsString();
                 direccion_usuario = jsonObject.get("direccion_usuario").getAsString();
