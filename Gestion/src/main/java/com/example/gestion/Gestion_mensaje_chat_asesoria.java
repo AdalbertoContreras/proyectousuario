@@ -109,13 +109,7 @@ public class Gestion_mensaje_chat_asesoria {
             obj.addProperty("llave_ws",llave_ws);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty(NOMBRE_USUARIO,Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty(CONTRASENA_USUARIO,Gestion_usuario.getUsuario_online().contrasena_usuario);
-            }
-            else
-            {
-                obj.addProperty(NOMBRE_USUARIO,"");
-                obj.addProperty(CONTRASENA_USUARIO,"");
+                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

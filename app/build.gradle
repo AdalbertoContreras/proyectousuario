@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.comfacesar.comfacesar"
+        applicationId "com.iniciativascomfacesar.serviamigo"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -39,4 +38,7 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.2'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.airbnb.android:lottie:1.5.3'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
 }

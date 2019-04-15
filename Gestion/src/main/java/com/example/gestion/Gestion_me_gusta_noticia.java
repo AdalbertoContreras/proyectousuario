@@ -97,13 +97,7 @@ public class Gestion_me_gusta_noticia {
             obj.addProperty("llave_ws",llave_ws);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty("usuario_ol",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty("contrasena_ol",Gestion_usuario.getUsuario_online().contrasena_usuario);
-            }
-            else
-            {
-                obj.addProperty("usuario_ol","");
-                obj.addProperty("contrasena_ol","");
+                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

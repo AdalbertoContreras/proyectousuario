@@ -136,8 +136,7 @@ public class Gestion_administrador{
     {
         if(Gestion_usuario.getUsuario_online() != null)
         {
-            obj.addProperty("NU",Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-            obj.addProperty("CU",Gestion_usuario.getUsuario_online().contrasena_usuario);
+            obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
         }
     }
 }

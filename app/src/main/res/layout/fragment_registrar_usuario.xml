@@ -140,7 +140,8 @@
                             android:id="@+id/edadEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="edad:"
+                            android:hint="fecha de nacimiento '2019-06-09'"
+                            android:inputType="date"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -189,7 +190,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="direccion:"
-                            android:inputType="textWebEmailAddress"
+                            android:inputType="textPostalAddress"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 

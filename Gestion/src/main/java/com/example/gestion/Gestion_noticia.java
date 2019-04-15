@@ -118,6 +118,10 @@ public class Gestion_noticia {
             obj.addProperty("numero_visistas_noticia", elemento.numero_visistas_noticia);
             obj.addProperty("administrador_noticia", elemento.administrador_noticia);
             obj.addProperty("categoria_noticia_manual_noticia", elemento.categoria_noticia_manual_noticia);
+            if(Gestion_usuario.getUsuario_online() != null)
+            {
+                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
+            }
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
