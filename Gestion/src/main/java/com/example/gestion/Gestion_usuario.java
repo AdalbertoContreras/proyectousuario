@@ -27,6 +27,12 @@ public class Gestion_usuario{
         return construir_parametros(usuario);
     }
 
+    public HashMap<String, String> cerrarSesion()
+    {
+        tipo_consulta = "cerrarSesion";
+        return construir_parametros(usuario_online);
+    }
+
     public HashMap<String, String> modificar_datos_personales(Usuario usuario)
     {
         if(usuario.foto_perfil_usuario.contains("http://31.220.63.102/WScomfacesar/"))
@@ -61,9 +67,15 @@ public class Gestion_usuario{
         return construir_parametros(usuario);
     }
 
-    public HashMap<String, String> validar_usuario(Usuario usuario)
+    public HashMap<String, String> validar_cuenta_y_generar_token(Usuario usuario)
     {
-        tipo_consulta = "validar_cuenta";
+        tipo_consulta = "validar_cuenta_y_generar_token";
+        return construir_parametros(usuario);
+    }
+
+    public HashMap<String, String> validarTokenObtenerusuario(Usuario usuario)
+    {
+        tipo_consulta = "validarTokenObtenerusuario";
         return construir_parametros(usuario);
     }
 
@@ -105,6 +117,14 @@ public class Gestion_usuario{
                 correo_usuario = jsonObject.get("correo_usuario").getAsString();
                 nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
                 foto_perfil_usuario = jsonObject.get("foto_perfil_usuario").getAsString();
+                if(!jsonObject.get("token").isJsonNull())
+                {
+                    token = jsonObject.get("token").getAsString();
+                }
+                else
+                {
+                    token = null;
+                }
             } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
                 e.printStackTrace();
             }
@@ -127,7 +147,7 @@ public class Gestion_usuario{
             obj.addProperty("nombre_cuenta_usuario", elemento.nombre_cuenta_usuario);
             obj.addProperty("contrasena_usuario", elemento.contrasena_usuario);
             obj.addProperty("foto_perfil_usuario", elemento.foto_perfil_usuario);
-            obj.addProperty("foto_perfil_anterior", elemento.foto_perfil_anterior);
+            obj.addProperty("token", elemento.token);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
@@ -135,8 +155,7 @@ public class Gestion_usuario{
 
             if(usuario_online != null)
             {
-                obj.addProperty("NU",usuario_online.nombre_cuenta_usuario);
-                obj.addProperty("CU",usuario_online.contrasena_usuario);
+                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

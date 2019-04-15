@@ -24,9 +24,7 @@ import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
-import com.example.gestion.Gestion_administrador;
 import com.example.gestion.Gestion_usuario;
-import com.example.modelo.Administrador;
 import com.example.modelo.Usuario;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,8 +35,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -196,7 +192,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
     }
     private void validarUsuario(Usuario usuario)
     {
-        HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
+        HashMap<String, String> params = new Gestion_usuario().validar_cuenta_y_generar_token(usuario);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -205,22 +201,30 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                 try
                 {
                     val = Integer.parseInt(response);
-                    if(val == 0)
-                    {
-                        dialog.dismiss();
-                        Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
-                                "incorrecto", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        consultar_usuario_y_agregar_online(val);
-                    }
-                }
-                catch(NumberFormatException exc)
-                {
                     dialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                             "incorrecto", Toast.LENGTH_LONG).show();
+                }
+                catch(NumberFormatException exc)
+                {
+                    ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                    if(usuarios.isEmpty())
+                    {
+                        Toast.makeText(view_permanente.getContext(), "Error en el sistema",
+                                Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                    else
+                    {
+                        usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
+                        Gestion_usuario.setUsuario_online(usuarios.get(0));
+                        dialog.dismiss();
+                        Toast.makeText(view_permanente.getContext(), "Logueado",
+                                Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(), ContainerActivity.class);
+                            salvarSesion();
+                            startActivity(intent);
+                    }
                 }
             }
         };
@@ -234,51 +238,6 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
-    }
-
-    private void consultar_usuario_y_agregar_online(int id_usuario)
-    {
-        Usuario usuario = new Usuario();
-        usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString();
-        usuario.contrasena_usuario = contraseñaEditText.getText().toString();
-        usuario.id_usuario = id_usuario;
-        Gestion_usuario.setUsuario_online(usuario);
-        HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(usuario);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
-                if(usuarios.isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Error en el sistema",
-                            Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-                else
-                {
-                    usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
-                    Gestion_usuario.setUsuario_online(usuarios.get(0));
-                    dialog.dismiss();
-                    Toast.makeText(view_permanente.getContext(), "Logueado",
-                            Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getActivity(), ContainerActivity.class);
-                    salvarSesion();
-                    startActivity(intent);
-                }
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
-                Toast.makeText(view_permanente.getContext(), "Error",
-                        Toast.LENGTH_LONG).show();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -325,13 +284,11 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         void onFragmentInteraction(Uri uri);
     }
 
-
     private void salvarSesion()
     {
         SharedPreferences prefs = getActivity().getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
         SharedPreferences.Editor myEditor = prefs.edit();
-        myEditor.putString("USER", Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-        myEditor.putString("PASS", Gestion_usuario.getUsuario_online().contrasena_usuario);
+        myEditor.putString("TOKEN", Gestion_usuario.getUsuario_online().token);
         myEditor.commit();
     }
 

@@ -14,4 +14,5 @@ public class Usuario {
     public String contrasena_usuario;
     public String foto_perfil_usuario;
     public String foto_perfil_anterior;
+    public String token;
 }

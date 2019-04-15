@@ -128,7 +128,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         Usuario usuario_con_contraseña_validad = Gestion_usuario.getUsuario_online();
         usuario_con_contraseña_validad.contrasena_usuario = contraseñaCuentaAnteriorEditText.getText().toString();
         Gestion_usuario.setUsuario_online(usuario_con_contraseña_validad);
-        HashMap<String, String> hashMap = new Gestion_usuario().validar_usuario(usuario_con_contraseña_validad);
+        HashMap<String, String> hashMap = new Gestion_usuario().validar_cuenta_y_generar_token(usuario_con_contraseña_validad);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override

@@ -35,7 +35,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Activities.ChatAsesoria;
 import com.comfacesar.comfacesar.Activities.HistorialAlertaVacioActivity;
 import com.comfacesar.comfacesar.Activities.HistorialChatVacioActivity;
-import com.comfacesar.comfacesar.Dialog.MensajeUsuarioSaliendo;
 import com.comfacesar.comfacesar.adapterViewpager.MyPagerAdapter;
 import com.comfacesar.comfacesar.fragment.AsesoriaFragment;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
@@ -492,11 +491,11 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-        cambaiarMenu();
+        cambiarMenu();
         return true;
     }
 
-    private void cambaiarMenu()
+    private void cambiarMenu()
     {
         menu.removeItem(R.id.registrarmeMenu);
         menu.removeItem(R.id.iniciarSesionMenu);
@@ -626,12 +625,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 selecionado = true;
                 break;
             case  R.id.cerrarSesionMenu:
-                Gestion_usuario.setUsuario_online(null);
-                SharedPreferences.Editor myEditor = prefs.edit();
-                myEditor.putString("USER", "-1");
-                myEditor.putString("PASS", "-1");
-                myEditor.commit();
-                recreate();
+                cerrarSesion();
                 break;
             case  R.id.acercaDeMenu:
                 intent.putExtra("id",5);
@@ -651,6 +645,46 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             startActivity(intent);
         }
         return true;
+    }
+
+    private void cerrarSesion()
+    {
+        HashMap<String,String> params = new Gestion_usuario().cerrarSesion();
+        Response.Listener<String> stringListener = new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                try
+                {
+                    int val = Integer.parseInt(response);
+                    if(val > 0)
+                    {
+                        Gestion_usuario.setUsuario_online(null);
+                        SharedPreferences.Editor myEditor = prefs.edit();
+                        myEditor.putString("TOKEN", "-1");
+                        myEditor.commit();
+                        recreate();
+                        Toast.makeText(getBaseContext(), "Sesion finalizada", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+
+                    }
+                }
+                catch(NumberFormatException exc)
+                {
+
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        };
+        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
     private void tengoAlertaTempranas()
@@ -821,14 +855,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     private void recuperarSesion()
     {
         prefs = getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
-        String user = prefs.getString("USER", "-1");
-        String pass = prefs.getString("PASS", "-1");
-        if(!user.equals("-1") && !pass.equals("-1"))
+        String token = prefs.getString("TOKEN", "-1");
+        if(!token.equals("-1") )
         {
             Usuario usuario = new Usuario();
-            usuario.nombre_cuenta_usuario = user;
-            usuario.contrasena_usuario = pass;
-            validarUsuario(usuario);
+            usuario.token = token;
+            validarTokenObtenerUsuario(usuario);
         }
         else
         {
@@ -836,9 +868,9 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         }
     }
 
-    private void validarUsuario(Usuario usuario)
+    private void validarTokenObtenerUsuario(Usuario usuario)
     {
-        HashMap<String, String> params = new Gestion_usuario().validar_usuario(usuario);
+        HashMap<String, String> params = new Gestion_usuario().validarTokenObtenerusuario(usuario);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -858,7 +890,19 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 }
                 catch(NumberFormatException exc)
                 {
-                    aux();
+                    ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                    if(usuarios.isEmpty())
+                    {
+                        Toast.makeText(getBaseContext(), "Error en el sistema",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Gestion_usuario.setUsuario_online(usuarios.get(0));
+                        Toast.makeText(getBaseContext(), "Logueado",
+                                Toast.LENGTH_LONG).show();
+                        cambiarMenu();
+                    }
+                    //aux();
                 }
             }
         };
@@ -889,7 +933,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     usuarios.get(0).contrasena_usuario = prefs.getString("PASS", "-1");
                     Gestion_usuario.setUsuario_online(usuarios.get(0));
-                    cambaiarMenu();
+                    cambiarMenu();
                 }
                 else
                 {

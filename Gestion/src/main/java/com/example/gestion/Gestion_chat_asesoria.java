@@ -273,8 +273,7 @@ public class Gestion_chat_asesoria {
             obj.addProperty("llave_ws",llave_ws);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty(NOMBRE_USUARIO,Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-                obj.addProperty(CONTRASENA_USUARIO,Gestion_usuario.getUsuario_online().contrasena_usuario);
+                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
             }
             else
             {
@@ -297,8 +296,7 @@ public class Gestion_chat_asesoria {
             obj.addProperty("fecha2",fecha2);
             obj.addProperty(TIPO_CONSULTA,tipo_consulta);
             obj.addProperty("llave_ws",llave_ws);
-            obj.addProperty(NOMBRE_USUARIO,Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
-            obj.addProperty(CONTRASENA_USUARIO,Gestion_usuario.getUsuario_online().contrasena_usuario);
+            obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
