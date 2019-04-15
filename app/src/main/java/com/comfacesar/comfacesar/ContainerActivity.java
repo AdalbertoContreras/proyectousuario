@@ -771,7 +771,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     @Override
     public void onBackPressed() {
-        if(Gestion_usuario.getUsuario_online() != null)
+        super.onBackPressed();
+        /*if(Gestion_usuario.getUsuario_online() != null)
         {
             MensajeUsuarioSaliendo mensajeUsuarioSaliendo = MensajeUsuarioSaliendo.nuevaUbstancia(new MensajeUsuarioSaliendo.CerrarAplicacion() {
                 @Override
@@ -795,7 +796,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             System.exit(0);
             super.onBackPressed();
         }
-        mostrar_mensaje_conexion = false;
+        mostrar_mensaje_conexion = false;*/
     }
 
     @Override

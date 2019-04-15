@@ -32,27 +32,6 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="5dp">
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/numeroIdentificacionUsuarioEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:hint="identificacion:"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp">
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp">
-                        <android.support.design.widget.TextInputEditText
                             android:id="@+id/nombresUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -132,11 +111,13 @@
                         android:paddingTop="5dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="5dp">
+
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/edadUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="edad:"
+                            android:hint="fecha de nacimineto '2019-06-09'"
+                            android:inputType="date"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -152,11 +133,13 @@
                         android:paddingTop="5dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="5dp">
+
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/telefonoUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="telefono:"
+                            android:inputType="phone"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -172,11 +155,13 @@
                         android:paddingTop="5dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="5dp">
+
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/direccionUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="direccion:"
+                            android:inputType="textEmailAddress"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -192,11 +177,13 @@
                         android:paddingTop="5dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="5dp">
+
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/correoEletronicoUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="correo electronico :"
+                            android:inputType="textPostalAddress"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>

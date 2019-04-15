@@ -32,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.Util.Util;
+import com.example.extra.Calculo;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
@@ -39,7 +40,10 @@ import com.example.modelo.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -165,22 +169,28 @@ public class RegistrarUsuarioFragment extends Fragment {
                 fotoPerfilCircleImageView.setImageBitmap(null);
             }
         });
-        fecha_nacimientoEditText.setFocusable(false);
+        /*fecha_nacimientoEditText.setFocusable(false);
         fecha_nacimientoEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
             }
-        });
+        });*/
         fecha_nacimientoEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus)
+                fecha_nacimientoEditText.setText(fecha_nacimientoEditText.getText().toString().trim());
+                if(new Calculo().validarFecha(fecha_nacimientoEditText.getText().toString()))
                 {
-                    showDatePickerDialog();
+                    Toast.makeText(getActivity().getBaseContext(), "Fecha de nacimineto valida", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getActivity().getBaseContext(), "Fecha de nacimineto no valida", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
         registrar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +199,18 @@ public class RegistrarUsuarioFragment extends Fragment {
         });
         return view_permanente;
     }
+
+    public static boolean validarFecha(String fecha) {
+        try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            formatoFecha.setLenient(false);
+            formatoFecha.parse(fecha);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
+
 
     public void setProgressDialog()
     {
@@ -327,6 +349,13 @@ public class RegistrarUsuarioFragment extends Fragment {
         if(fecha_nacimientoEditText.getText().toString().isEmpty())
         {
             Toast.makeText(view_permanente.getContext(), "Ingrese su fecha de nacimiento.", Toast.LENGTH_LONG).show();
+            alertDialog.dismiss();
+            return;
+        }
+        fecha_nacimientoEditText.setText(fecha_nacimientoEditText.getText().toString().trim());
+        if(!new Calculo().validarFecha(fecha_nacimientoEditText.getText().toString()))
+        {
+            Toast.makeText(view_permanente.getContext(), "Fecha de nacimiento ingresada no valida.", Toast.LENGTH_LONG).show();
             alertDialog.dismiss();
             return;
         }

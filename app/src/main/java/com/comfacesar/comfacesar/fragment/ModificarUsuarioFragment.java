@@ -10,7 +10,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatePickerFragment;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.Util.Util;
+import com.example.extra.Calculo;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
@@ -34,6 +37,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -85,8 +90,6 @@ public class ModificarUsuarioFragment extends Fragment {
     private static View view_permanente;
     private EditText nombreUsuarioEditText;
     private EditText apellidoEditText;
-    private EditText nombreCuentaEditText;
-    private EditText contraseñaCuentaEditText;
     private RadioButton masculinoRadioButton;
     private RadioButton femeninoRadioButton;
     private EditText telefonoEditText;
@@ -146,7 +149,6 @@ public class ModificarUsuarioFragment extends Fragment {
                 fotoPerfilImageView.setImageBitmap(null);
             }
         });
-        fecha_nacimientoEditText.setFocusable(false);
         usuario_espejo = Gestion_usuario.getUsuario_online();
         evento_fecha_nacimiento();
         evento_modificar_usuario();
@@ -198,18 +200,17 @@ public class ModificarUsuarioFragment extends Fragment {
 
     private void evento_fecha_nacimiento()
     {
-        fecha_nacimientoEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
         fecha_nacimientoEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus)
+                fecha_nacimientoEditText.setText(fecha_nacimientoEditText.getText().toString().trim());
+                if(new Calculo().validarFecha(fecha_nacimientoEditText.getText().toString()))
                 {
-                    showDatePickerDialog();
+                    fecha_nacimientoEditText.setTextColor(getResources().getColor(R.color.Black));
+                }
+                else
+                {
+                    fecha_nacimientoEditText.setTextColor(getResources().getColor(R.color.rojo));
                 }
             }
         });
@@ -233,6 +234,18 @@ public class ModificarUsuarioFragment extends Fragment {
             {
                 alertDialog.dismiss();
                 Toast.makeText(view_permanente.getContext(), "Ingrese sus apellidos", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(fecha_nacimientoEditText.getText().toString().isEmpty())
+            {
+                alertDialog.dismiss();
+                Toast.makeText(view_permanente.getContext(), "Ingrese la fecha de nacimiento", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(!new Calculo().validarFecha(fecha_nacimientoEditText.getText().toString()))
+            {
+                alertDialog.dismiss();
+                Toast.makeText(view_permanente.getContext(), "Fecha de nacimineto ingresada no valida", Toast.LENGTH_LONG).show();
                 return;
             }
             if(masculinoRadioButton.isChecked())

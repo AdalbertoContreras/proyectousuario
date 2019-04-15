@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "1083945275899",
+    "firebase_url": "https://my-project-1-214619.firebaseio.com",
+    "project_id": "my-project-1-214619",
+    "storage_bucket": "my-project-1-214619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083945275899:android:f3f808d12e57dcb1",
+        "android_client_info": {
+          "package_name": "com.iniciativascomfacesar.serviamigo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083945275899-mo484hg0pjno147p2d7ck75m8bnj81sf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iniciativascomfacesar.serviamigo",
+            "certificate_hash": "e8e94c7e065baf0e87dfa0b12f0d509493fcb25a"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmUar5u4PneW945IAZITYXQiJJJ_76FU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083945275899-tlivef0dd8d2tctaoktb53gttc1dkbns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
