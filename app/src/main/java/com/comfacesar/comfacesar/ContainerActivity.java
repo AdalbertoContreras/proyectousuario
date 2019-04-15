@@ -774,7 +774,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 }
                 catch(NumberFormatException exc)
                 {
-                    intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
+                    intent = new Intent(ContainerActivity.this, HistorialChatVacioActivity.class);
                     HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
                         @Override
                         public void enviarAsesoria() {
@@ -788,12 +788,11 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Intent intent;
-                intent = new Intent(ContainerActivity.this, HistorialAlertaVacioActivity.class);
-                HistorialAlertaVacioActivity.enviarAlerta = new HistorialAlertaVacioActivity.EnviarAlerta() {
+                Intent intent = new Intent(ContainerActivity.this, HistorialChatVacioActivity.class);
+                HistorialChatVacioActivity.enviarAsesoria = new HistorialChatVacioActivity.EnviarAsesoria() {
                     @Override
-                    public void enviarAlerta() {
-                        viewPager.setCurrentItem(11,true);
+                    public void enviarAsesoria() {
+                        viewPager.setCurrentItem(1,true);
                     }
                 };
                 startActivity(intent);
@@ -806,31 +805,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*if(Gestion_usuario.getUsuario_online() != null)
-        {
-            MensajeUsuarioSaliendo mensajeUsuarioSaliendo = MensajeUsuarioSaliendo.nuevaUbstancia(new MensajeUsuarioSaliendo.CerrarAplicacion() {
-                @Override
-                public void usuarioAcepto(MensajeUsuarioSaliendo mensajeUsuarioSaliendo) {
-                    mensajeUsuarioSaliendo.dismiss();
-                    moveTaskToBack(true);
-                }
-
-                @Override
-                public void usuarioNoAcepto(MensajeUsuarioSaliendo mensajeUsuarioSaliendo) {
-                    mensajeUsuarioSaliendo.dismiss();
-                    finish();
-                    System.exit(0);
-                }
-            });
-            mensajeUsuarioSaliendo.show(this.getSupportFragmentManager(), "missiles");
-        }
-        else
-        {
-            finish();
-            System.exit(0);
-            super.onBackPressed();
-        }
-        mostrar_mensaje_conexion = false;*/
     }
 
     @Override
@@ -875,18 +849,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         {
             @Override
             public void onResponse(String response) {
-                int val = 0;
                 try
                 {
-                    val = Integer.parseInt(response);
-                    if(val > 0)
-                    {
-                        consultar_usuario_y_agregar_online(val);
-                    }
-                    else
-                    {
-                        aux();
-                    }
+                    Integer.parseInt(response);
+                    aux();
                 }
                 catch(NumberFormatException exc)
                 {
@@ -895,6 +861,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     {
                         Toast.makeText(getBaseContext(), "Error en el sistema",
                                 Toast.LENGTH_LONG).show();
+                        aux();
                     }
                     else {
                         Gestion_usuario.setUsuario_online(usuarios.get(0));
@@ -902,7 +869,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                                 Toast.LENGTH_LONG).show();
                         cambiarMenu();
                     }
-                    //aux();
                 }
             }
         };
@@ -913,41 +879,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         };
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
-    }
-
-    private void consultar_usuario_y_agregar_online(int id_usuario)
-    {
-        Usuario usuario = new Usuario();
-        usuario.nombre_cuenta_usuario = prefs.getString("USER", "-1");
-        usuario.contrasena_usuario = prefs.getString("PASS", "-1");
-        usuario.id_usuario = id_usuario;
-        Gestion_usuario.setUsuario_online(usuario);
-        HashMap<String, String> hashMap = new Gestion_usuario().consultar_usuario_por_id(usuario);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
-                if(!usuarios.isEmpty())
-                {
-                    usuarios.get(0).contrasena_usuario = prefs.getString("PASS", "-1");
-                    Gestion_usuario.setUsuario_online(usuarios.get(0));
-                    cambiarMenu();
-                }
-                else
-                {
-                    aux();
-                }
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                aux();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 }

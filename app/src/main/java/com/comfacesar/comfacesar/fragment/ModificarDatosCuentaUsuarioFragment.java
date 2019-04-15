@@ -23,6 +23,7 @@ import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -128,7 +129,7 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
         Usuario usuario_con_contraseña_validad = Gestion_usuario.getUsuario_online();
         usuario_con_contraseña_validad.contrasena_usuario = contraseñaCuentaAnteriorEditText.getText().toString();
         Gestion_usuario.setUsuario_online(usuario_con_contraseña_validad);
-        HashMap<String, String> hashMap = new Gestion_usuario().validar_cuenta_y_generar_token(usuario_con_contraseña_validad);
+        HashMap<String, String> hashMap = new Gestion_usuario().validar_cuenta(usuario_con_contraseña_validad);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
             @Override
@@ -203,21 +204,31 @@ public class ModificarDatosCuentaUsuarioFragment extends Fragment {
                 int val = 0;
                 try
                 {
-                    val = Integer.parseInt(response);
-                    if(val > 0)
-                    {
-                        limpiar();
-                        alertDialog.dismiss();
-                        Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
-                        salvarSesion();
-                        Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
-                        getActivity().finish();
-                    }
+                    Integer.parseInt(response);
+                    alertDialog.dismiss();
+                    Toast.makeText(view_permanente.getContext(),"Datos no actualizados", Toast.LENGTH_LONG).show();
                 }
                 catch (NumberFormatException exc)
                 {
+                    limpiar();
                     alertDialog.dismiss();
-                    Toast.makeText(view_permanente.getContext(),"Error al actualizar datos de la cuenta", Toast.LENGTH_LONG).show();
+                    ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                    if(usuarios.isEmpty())
+                    {
+                        alertDialog.dismiss();
+                        Toast.makeText(view_permanente.getContext(),"Datos no actualizados", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Gestion_usuario.actualizarUsuario(usuarios.get(0));
+                        Gestion_usuario.getUsuario_online().contrasena_usuario = usuario_espejo.contrasena_usuario;
+                        SharedPreferences prefs = getActivity().getSharedPreferences("SESION_USER", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor myEditor = prefs.edit();
+                        myEditor.putString("TOKEN", Gestion_usuario.getUsuario_online().token);
+                        alertDialog.dismiss();
+                        Toast.makeText(view_permanente.getContext(),"Datos de la cuenta actualizados", Toast.LENGTH_LONG).show();
+                        getActivity().finish();
+                    }
                 }
             }
         };

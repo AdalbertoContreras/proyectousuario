@@ -73,6 +73,12 @@ public class Gestion_usuario{
         return construir_parametros(usuario);
     }
 
+    public HashMap<String, String> validar_cuenta(Usuario usuario)
+    {
+        tipo_consulta = "validar_cuenta";
+        return construir_parametros(usuario);
+    }
+
     public HashMap<String, String> validarTokenObtenerusuario(Usuario usuario)
     {
         tipo_consulta = "validarTokenObtenerusuario";
@@ -182,6 +188,11 @@ public class Gestion_usuario{
                 escuchadorParaHome.usuarioCambiado(usuario_online);
             }
         }
+        actualizarUsuario(usuario_online);
+    }
+
+    public static void actualizarUsuario(Usuario usuario_online)
+    {
         Gestion_usuario.usuario_online = usuario_online;
     }
 }

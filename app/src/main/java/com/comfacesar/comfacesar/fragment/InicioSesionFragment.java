@@ -102,6 +102,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
     private GoogleApiClient googleApiClient;
     private final int SIGN_IN_CODE = 777;
     private GoogleSignInClient googleSignInClient;
+    private String WEB_CLIENT_ID = "1083945275899-tlivef0dd8d2tctaoktb53gttc1dkbns.apps.googleusercontent.com";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,7 +114,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
-                registrarmeTextView.setOnClickListener(new View.OnClickListener() {
+        registrarmeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ContainertwoActivity.class);
@@ -147,6 +148,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         });
         googleSignInButton = view_permanente.findViewById(R.id.googleSignInButton);
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(WEB_CLIENT_ID)
                 .requestEmail()
                 .build();
         googleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -159,6 +161,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
             public void onClick(View v) {
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(intent, SIGN_IN_CODE);
+                googleApiClient.connect();
             }
         });
         googleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
@@ -180,16 +183,16 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         {
             GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
             nombreCuentaEditText.setText(googleSignInAccount.getDisplayName());
+            Toast.makeText(view_permanente.getContext(), "Logueado", Toast.LENGTH_SHORT).show();
 
-            // Google sign out
-            googleSignInClient.signOut();
-            googleSignInClient.revokeAccess();
         }
         else
         {
-
+            Toast.makeText(view_permanente.getContext(), "No logueado", Toast.LENGTH_SHORT).show();
+            googleSignInClient.signOut();
         }
     }
+
     private void validarUsuario(Usuario usuario)
     {
         HashMap<String, String> params = new Gestion_usuario().validar_cuenta_y_generar_token(usuario);

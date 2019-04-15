@@ -21,6 +21,10 @@
             "package_name": "com.iniciativascomfacesar.serviamigo",
             "certificate_hash": "e8e94c7e065baf0e87dfa0b12f0d509493fcb25a"
           }
+        },
+        {
+          "client_id": "1083945275899-tlivef0dd8d2tctaoktb53gttc1dkbns.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
