@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1083945275899-mo484hg0pjno147p2d7ck75m8bnj81sf.apps.googleusercontent.com",
+          "client_id": "1083945275899-8r95nq41duag48a78vdt48fjtk84u5f3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.iniciativascomfacesar.serviamigo",
-            "certificate_hash": "e8e94c7e065baf0e87dfa0b12f0d509493fcb25a"
+            "certificate_hash": "9355d53946866dca5e75ae986cd67043e450929b"
           }
         },
         {
