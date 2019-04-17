@@ -62,7 +62,8 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
     public Activity actividad;
     private TextView registrarmeTextView;
     private SignInButton googleSignInButton;
-
+    private final int TIPO_CUENTA_GOOGLE = 1;
+    private final int TIPO_CUENTA_FACEBOOK = 2;
 
     public InicioSesionFragment() {
         // Required empty public constructor
@@ -161,6 +162,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                 startActivityForResult(intent, SIGN_IN_CODE);
             }
         });
+
         googleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
         return view_permanente;
     }
@@ -179,9 +181,44 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         if(googleSignInResult.isSuccess())
         {
             GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-            nombreCuentaEditText.setText(googleSignInAccount.getAccount().name.split("@")[0]);
-            Toast.makeText(view_permanente.getContext(), "Logueado", Toast.LENGTH_SHORT).show();
+            HashMap<String, String> params = new Gestion_usuario().generar_token_tipo_google_facebook(googleSignInAccount.getAccount().name, TIPO_CUENTA_GOOGLE);
             googleSignInClient.signOut();
+            Response.Listener<String> stringListener = new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response) {
+                    try
+                    {
+                        Integer.parseInt(response);
+                        Toast.makeText(view_permanente.getContext(), "Error al iniciar sesion", Toast.LENGTH_LONG).show();
+                    }
+                    catch(NumberFormatException exc)
+                    {
+                        ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
+                        if(usuarios.isEmpty())
+                        {
+                            Toast.makeText(view_permanente.getContext(), "Error en el sistema", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
+                            Gestion_usuario.setUsuario_online(usuarios.get(0));
+                            Toast.makeText(view_permanente.getContext(), "Logueado", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(), ContainerActivity.class);
+                            salvarSesion();
+                            startActivity(intent);
+                        }
+                    }
+                }
+            };
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(view_permanente.getContext(), "Error en el sistema", Toast.LENGTH_LONG).show();
+                }
+            };
+            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
+            MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
         }
         else
         {
@@ -197,10 +234,9 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         {
             @Override
             public void onResponse(String response) {
-                int val = 0;
                 try
                 {
-                    val = Integer.parseInt(response);
+                    Integer.parseInt(response);
                     dialog.dismiss();
                     Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
                             "incorrecto", Toast.LENGTH_LONG).show();
@@ -221,9 +257,9 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                         dialog.dismiss();
                         Toast.makeText(view_permanente.getContext(), "Logueado",
                                 Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getActivity(), ContainerActivity.class);
-                            salvarSesion();
-                            startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ContainerActivity.class);
+                        salvarSesion();
+                        startActivity(intent);
                     }
                 }
             }

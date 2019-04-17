@@ -15,4 +15,5 @@ public class Usuario {
     public String foto_perfil_usuario;
     public String foto_perfil_anterior;
     public String token;
+    public int tipo_cuenta;
 }

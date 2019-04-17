@@ -54,6 +54,14 @@ public class Gestion_usuario{
         return construir_parametros(aux);
     }
 
+    public HashMap<String, String> generar_token_tipo_google_facebook(String correo_electronico, int tipoCuenta)
+    {
+        tipo_consulta = "generar_token_tipo_google_facebook";
+        aux.correo_usuario = correo_electronico;
+        aux.tipo_cuenta = tipoCuenta;
+        return construir_parametros(aux);
+    }
+
     public HashMap<String, String> existe_numero_identificacion(String numero_identificacion)
     {
         tipo_consulta = "existe_numero_identificacion";
@@ -119,7 +127,15 @@ public class Gestion_usuario{
                 direccion_usuario = jsonObject.get("direccion_usuario").getAsString();
                 telefono_usuario = jsonObject.get("telefono_usuario").getAsString();
                 sexo_usuario = jsonObject.get("sexo_usuario").getAsInt();
-                fecha_nacimiento = jsonObject.get("fecha_nacimiento").getAsString();
+                if(!jsonObject.get("fecha_nacimiento").isJsonNull())
+                {
+                    fecha_nacimiento = jsonObject.get("fecha_nacimiento").getAsString();
+                }
+                else
+                {
+                    fecha_nacimiento = "";
+                }
+
                 correo_usuario = jsonObject.get("correo_usuario").getAsString();
                 nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
                 foto_perfil_usuario = jsonObject.get("foto_perfil_usuario").getAsString();
@@ -154,6 +170,7 @@ public class Gestion_usuario{
             obj.addProperty("contrasena_usuario", elemento.contrasena_usuario);
             obj.addProperty("foto_perfil_usuario", elemento.foto_perfil_usuario);
             obj.addProperty("token", elemento.token);
+            obj.addProperty("tipo_cuenta", elemento.tipo_cuenta);
             obj.addProperty("fecha1",fecha1);
             obj.addProperty("fecha2",fecha2);
             obj.addProperty("tipo_consulta",tipo_consulta);
