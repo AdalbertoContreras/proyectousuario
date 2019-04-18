@@ -26,6 +26,12 @@ import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Usuario;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -35,8 +41,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -103,17 +117,23 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
     private GoogleApiClient googleApiClient;
     private final int SIGN_IN_CODE = 777;
     private GoogleSignInClient googleSignInClient;
+    private LoginButton loginButton;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private CallbackManager callbackManager;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
-
+        callbackManager = CallbackManager.Factory.create();
         registrarmeTextView = view_permanente.findViewById(R.id.registrarmeTextView);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
+        loginButton = view_permanente.findViewById(R.id.loginButton);
         registrarmeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,8 +182,36 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                 startActivityForResult(intent, SIGN_IN_CODE);
             }
         });
-
         googleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
+        loginButton.setReadPermissions(Arrays.asList("email"));
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccesToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+        firebaseAuth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if(firebaseUser != null)
+                {
+                    Toast.makeText(getContext(), firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+                    firebaseAuth.signOut();
+                }
+            }
+        };
         return view_permanente;
     }
 
@@ -174,6 +222,17 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         {
             handleSignInResult(Auth.GoogleSignInApi.getSignInResultFromIntent(data));
         }
+    }
+
+    private void handleFacebookAccesToken(AccessToken accessToken)
+    {
+        AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void handleSignInResult(GoogleSignInResult googleSignInResult)
@@ -219,6 +278,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
             };
             StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
             MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
+
         }
         else
         {
@@ -229,6 +289,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
 
     private void validarUsuario(Usuario usuario)
     {
+
         HashMap<String, String> params = new Gestion_usuario().validar_cuenta_y_generar_token(usuario);
         Response.Listener<String> stringListener = new Response.Listener<String>()
         {
@@ -335,5 +396,17 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         {
             getActivity().finish();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        firebaseAuth.removeAuthStateListener(authStateListener);
     }
 }
