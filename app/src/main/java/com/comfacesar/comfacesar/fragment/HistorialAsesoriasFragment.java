@@ -108,21 +108,6 @@ public class HistorialAsesoriasFragment extends Fragment {
         generar_consulta("");
     }
 
-    private void consultar_chats()
-    {
-        //tomo los parametros del controlador
-        HashMap<String,String> params = new Gestion_chat_asesoria().consultar_por_usuario(Gestion_usuario.getUsuario_online().id_usuario);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                generar_consulta(response);
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, MySocialMediaSingleton.errorListener());
-        MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-    }
-
     private void generar_consulta(final String response)
     {
         ArrayList<Chat_asesoria> list;

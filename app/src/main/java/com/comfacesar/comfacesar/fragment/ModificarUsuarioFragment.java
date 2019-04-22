@@ -258,12 +258,9 @@ public class ModificarUsuarioFragment extends Fragment {
             }
             usuario_espejo.foto_perfil_usuario = Gestion_usuario.getUsuario_online().foto_perfil_usuario;
             usuario_espejo.foto_perfil_anterior = usuario_espejo.foto_perfil_usuario;
-            if(imagen_modificada)
+            if(bitmap != null)
             {
-                if(bitmap != null)
-                {
-                    usuario_espejo.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
-                }
+                usuario_espejo.foto_perfil_usuario = bitmap_conver_to_String(bitmap);
             }
             if(imagen_eliminada)
             {
@@ -369,19 +366,6 @@ public class ModificarUsuarioFragment extends Fragment {
         telefonoEditText.setText(usuario_espejo.telefono_usuario);
         direccionEditText.setText(usuario_espejo.direccion_usuario);
         correo_electronicoEditText.setText(usuario_espejo.correo_usuario);
-    }
-
-    private void showDatePickerDialog()
-    {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because january is zero
-                final String selectedDate = year + "-" + (month+1)  + "-" + day ;
-                fecha_nacimientoEditText.setText(selectedDate);
-            }
-        });
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

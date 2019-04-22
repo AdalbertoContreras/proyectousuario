@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -43,11 +44,13 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,10 +120,6 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
     private GoogleApiClient googleApiClient;
     private final int SIGN_IN_CODE = 777;
     private GoogleSignInClient googleSignInClient;
-    private LoginButton loginButton;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private CallbackManager callbackManager;
 
 
     @Override
@@ -128,12 +127,10 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
-        callbackManager = CallbackManager.Factory.create();
         registrarmeTextView = view_permanente.findViewById(R.id.registrarmeTextView);
         nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
         contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
-        loginButton = view_permanente.findViewById(R.id.loginButton);
         registrarmeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,35 +180,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
             }
         });
         googleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
-        loginButton.setReadPermissions(Arrays.asList("email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccesToken(loginResult.getAccessToken());
-            }
 
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-        firebaseAuth = FirebaseAuth.getInstance();
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if(firebaseUser != null)
-                {
-                    Toast.makeText(getContext(), firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
-                    firebaseAuth.signOut();
-                }
-            }
-        };
         return view_permanente;
     }
 
@@ -224,17 +193,6 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         }
     }
 
-    private void handleFacebookAccesToken(AccessToken accessToken)
-    {
-        AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken.getToken());
-        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void handleSignInResult(GoogleSignInResult googleSignInResult)
     {
         if(googleSignInResult.isSuccess())
@@ -242,6 +200,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
             GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
             HashMap<String, String> params = new Gestion_usuario().generar_token_tipo_google_facebook(googleSignInAccount.getAccount().name, TIPO_CUENTA_GOOGLE);
             googleSignInClient.signOut();
+            String idToken = googleSignInAccount.getIdToken();
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
                 @Override
@@ -264,8 +223,8 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                             Gestion_usuario.setUsuario_online(usuarios.get(0));
                             Toast.makeText(view_permanente.getContext(), "Logueado", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getActivity(), ContainerActivity.class);
-                            salvarSesion();
-                            startActivity(intent);
+                            //salvarSesion();
+                            //startActivity(intent);
                         }
                     }
                 }
@@ -396,17 +355,17 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         {
             getActivity().finish();
         }
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        firebaseAuth.removeAuthStateListener(authStateListener);
     }
 }

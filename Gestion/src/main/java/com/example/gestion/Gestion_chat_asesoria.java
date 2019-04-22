@@ -11,38 +11,54 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_chat_asesoria {
+    //############################################################################################\\
+    //###############################PROPIEDADES GLOBALES##########################################\\
+    private final String LLAVE_CHAT_ASESORIA= Propiedades.LLAVE_CHAT_ASESORIA;
+    private final String TIPO_CONSULTA = Propiedades.TIPO_CONSULTA;
+    private final String LLAVE_WS = Propiedades.LLAVE_WS;
+    private final String JSON = Propiedades.JSON;
+    private final String TOKEN = Propiedades.TOKEN;
+    //############################################################################################\\
+    //###############################PROPIEDADES DE CATEGORIA NOTICIA MANUAL#######################\\
+
+    private final String ID_CHAT_ASESORIA = "A";
+    private final String FECHA_INICIO_ASESORIA = "B";
+    private final String HORA_INICIO_ASESORIA = "C";
+    private final String FECHA_CIERRE_ASESORIA = "D";
+    private final String HORA_CIERRA_CHAT_ASESORIA = "E";
+    private final String ADMINISTRADOR_CHAT_ASESORIA = "F";
+    private final String USUARIO_CHAT_ASESORIA = "G";
+    private final String ESTADO_CERRADO = "H";
+    private final String TIEMPO_SESION_CHAT_ASESORIA = "I";
+    private final String ESPECIALIZACION_CHAT_ASESORIA = "J";
+    private final String ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA = "K";
+    private final String ULTIMA_HORA_ADMINISTRADOR_CHAT_ASESORIA = "L";
+    private final String ULTIMO_MENSAJE_ADMINISTRADOR_CHAT_ASESORIA = "M";
+    private final String ULTIMA_FECHA_USUARIO_CHAT_ASESORIA = "N";
+    private final String ULTIMA_HORA_USUARIO_CHAT_ASESORIA = "O";
+    private final String ULTIMO_MENSAJE_USUARIO_CHAT_ASESORIA = "P";
+    private final String ULTIMA_FECHA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "Q";
+    private final String ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "R";
+    private final String ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA = "S";
+    private final String ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA = "T";
+    private final String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
+    private final String ULTIMA_FECHA_CHAT_ASESORIA = "V";
+    private final String ULTIMA_HORA_CHAT_ASESORIA = "X";
+    //############################################################################################\\
+    //###############################PROPIEDADES RELACIONES#######################################\\
+    private final String USUARIO = "usuario";
+    private final String ADMINISTRADOR = "administrador";
+    private final String ESPECIALIDAD = "especialidad";
+    //############################################################################################\\
+    //###############################CONSULTA#####################################################\\
+    private final String CONSULTAR_CHAT_ASESORIA_POR_USUARIO_ADMINISTRADOR_Y_ESPECIALIDAD = "consultar_chat_asesoria_por_usuario_administrador_y_especialidad";
+    private final String VISTA_POR_USUARIO = "vista_por_usuario";
+    private final String CONSULTAR_POR_USUARIO = "consultar_por_usuario";
+    private final String NUMERO_POR_USUARIO = "numero_por_usuario";
+    private String tipo_consulta;
+
     private static ArrayList<Chat_asesoria> chat_asesorias = null;
     private static Chat_asesoria aux = new Chat_asesoria();
-    private static String llave_ws = "chat_asesoria";
-    private static String fecha1;
-    private static String fecha2;
-    private static String tipo_consulta;
-    private static String ID_CHAT_ASESORIA = "A";
-    private static String FECHA_INICIO_ASESORIA = "B";
-    private static String HORA_INICIO_ASESORIA = "C";
-    private static String FECHA_CIERRE_ASESORIA = "D";
-    private static String HORA_CIERRA_CHAT_ASESORIA = "E";
-    private static String ADMINISTRADOR_CHAT_ASESORIA = "F";
-    private static String USUARIO_CHAT_ASESORIA = "G";
-    private static String ESTADO_CERRADO = "H";
-    private static String TIEMPO_SESION_CHAT_ASESORIA = "I";
-    private static String ESPECIALIZACION_CHAT_ASESORIA = "J";
-    private static String ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA = "K";
-    private static String ULTIMA_HORA_ADMINISTRADOR_CHAT_ASESORIA = "L";
-    private static String ULTIMO_MENSAJE_ADMINISTRADOR_CHAT_ASESORIA = "M";
-    private static String ULTIMA_FECHA_USUARIO_CHAT_ASESORIA = "N";
-    private static String ULTIMA_HORA_USUARIO_CHAT_ASESORIA = "O";
-    private static String ULTIMO_MENSAJE_USUARIO_CHAT_ASESORIA = "P";
-    private static String ULTIMA_FECHA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "Q";
-    private static String ULTIMA_HORA_VISTA_ADMINISTRADOR_CHAT_ASESORIA = "R";
-    private static String ULTIMA_FECHA_VISTA_USUARIO_CHAT_ASESORIA = "S";
-    private static String ULTIMA_HORA_VISTA_USUARIO_CHAT_ASESORIA = "T";
-    private static String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
-    private static String ULTIMA_FECHA_CHAT_ASESORIA = "V";
-    private static String ULTIMA_HORA_CHAT_ASESORIA = "X";
-    private static String NOMBRE_USUARIO = "NU";
-    private static String CONTRASENA_USUARIO = "CU";
-    private static String TIPO_CONSULTA = "TC";
     public static ArrayChatCambiado arrayChatCambiado;
     public interface ArrayChatCambiado
     {
@@ -63,46 +79,33 @@ public class Gestion_chat_asesoria {
         Gestion_chat_asesoria.chatAbierto = chatAbierto;
     }
 
-
-    private static void iniciar_axu()
-    {
-        aux = new Chat_asesoria();
-    }
-
     public HashMap<String, String> consultar_chat_asesoria_por_usuario_administrador_y_especialidad(int administrador, int usuario, int especialidad)
     {
         aux.administrador_chat_asesoria = administrador;
         aux.usuario_chat_asesoria = usuario;
         aux.especializacion_chat_asesoria = especialidad;
-        tipo_consulta = "consultar_chat_asesoria_por_usuario_administrador_y_especialidad";
+        tipo_consulta = CONSULTAR_CHAT_ASESORIA_POR_USUARIO_ADMINISTRADOR_Y_ESPECIALIDAD;
         return construir_parametros(aux);
     }
 
     public HashMap<String, String> vista_por_usuario( int id_chat)
     {
         aux.id_chat_asesoria = id_chat;
-        tipo_consulta = "vista_por_usuario";
+        tipo_consulta = VISTA_POR_USUARIO;
         return construir_parametros(aux);
     }
 
     public HashMap<String, String> consultar_por_usuario( int usuario)
     {
         aux.usuario_chat_asesoria = usuario;
-        tipo_consulta = "consultar_por_usuario";
+        tipo_consulta = CONSULTAR_POR_USUARIO;
         return construir_parametros(aux);
     }
 
     public HashMap<String, String> numero_por_usuario( int usuario)
     {
         aux.usuario_chat_asesoria = usuario;
-        tipo_consulta = "numero_por_usuario";
-        return construir_parametros(aux);
-    }
-
-    public HashMap<String, String> chat_asesoria_por_id(int id_chat)
-    {
-        aux.id_chat_asesoria = id_chat;
-        tipo_consulta = "chat_asesoria_por_id";
+        tipo_consulta = NUMERO_POR_USUARIO;
         return construir_parametros(aux);
     }
 
@@ -223,17 +226,17 @@ public class Gestion_chat_asesoria {
                 {
                     ultima_hora_vista_usuario_chat_asesoria = "-1";
                 }
-                if(!jsonObject.get("usuario").isJsonNull())
+                if(!jsonObject.get(USUARIO).isJsonNull())
                 {
-                    usuario = jsonObject.get("usuario").getAsString();
+                    usuario = jsonObject.get(USUARIO).getAsString();
                 }
-                if(!jsonObject.get("administrador").isJsonNull())
+                if(!jsonObject.get(ADMINISTRADOR).isJsonNull())
                 {
-                    administrador = jsonObject.get("administrador").getAsString();
+                    administrador = jsonObject.get(ADMINISTRADOR).getAsString();
                 }
-                if(!jsonObject.get("especialidad").isJsonNull())
+                if(!jsonObject.get(ESPECIALIDAD).isJsonNull())
                 {
-                    especialidad = jsonObject.get("especialidad").getAsString();
+                    especialidad = jsonObject.get(ESPECIALIDAD).getAsString();
                 }
                 if(!jsonObject.get(ULTIMO_MENSAJE_CHAT_ASESORIA).isJsonNull())
                 {
@@ -267,41 +270,17 @@ public class Gestion_chat_asesoria {
             obj.addProperty(ESTADO_CERRADO, elemento.estado_cerrado);
             obj.addProperty(TIEMPO_SESION_CHAT_ASESORIA, elemento.tiempo_sesion_chat_asesoria);
             obj.addProperty(ESPECIALIZACION_CHAT_ASESORIA, elemento.especializacion_chat_asesoria);
-            obj.addProperty("fecha1",fecha1);
-            obj.addProperty("fecha2",fecha2);
             obj.addProperty(TIPO_CONSULTA,tipo_consulta);
-            obj.addProperty("llave_ws",llave_ws);
+            obj.addProperty(LLAVE_WS,LLAVE_CHAT_ASESORIA);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
-            }
-            else
-            {
-                obj.addProperty(NOMBRE_USUARIO,"");
-                obj.addProperty(CONTRASENA_USUARIO,"");
+                obj.addProperty(TOKEN,Gestion_usuario.getUsuario_online().token);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
         HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("json",obj.toString());
-        return hashMap;
-    }
-
-    private HashMap<String,String> construir_parametros()
-    {
-        JsonObject obj = new JsonObject();
-        try {
-            obj.addProperty("fecha1",fecha1);
-            obj.addProperty("fecha2",fecha2);
-            obj.addProperty(TIPO_CONSULTA,tipo_consulta);
-            obj.addProperty("llave_ws",llave_ws);
-            obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
-        }
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("json",obj.toString());
+        hashMap.put(JSON,obj.toString());
         return hashMap;
     }
 

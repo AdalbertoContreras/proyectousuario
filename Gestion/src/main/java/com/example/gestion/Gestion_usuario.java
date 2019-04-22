@@ -12,90 +12,116 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_usuario{
-    private static Usuario aux = new Usuario();
-    private static String llave_ws = "usuario";
-    private static String fecha1;
-    private static String fecha2;
-    private static String tipo_consulta;
+    //############################################################################################\\
+    //###############################PROPIEDADES GLOBALES##########################################\\
+    private final String LLAVE_USUARIO = Propiedades.LLAVE_USUARIO;
+    private final String TIPO_CONSULTA = Propiedades.TIPO_CONSULTA;
+    private final String LLAVE_WS = Propiedades.LLAVE_WS;
+    private final String JSON = Propiedades.JSON;
+    private final String TOKEN = Propiedades.TOKEN;
+    private final String URL_SERVER = Propiedades.URL_SERVER;
+    //############################################################################################\\
+    //###############################PROPIEDADES DE CATEGORIA NOTICIA MANUAL#######################\\
+    private final String ID_USUARIO = "id_usuario";
+    private final String NOMBRES_USUARIO = "nombres_usuario";
+    private final String APELLIDOS_USUARIO = "apellidos_usuario";
+    private final String DIRECCION_USUARIO = "direccion_usuario";
+    private final String TELEFONO_USUARIO = "telefono_usuario";
+    private final String SEXO_USUARIO = "sexo_usuario";
+    private final String FECHA_NACIMIENTO = "fecha_nacimiento";
+    private final String CORREO_USUARIO = "correo_usuario";
+    private final String NOMBRE_CUENTA_USUARIO = "nombre_cuenta_usuario";
+    private final String FOTO_PERFIL_USUARIO = "foto_perfil_usuario";
+    private final String CONTRASENA_USUARIO = "contrasena_usuario";
+    private final String FOTO_PERFIL_ANTERIOR = "foto_perfil_anterior";
+    private final String TIPO_CUENTA = "tipo_cuenta";
+    //############################################################################################\\
+    //###############################CONSULTAS####################################################\\
+    private final String INSERT = "insert";
+    private final String CERRARSESION = "cerrarsesion";
+    private final String MODIFICAR_DATOS_PERSONALES = "modificar_datos_personales";
+    private final String EXISTE_NOMBRE_CUENTA = "existe_nombre_cuenta";
+    private final String GENERAR_TOKEN_TIPO_GOOGLE_FACEBOOK = "generar_token_tipo_google_facebook";
+    private final String ACTUALIZAR_CONTRASENA_USUARIO = "actualizar_contrasena_usuario";
+    private final String VALIDAR_CUENTA_Y_GENERAR_TOKEN = "validar_cuenta_y_generar_token";
+    private final String VALIDAR_CUENTA = "validar_cuenta";
+    private final String VALIDARTOKENOBTENERUSUARIO = "validartokenobtenerusuario";
+    private final String CONSULTAR_USUARIO_POR_ID = "consultar_usuario_por_id";
+
+
+    private Usuario aux = new Usuario();
+    private String tipo_consulta;
     private static Usuario usuario_online = null;
     public static EscuchadorUsuario escuchadorParaHome;
     public static EscuchadorUsuario escuchadorParaActivityPrincipal = null;
-
     public HashMap<String, String> registrar_usuario(Usuario usuario)
     {
-        tipo_consulta = "insert";
+        tipo_consulta = INSERT;
         return construir_parametros(usuario);
     }
 
     public HashMap<String, String> cerrarSesion()
     {
-        tipo_consulta = "cerrarSesion";
+        tipo_consulta = CERRARSESION;
         return construir_parametros(usuario_online);
     }
 
     public HashMap<String, String> modificar_datos_personales(Usuario usuario)
     {
-        if(usuario.foto_perfil_usuario.contains("http://31.220.63.102/WScomfacesar/"))
+        if(usuario.foto_perfil_usuario.contains(URL_SERVER))
         {
-            usuario.foto_perfil_usuario = usuario.foto_perfil_usuario.replace("http://31.220.63.102/WScomfacesar/", "");
+            usuario.foto_perfil_usuario = usuario.foto_perfil_usuario.replace(URL_SERVER, "");
         }
-        if(usuario.foto_perfil_anterior.contains("http://31.220.63.102/WScomfacesar/"))
+        if(usuario.foto_perfil_anterior.contains(URL_SERVER))
         {
-            usuario.foto_perfil_anterior = usuario.foto_perfil_anterior.replace("http://31.220.63.102/WScomfacesar/", "");
+            usuario.foto_perfil_anterior = usuario.foto_perfil_anterior.replace(URL_SERVER, "");
         }
-        tipo_consulta = "modificar_datos_personales";
+        tipo_consulta = MODIFICAR_DATOS_PERSONALES;
         return construir_parametros(usuario);
     }
 
     public HashMap<String, String> existe_nombre_cuenta(String nombre_cuenta)
     {
-        tipo_consulta = "existe_nombre_cuenta";
+        tipo_consulta = EXISTE_NOMBRE_CUENTA;
         aux.nombre_cuenta_usuario = nombre_cuenta;
         return construir_parametros(aux);
     }
 
     public HashMap<String, String> generar_token_tipo_google_facebook(String correo_electronico, int tipoCuenta)
     {
-        tipo_consulta = "generar_token_tipo_google_facebook";
+        tipo_consulta = GENERAR_TOKEN_TIPO_GOOGLE_FACEBOOK;
         aux.correo_usuario = correo_electronico;
         aux.tipo_cuenta = tipoCuenta;
         return construir_parametros(aux);
     }
 
-    public HashMap<String, String> existe_numero_identificacion(String numero_identificacion)
-    {
-        tipo_consulta = "existe_numero_identificacion";
-        aux.numero_identificacion_usuario = numero_identificacion;
-        return construir_parametros(aux);
-    }
-
     public HashMap<String, String> actualizar_contrasena_usuario(Usuario usuario)
     {
-        tipo_consulta = "actualizar_contrasena_usuario";
+        tipo_consulta = ACTUALIZAR_CONTRASENA_USUARIO;
         return construir_parametros(usuario);
     }
 
     public HashMap<String, String> validar_cuenta_y_generar_token(Usuario usuario)
     {
-        tipo_consulta = "validar_cuenta_y_generar_token";
+        tipo_consulta = VALIDAR_CUENTA_Y_GENERAR_TOKEN;
         return construir_parametros(usuario);
     }
 
     public HashMap<String, String> validar_cuenta(Usuario usuario)
     {
-        tipo_consulta = "validar_cuenta";
+        tipo_consulta = VALIDAR_CUENTA;
         return construir_parametros(usuario);
     }
 
     public HashMap<String, String> validarTokenObtenerusuario(Usuario usuario)
     {
-        tipo_consulta = "validarTokenObtenerusuario";
+        tipo_consulta = VALIDARTOKENOBTENERUSUARIO;
         return construir_parametros(usuario);
     }
 
     public HashMap<String, String> consultar_usuario_por_id(Usuario usuario)
     {
-        tipo_consulta = "consultar_usuario_por_id";
+        tipo_consulta = CONSULTAR_USUARIO_POR_ID;
         return construir_parametros(usuario);
     }
 
@@ -121,27 +147,27 @@ public class Gestion_usuario{
 
         return new Usuario(){{
             try {
-                id_usuario = jsonObject.get("id_usuario").getAsInt();
-                nombres_usuario = jsonObject.get("nombres_usuario").getAsString();
-                apellidos_usuario = jsonObject.get("apellidos_usuario").getAsString();
-                direccion_usuario = jsonObject.get("direccion_usuario").getAsString();
-                telefono_usuario = jsonObject.get("telefono_usuario").getAsString();
-                sexo_usuario = jsonObject.get("sexo_usuario").getAsInt();
-                if(!jsonObject.get("fecha_nacimiento").isJsonNull())
+                id_usuario = jsonObject.get(ID_USUARIO).getAsInt();
+                nombres_usuario = jsonObject.get(NOMBRES_USUARIO).getAsString();
+                apellidos_usuario = jsonObject.get(APELLIDOS_USUARIO).getAsString();
+                direccion_usuario = jsonObject.get(DIRECCION_USUARIO).getAsString();
+                telefono_usuario = jsonObject.get(TELEFONO_USUARIO).getAsString();
+                sexo_usuario = jsonObject.get(SEXO_USUARIO).getAsInt();
+                if(!jsonObject.get(FECHA_NACIMIENTO).isJsonNull())
                 {
-                    fecha_nacimiento = jsonObject.get("fecha_nacimiento").getAsString();
+                    fecha_nacimiento = jsonObject.get(FECHA_NACIMIENTO).getAsString();
                 }
                 else
                 {
                     fecha_nacimiento = "";
                 }
 
-                correo_usuario = jsonObject.get("correo_usuario").getAsString();
-                nombre_cuenta_usuario = jsonObject.get("nombre_cuenta_usuario").getAsString();
-                foto_perfil_usuario = jsonObject.get("foto_perfil_usuario").getAsString();
-                if(!jsonObject.get("token").isJsonNull())
+                correo_usuario = jsonObject.get(CORREO_USUARIO).getAsString();
+                nombre_cuenta_usuario = jsonObject.get(NOMBRE_CUENTA_USUARIO).getAsString();
+                foto_perfil_usuario = jsonObject.get(FOTO_PERFIL_USUARIO).getAsString();
+                if(!jsonObject.get(TOKEN).isJsonNull())
                 {
-                    token = jsonObject.get("token").getAsString();
+                    token = jsonObject.get(TOKEN).getAsString();
                 }
                 else
                 {
@@ -157,34 +183,32 @@ public class Gestion_usuario{
     {
         JsonObject obj = new JsonObject();
         try {
-            obj.addProperty("id_usuario", elemento.id_usuario);
-            //obj.addProperty("numero_identificacion_usuario", elemento.numero_identificacion_usuario);
-            obj.addProperty("nombres_usuario", elemento.nombres_usuario);
-            obj.addProperty("apellidos_usuario", elemento.apellidos_usuario);
-            obj.addProperty("direccion_usuario", elemento.direccion_usuario);
-            obj.addProperty("telefono_usuario", elemento.telefono_usuario);
-            obj.addProperty("sexo_usuario", elemento.sexo_usuario);
-            obj.addProperty("fecha_nacimiento", elemento.fecha_nacimiento);
-            obj.addProperty("correo_usuario", elemento.correo_usuario);
-            obj.addProperty("nombre_cuenta_usuario", elemento.nombre_cuenta_usuario);
-            obj.addProperty("contrasena_usuario", elemento.contrasena_usuario);
-            obj.addProperty("foto_perfil_usuario", elemento.foto_perfil_usuario);
-            obj.addProperty("token", elemento.token);
-            obj.addProperty("tipo_cuenta", elemento.tipo_cuenta);
-            obj.addProperty("fecha1",fecha1);
-            obj.addProperty("fecha2",fecha2);
-            obj.addProperty("tipo_consulta",tipo_consulta);
-            obj.addProperty("llave_ws",llave_ws);
+            obj.addProperty(ID_USUARIO, elemento.id_usuario);
+            obj.addProperty(NOMBRES_USUARIO, elemento.nombres_usuario);
+            obj.addProperty(APELLIDOS_USUARIO, elemento.apellidos_usuario);
+            obj.addProperty(DIRECCION_USUARIO, elemento.direccion_usuario);
+            obj.addProperty(TELEFONO_USUARIO, elemento.telefono_usuario);
+            obj.addProperty(SEXO_USUARIO, elemento.sexo_usuario);
+            obj.addProperty(FECHA_NACIMIENTO, elemento.fecha_nacimiento);
+            obj.addProperty(CORREO_USUARIO, elemento.correo_usuario);
+            obj.addProperty(NOMBRE_CUENTA_USUARIO, elemento.nombre_cuenta_usuario);
+            obj.addProperty(CONTRASENA_USUARIO, elemento.contrasena_usuario);
+            obj.addProperty(FOTO_PERFIL_USUARIO, elemento.foto_perfil_usuario);
+            obj.addProperty(FOTO_PERFIL_ANTERIOR, elemento.foto_perfil_anterior);
+            obj.addProperty(TOKEN, elemento.token);
+            obj.addProperty(TIPO_CUENTA, elemento.tipo_cuenta);
+            obj.addProperty(TIPO_CONSULTA,tipo_consulta);
+            obj.addProperty(LLAVE_WS, LLAVE_USUARIO);
 
             if(usuario_online != null)
             {
-                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
+                obj.addProperty(TOKEN,Gestion_usuario.getUsuario_online().token);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
         HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("json",obj.toString());
+        hashMap.put(JSON,obj.toString());
         return hashMap;
     }
 

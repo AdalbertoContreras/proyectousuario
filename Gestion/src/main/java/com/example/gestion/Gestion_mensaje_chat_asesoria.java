@@ -14,37 +14,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Gestion_mensaje_chat_asesoria {
-    private static Mensaje_chat_asesoria aux = new Mensaje_chat_asesoria();
-    private static String llave_ws = "mensaje_chat_asesoria";
-    private static String fecha1;
-    private static String fecha2;
-    private static String tipo_consulta;
-    private static final String ID_MENSAJE_CHAT_ASESORIA = "A";
-    private static final String FECHA_ENVIO_MENSAJE_CHAT_ASESORIA = "B";
-    private static final String HORA_ENVIO_MENSAJE_ASESORIA = "C";
-    private static final String CONTENIDO_MENSAJE_CHAT_ASESORIA = "D";
-    private static final String CHAT_MENSAJE_CHAT_ASESORIA = "E";
-    private static final String ID_CREADOR_MENSAJE_CHAT_ASESORIA = "F";
-    private static final String TIPO_CREADOR_MENSAJE_CHAT_ASESORIA = "G";
-    private static final String NOMBRE_USUARIO = "NU";
-    private static final String CONTRASENA_USUARIO = "CU";
-    private static final String TIPO_CONSULTA = "TC";
-
-    private static void iniciar_axu()
-    {
-        aux = new Mensaje_chat_asesoria();
-    }
+    //############################################################################################\\
+    //###############################PROPIEDADES GLOBALES##########################################\\
+    private final String LLAVE_MENSAJE_CHAT_ASESORIA= Propiedades.LLAVE_MENSAJE_CHAT_ASESORIA;
+    private final String TIPO_CONSULTA = Propiedades.TIPO_CONSULTA;
+    private final String LLAVE_WS = Propiedades.LLAVE_WS;
+    private final String JSON = Propiedades.JSON;
+    private final String TOKEN = Propiedades.TOKEN;
+    //############################################################################################\\
+    //###############################PROPIEDADES DE CATEGORIA NOTICIA MANUAL#######################\\
+    private final String ID_MENSAJE_CHAT_ASESORIA = "A";
+    private final String FECHA_ENVIO_MENSAJE_CHAT_ASESORIA = "B";
+    private final String HORA_ENVIO_MENSAJE_ASESORIA = "C";
+    private final String CONTENIDO_MENSAJE_CHAT_ASESORIA = "D";
+    private final String CHAT_MENSAJE_CHAT_ASESORIA = "E";
+    private final String ID_CREADOR_MENSAJE_CHAT_ASESORIA = "F";
+    private final String TIPO_CREADOR_MENSAJE_CHAT_ASESORIA = "G";
+    //############################################################################################\\
+    //###############################CONSULTAS#######################\\
+    private final String REGISTRAR_MENSAJE_CHAT_ASESORIA = "registrar_mensaje_chat_asesoria";
+    private final String MENSAJES_ASESORIA_POR_ASESORIA = "mensajes_asesoria_por_asesoria";
+    private final String MENSAJE_CHAT_ASESORIA_POR_CHAT_MAYOR = "mensaje_chat_asesoria_por_chat_mayor";
+    private Mensaje_chat_asesoria aux = new Mensaje_chat_asesoria();
+    private String tipo_consulta;
 
     public HashMap<String, String> registrar_mensaje_chat_asesoria(Mensaje_chat_asesoria mensaje_chat_asesoria)
     {
-        tipo_consulta = "registrar_mensaje_chat_asesoria";
+        tipo_consulta = REGISTRAR_MENSAJE_CHAT_ASESORIA;
         return construir_parametros(mensaje_chat_asesoria);
     }
 
     public HashMap<String, String> mensajes_asesoria_por_asesoria(int asesoria)
     {
         aux.chat_mensaje_chat_asesoria = asesoria;
-        tipo_consulta = "mensajes_asesoria_por_asesoria";
+        tipo_consulta = MENSAJES_ASESORIA_POR_ASESORIA;
         return construir_parametros(aux);
     }
 
@@ -53,7 +56,7 @@ public class Gestion_mensaje_chat_asesoria {
         aux.fecha_envio_mensaje_chat_asesoria = fecha;
         aux.hora_envio_mensaje_asesoria = hora;
         aux.chat_mensaje_chat_asesoria = id_chat;
-        tipo_consulta = "mensaje_chat_asesoria_por_chat_mayor";
+        tipo_consulta = MENSAJE_CHAT_ASESORIA_POR_CHAT_MAYOR;
         return construir_parametros(aux);
     }
 
@@ -103,19 +106,17 @@ public class Gestion_mensaje_chat_asesoria {
             obj.addProperty(CHAT_MENSAJE_CHAT_ASESORIA, elemento.chat_mensaje_chat_asesoria);
             obj.addProperty(ID_CREADOR_MENSAJE_CHAT_ASESORIA, elemento.id_creador_mensaje_chat_asesoria);
             obj.addProperty(TIPO_CREADOR_MENSAJE_CHAT_ASESORIA, elemento.tipo_creador_mensaje_chat_asesoria);
-            obj.addProperty("fecha1",fecha1);
-            obj.addProperty("fecha2",fecha2);
             obj.addProperty(TIPO_CONSULTA,tipo_consulta);
-            obj.addProperty("llave_ws",llave_ws);
+            obj.addProperty(LLAVE_WS,LLAVE_MENSAJE_CHAT_ASESORIA);
             if(Gestion_usuario.getUsuario_online() != null)
             {
-                obj.addProperty("token",Gestion_usuario.getUsuario_online().token);
+                obj.addProperty(TOKEN,Gestion_usuario.getUsuario_online().token);
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
         HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("json",obj.toString());
+        hashMap.put(JSON,obj.toString());
         return hashMap;
     }
 }
