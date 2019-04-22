@@ -357,6 +357,7 @@ public class ChatAsesoria extends AppCompatActivity {
         if(esNotificacion == 1)
         {
             Intent intent = new Intent(getBaseContext(), ContainerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
         else

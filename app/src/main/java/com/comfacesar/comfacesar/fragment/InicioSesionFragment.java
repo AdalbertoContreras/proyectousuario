@@ -205,6 +205,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
             {
                 @Override
                 public void onResponse(String response) {
+                    FirebaseApp.initializeApp(InicioSesionFragment.this.getContext());
                     try
                     {
                         Integer.parseInt(response);
@@ -223,8 +224,8 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                             Gestion_usuario.setUsuario_online(usuarios.get(0));
                             Toast.makeText(view_permanente.getContext(), "Logueado", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getActivity(), ContainerActivity.class);
-                            //salvarSesion();
-                            //startActivity(intent);
+                            salvarSesion();
+                            startActivity(intent);
                         }
                     }
                 }
