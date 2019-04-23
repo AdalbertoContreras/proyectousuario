@@ -32,7 +32,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_gravity="center"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -55,7 +63,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_gravity="center"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -125,7 +141,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_gravity="center"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -140,7 +164,7 @@
                             android:id="@+id/edadEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="fecha de nacimiento '2019-06-09'"
+                            android:hint="fecha de nacimiento ( 2019-12-01 )"
                             android:inputType="date"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
@@ -149,7 +173,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_gravity="center"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -174,7 +206,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/White"
+                        android:layout_gravity="center"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -209,7 +249,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/Gris3"
                         android:orientation="vertical"
-                        android:paddingBottom="15dp">
+                        android:paddingBottom="15dp"
+                        android:paddingHorizontal="5dp">
 
 
                         <LinearLayout
@@ -218,6 +259,19 @@
                             android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="*"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="10dp"/>
+
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -226,6 +280,7 @@
                                 android:paddingTop="5dp"
                                 android:paddingRight="10dp"
                                 android:paddingBottom="5dp">
+
 
                                 <android.support.design.widget.TextInputEditText
                                     android:id="@+id/nombreCuentaEditTextRegistrarUsuario"
@@ -233,19 +288,36 @@
                                     android:layout_height="wrap_content"
                                     android:hint="nombre cuenta:"
                                     android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:textColor="@color/rojo"
+                                    android:textSize="10sp"
+                                    android:gravity="right"
+                                    android:text="este dato no es sensible a las mayuscula"/>
                             </android.support.design.widget.TextInputLayout>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="10dp"
-                                android:textColor="@color/rojo"
-                                android:text="este dato no es sensible a las mayuscula"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="*"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="10dp"/>
 
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
@@ -254,7 +326,8 @@
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingRight="10dp"
-                                android:paddingBottom="5dp">
+                                android:paddingBottom="5dp"
+                                app:passwordToggleEnabled="true">
 
                                 <android.support.design.widget.TextInputEditText
                                     android:id="@+id/contraseñaCuentaEditTextRegistrarUsuario"
@@ -265,6 +338,20 @@
                                     android:textSize="14sp" />
                             </android.support.design.widget.TextInputLayout>
 
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="*"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="10dp"/>
+
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -272,7 +359,8 @@
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
                                 android:paddingRight="10dp"
-                                android:paddingBottom="5dp">
+                                android:paddingBottom="5dp"
+                                app:passwordToggleEnabled="true">
 
                                 <android.support.design.widget.TextInputEditText
                                     android:id="@+id/verificarContraseñaCuentaEditTextRegistrarUsuario"
@@ -282,6 +370,8 @@
                                     android:inputType="textPassword"
                                     android:textSize="14sp" />
                             </android.support.design.widget.TextInputLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

@@ -116,7 +116,7 @@
                             android:id="@+id/edadUsuarioEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="fecha de nacimineto '2019-06-09'"
+                            android:hint="fecha de nacimineto ( 2019-12-01 )"
                             android:inputType="date"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>

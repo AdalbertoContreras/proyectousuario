@@ -113,6 +113,7 @@
                     app:cardCornerRadius="30dp"
                     android:layout_gravity="center"
                     android:background="@color/colorAccent"
+                    android:layout_marginBottom="30dp"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -136,13 +137,46 @@
 
                 </android.support.v7.widget.CardView>
 
+                <android.support.v7.widget.CardView
+                    android:layout_width="291dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/colorAccent"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/colorAccent"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+                        <Button
+
+                            android:layout_width="350dp"
+                            android:layout_height="55dp"
+                            android:text="Usuario y Contraseña"
+                            tools:ignore="MissingConstraints"
+                            android:gravity="center"
+                            android:theme="@style/Button"
+                            android:textSize="16sp"
+                            android:textColor="@color/White"
+                            android:layout_marginHorizontal="10dp"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/googleSignInButton"
-                    android:layout_width="140dp"
+                    android:layout_width="300dp"
                     android:layout_height="55dp"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+
+                    />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
