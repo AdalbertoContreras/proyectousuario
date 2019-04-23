@@ -29,6 +29,7 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundResource(R.color.Gris3);
 
+
         FirebaseApp.initializeApp(ContainertwoActivity.this);
         setSupportActionBar(toolbar);
 
