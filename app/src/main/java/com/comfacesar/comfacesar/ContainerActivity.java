@@ -865,8 +865,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     }
                     else {
                         Gestion_usuario.setUsuario_online(usuarios.get(0));
-                        Toast.makeText(getBaseContext(), "Logueado",
-                                Toast.LENGTH_LONG).show();
                         cambiarMenu();
                     }
                 }
