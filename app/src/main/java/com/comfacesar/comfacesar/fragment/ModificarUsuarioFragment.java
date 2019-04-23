@@ -92,8 +92,8 @@ public class ModificarUsuarioFragment extends Fragment {
     private EditText apellidoEditText;
     private RadioButton masculinoRadioButton;
     private RadioButton femeninoRadioButton;
-    private EditText telefonoEditText;
-    private EditText direccionEditText;
+   // private EditText telefonoEditText;
+   // private EditText direccionEditText;
     private Button modificar_usuario;
     private EditText fecha_nacimientoEditText;
     private EditText correo_electronicoEditText;
@@ -119,8 +119,8 @@ public class ModificarUsuarioFragment extends Fragment {
         masculinoRadioButton = view_permanente.findViewById(R.id.masculinoUsuarioRadioButton);
         femeninoRadioButton = view_permanente.findViewById(R.id.femeninoUsuarioRadioButton);
         modificar_usuario = view_permanente.findViewById(R.id.modificarUsuarioButton);
-        direccionEditText = view_permanente.findViewById(R.id.direccionUsuarioEditText);
-        telefonoEditText = view_permanente.findViewById(R.id.telefonoUsuarioEditText);
+       // direccionEditText = view_permanente.findViewById(R.id.direccionUsuarioEditText);
+       // telefonoEditText = view_permanente.findViewById(R.id.telefonoUsuarioEditText);
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadUsuarioEditText);
         correo_electronicoEditText = view_permanente.findViewById(R.id.correoEletronicoUsuarioEditText);
         fotoPerfilImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
@@ -270,8 +270,8 @@ public class ModificarUsuarioFragment extends Fragment {
             usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
             usuario_espejo.apellidos_usuario = apellidoEditText.getText().toString();
             usuario_espejo.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
-            usuario_espejo.telefono_usuario = telefonoEditText.getText().toString();
-            usuario_espejo.direccion_usuario = direccionEditText.getText().toString();
+           // usuario_espejo.telefono_usuario = telefonoEditText.getText().toString();
+          //  usuario_espejo.direccion_usuario = direccionEditText.getText().toString();
             usuario_espejo.correo_usuario = correo_electronicoEditText.getText().toString();
             HashMap<String, String> hashMap = new Gestion_usuario().modificar_datos_personales(usuario_espejo);
             Response.Listener<String> stringListener = new Response.Listener<String>()
@@ -363,8 +363,8 @@ public class ModificarUsuarioFragment extends Fragment {
         }
         imagen_eliminada = false;
         imagen_modificada = false;
-        telefonoEditText.setText(usuario_espejo.telefono_usuario);
-        direccionEditText.setText(usuario_espejo.direccion_usuario);
+      //  telefonoEditText.setText(usuario_espejo.telefono_usuario);
+      //  direccionEditText.setText(usuario_espejo.direccion_usuario);
         correo_electronicoEditText.setText(usuario_espejo.correo_usuario);
     }
 

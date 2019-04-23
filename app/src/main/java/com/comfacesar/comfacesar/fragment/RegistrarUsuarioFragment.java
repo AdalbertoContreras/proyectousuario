@@ -101,8 +101,8 @@ public class RegistrarUsuarioFragment extends Fragment {
     private EditText verificarContraseñaCuentaEditText;
     private RadioButton masculinoRadioButton;
     private RadioButton femeninoRadioButton;
-    private EditText telefonoEditText;
-    private EditText direccionEditText;
+    //private EditText telefonoEditText;
+   // private EditText direccionEditText;
     private Button registrar_usuario;
     private EditText fecha_nacimientoEditText;
     private Button tomarFotoButton;
@@ -129,8 +129,8 @@ public class RegistrarUsuarioFragment extends Fragment {
         contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaEditTextRegistrarUsuario);
         verificarContraseñaCuentaEditText = view_permanente.findViewById(R.id.verificarContraseñaCuentaEditTextRegistrarUsuario);
         registrar_usuario = view_permanente.findViewById(R.id.registrarmeButtonRegistrarUsuario);
-        direccionEditText = view_permanente.findViewById(R.id.direccionEditText);
-        telefonoEditText = view_permanente.findViewById(R.id.telefonoEditText);
+       // direccionEditText = view_permanente.findViewById(R.id.direccionEditText);
+       // telefonoEditText = view_permanente.findViewById(R.id.telefonoEditText);
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadEditText);
         tomarFotoButton = view_permanente.findViewById(R.id.tomarFotoButton);
         subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
@@ -393,8 +393,8 @@ public class RegistrarUsuarioFragment extends Fragment {
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
         usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
-        usuario.telefono_usuario = telefonoEditText.getText().toString();
-        usuario.direccion_usuario = direccionEditText.getText().toString();
+       // usuario.telefono_usuario = telefonoEditText.getText().toString();
+       // usuario.direccion_usuario = direccionEditText.getText().toString();
         if(masculinoRadioButton.isChecked())
         {
             usuario.sexo_usuario = 0;
@@ -462,8 +462,8 @@ public class RegistrarUsuarioFragment extends Fragment {
         nombreUsuarioEditText.setText("");
         apellidoEditText.setText("");
         fecha_nacimientoEditText.setText("");
-        telefonoEditText.setText("");
-        direccionEditText.setText("");
+       // telefonoEditText.setText("");
+      //  direccionEditText.setText("");
         nombreCuentaEditText.setText("");
         contraseñaCuentaEditText.setText("");
         fotoPerfilCircleImageView.setImageDrawable(getResources().getDrawable(R.drawable.perfil2));
