@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.ContainertwoActivity;
+import com.comfacesar.comfacesar.Dialog.Inicio_sesion_dialog;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
@@ -74,9 +75,7 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ProgressDialog dialog;
     private OnFragmentInteractionListener mListener;
-    public Activity actividad;
     private TextView registrarmeTextView;
     private SignInButton googleSignInButton;
     private final int TIPO_CUENTA_GOOGLE = 1;
@@ -114,8 +113,6 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         }
     }
     private static View view_permanente;
-    private EditText nombreCuentaEditText;
-    private EditText contraseñaEditText;
     private Button iniciarSesionButton;
     private GoogleApiClient googleApiClient;
     private final int SIGN_IN_CODE = 777;
@@ -128,8 +125,6 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         // Inflate the layout for this fragment
         view_permanente = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
         registrarmeTextView = view_permanente.findViewById(R.id.registrarmeTextView);
-        nombreCuentaEditText = view_permanente.findViewById(R.id.nombreCuentaEditTextInicioSesion);
-        contraseñaEditText = view_permanente.findViewById(R.id.contraseñaEditTextInicioSesion);
         iniciarSesionButton = view_permanente.findViewById(R.id.iniciarSesionButton);
         registrarmeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,25 +137,16 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
         iniciarSesionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = new ProgressDialog(view_permanente.getContext());
-                dialog.show();
-                dialog.setCancelable(false);
-                if(nombreCuentaEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese el nombre de su cuenta de usuario", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                    return;
-                }
-                if(contraseñaEditText.getText().toString().isEmpty())
-                {
-                    Toast.makeText(view_permanente.getContext(), "Ingrese la contraseña de su cuenta de usuario", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                    return;
-                }
-                final Usuario usuario = new Usuario();
-                usuario.nombre_cuenta_usuario = nombreCuentaEditText.getText().toString().toLowerCase();
-                usuario.contrasena_usuario = contraseñaEditText.getText().toString();
-                validarUsuario(usuario);
+                Inicio_sesion_dialog inicio_sesion_dialog =Inicio_sesion_dialog.newInstancia(new Inicio_sesion_dialog.IniciarSesion() {
+                    @Override
+                    public void sesionIniciada(Inicio_sesion_dialog inicio_sesion_dialog) {
+                        Intent intent = new Intent(getActivity(), ContainerActivity.class);
+                        startActivity(intent);
+                        salvarSesion();
+                        inicio_sesion_dialog.dismiss();
+                    }
+                });
+                inicio_sesion_dialog.show(getFragmentManager(), "missiles");
             }
         });
         googleSignInButton = view_permanente.findViewById(R.id.googleSignInButton);
@@ -220,9 +206,8 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
                         }
                         else
                         {
-                            usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
                             Gestion_usuario.setUsuario_online(usuarios.get(0));
-                            Toast.makeText(view_permanente.getContext(), "Logueado", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view_permanente.getContext(), "Sesion iniciada", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getActivity(), ContainerActivity.class);
                             salvarSesion();
                             startActivity(intent);
@@ -245,56 +230,6 @@ public class InicioSesionFragment extends Fragment implements GoogleApiClient.On
             Toast.makeText(view_permanente.getContext(), "No logueado", Toast.LENGTH_SHORT).show();
             googleSignInClient.signOut();
         }
-    }
-
-    private void validarUsuario(Usuario usuario)
-    {
-
-        HashMap<String, String> params = new Gestion_usuario().validar_cuenta_y_generar_token(usuario);
-        Response.Listener<String> stringListener = new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                try
-                {
-                    Integer.parseInt(response);
-                    dialog.dismiss();
-                    Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
-                            "incorrecto", Toast.LENGTH_LONG).show();
-                }
-                catch(NumberFormatException exc)
-                {
-                    ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
-                    if(usuarios.isEmpty())
-                    {
-                        Toast.makeText(view_permanente.getContext(), "Error en el sistema",
-                                Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
-                    }
-                    else
-                    {
-                        usuarios.get(0).contrasena_usuario = contraseñaEditText.getText().toString();
-                        Gestion_usuario.setUsuario_online(usuarios.get(0));
-                        dialog.dismiss();
-                        Toast.makeText(view_permanente.getContext(), "Logueado",
-                                Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getActivity(), ContainerActivity.class);
-                        salvarSesion();
-                        startActivity(intent);
-                    }
-                }
-            }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
-                Toast.makeText(view_permanente.getContext(), "Datos de usuario " +
-                        "incorrecto", Toast.LENGTH_LONG).show();
-            }
-        };
-        StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),params,stringListener, errorListener);
-        MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

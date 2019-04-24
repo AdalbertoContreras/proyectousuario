@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Numero de telefono"
+            android:id="@+id/numeroTelefonoEditText"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Direccion"
+            android:id="@+id/direccionEditText"/>
+    </android.support.design.widget.TextInputLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingrese estos datos para comunicarnos con usted"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="@color/rojo"
+        android:fontFamily="sans-serif-medium"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/cancelarButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            tools:ignore="MissingConstraints"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:theme="@style/Button_Alerta"
+            android:textSize="14sp"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            />
+        <Button
+            android:id="@+id/enviarButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar Alerta"
+            tools:ignore="MissingConstraints"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:theme="@style/Button_Alerta"
+            android:textSize="14sp"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>
