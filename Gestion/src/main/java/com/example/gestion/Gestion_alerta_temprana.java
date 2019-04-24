@@ -31,6 +31,8 @@ public class Gestion_alerta_temprana {
     private final String ATENDIDO_POR = "atendido_por";
     private final String ASUNTO = "asunto";
     private final String ESTADO_VISTO = "estado_visto";
+    private final String DIRECCION_ALERTA_TEMPRANA = "direccion_alerta_temprana";
+    private final String NUMERO_TELEFONO_ALERTA_TEMPRANA = "numero_telefono_alerta_temprana";
     //############################################################################################\\
     //###############################CONSULTA#######################\\
     private final String NUM_ALERTAS = "num_alertas";
@@ -139,6 +141,8 @@ public class Gestion_alerta_temprana {
             obj.addProperty(NUMERO_VISITAS, elemento.numero_visitas);
             obj.addProperty(ESTADO_ATENDIDO, elemento.estado_atendido);
             obj.addProperty(ATENDIDO_POR, elemento.atendido_por);
+            obj.addProperty(NUMERO_TELEFONO_ALERTA_TEMPRANA, elemento.numero_telefono_alerta_temprana);
+            obj.addProperty(DIRECCION_ALERTA_TEMPRANA, elemento.direccion_alerta_temprana);
             /*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
             obj.addProperty(TIPO_CONSULTA,tipo_consulta);
             obj.addProperty(LLAVE_WS,LLAVE_ALERTA_TEMPRANA);

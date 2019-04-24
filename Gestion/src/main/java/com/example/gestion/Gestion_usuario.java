@@ -48,7 +48,6 @@ public class Gestion_usuario{
     private final String VALIDARTOKENOBTENERUSUARIO = "validartokenobtenerusuario";
     private final String CONSULTAR_USUARIO_POR_ID = "consultar_usuario_por_id";
 
-
     private Usuario aux = new Usuario();
     private String tipo_consulta;
     private static Usuario usuario_online = null;

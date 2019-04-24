@@ -284,6 +284,62 @@ public class Gestion_chat_asesoria {
         return hashMap;
     }
 
+    public static class listaChatNoVisto
+    {
+        private static ArrayList<Chat_asesoria> chat_asesoriasNoVisto = new ArrayList<>();
+        private static int numChatNoVisto;
+
+        static void agregarChatNoVisto(Chat_asesoria chat_asesoria)
+        {
+            for(Chat_asesoria item : chat_asesoriasNoVisto)
+            {
+                if(item.id_chat_asesoria == chat_asesoria.id_chat_asesoria)
+                {
+                    return;
+                }
+            }
+            chat_asesoriasNoVisto.add(chat_asesoria);
+            numChatNoVisto ++;
+        }
+
+        static void quitarChatNoVisto(Chat_asesoria chat_asesoria)
+        {
+            int pos = -1;
+            int indice = 0;
+            for(Chat_asesoria item : chat_asesoriasNoVisto)
+            {
+                if(item.id_chat_asesoria == chat_asesoria.id_chat_asesoria)
+                {
+                    pos = indice;
+                }
+                indice ++;
+            }
+            if(pos != -1)
+            {
+                chat_asesoriasNoVisto.remove(pos);
+                numChatNoVisto --;
+            }
+        }
+
+        static Chat_asesoria existeChatNoVisto(Chat_asesoria chat_asesoria)
+        {
+            for(Chat_asesoria item : chat_asesoriasNoVisto)
+            {
+                if(item.id_chat_asesoria == chat_asesoria.id_chat_asesoria)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        static void quitarTodosChatNoVisto()
+        {
+            chat_asesoriasNoVisto = new ArrayList<>();
+            numChatNoVisto = 0;
+        }
+    }
+
     public static void setChat_asesorias(ArrayList<Chat_asesoria> chat_asesorias_aux)
     {
         boolean cambio = false;
@@ -301,6 +357,7 @@ public class Gestion_chat_asesoria {
                             if(!chat_asesoria.ultima_fecha_chat_asesoria.equals(item.ultima_fecha_chat_asesoria) || !chat_asesoria.ultima_hora_chat_asesoria.equals(item.ultima_hora_chat_asesoria))
                             {
                                 cambio = true;
+                                listaChatNoVisto.agregarChatNoVisto(item);
                             }
                         }
                         catch(NullPointerException exc)
