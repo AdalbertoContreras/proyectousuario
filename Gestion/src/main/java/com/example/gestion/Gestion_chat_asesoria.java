@@ -358,6 +358,16 @@ public class Gestion_chat_asesoria {
                             {
                                 cambio = true;
                                 listaChatNoVisto.agregarChatNoVisto(item);
+                                /**
+                                 *  si chat.fechaVista < ahora()
+                                        si vistaChat.estaAbierto
+                                            listaChatNoVisto.quitarTodosChatNoVisto()
+                                        else
+                                            ListaChatNoVistp.agregarChatNoVisto()
+                                        fin_si
+                                   fin_si
+
+                                 */
                             }
                         }
                         catch(NullPointerException exc)

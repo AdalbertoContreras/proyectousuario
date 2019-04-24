@@ -177,7 +177,7 @@ public class RegistrarUsuarioFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getActivity().getBaseContext(), "Fecha de nacimineto no valida", Toast.LENGTH_SHORT).show();
+                    fecha_nacimientoEditText.setTextColor(getResources().getColor(R.color.rojo));
                 }
             }
         });
@@ -347,7 +347,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         {
             @Override
             public void onResponse(String response) {
-                int val = 0;
                 try
                 {
                     ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
