@@ -859,8 +859,6 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                     ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);
                     if(usuarios.isEmpty())
                     {
-                        Toast.makeText(getBaseContext(), "Error en el sistema",
-                                Toast.LENGTH_LONG).show();
                         aux();
                     }
                     else {

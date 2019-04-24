@@ -13,17 +13,6 @@
         android:orderInCategory="100"
         android:title="Registrarme"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/modificarMisDatos"
-        android:orderInCategory="100"
-        android:title="Modificar datos"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/modificarMiContraseña"
-        android:orderInCategory="100"
-        android:title="Cambiar contraseña"
-        app:showAsAction="never"/>
     <item
         android:id="@+id/historialAlertasMenu"
         android:orderInCategory="100"
@@ -36,6 +25,19 @@
         android:title="Historial Asesorias"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/modificarMisDatos"
+        android:orderInCategory="100"
+        android:title="Modificar datos"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/modificarMiContraseña"
+        android:orderInCategory="100"
+        android:title="Cambiar contraseña"
+        app:showAsAction="never"/>
+
+
     <item
         android:id="@+id/cerrarSesionMenu"
         android:orderInCategory="100"

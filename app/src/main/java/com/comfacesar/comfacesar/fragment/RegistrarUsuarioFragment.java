@@ -101,8 +101,8 @@ public class RegistrarUsuarioFragment extends Fragment {
     private EditText verificarContraseñaCuentaEditText;
     private RadioButton masculinoRadioButton;
     private RadioButton femeninoRadioButton;
-    private EditText telefonoEditText;
-    private EditText direccionEditText;
+    //private EditText telefonoEditText;
+   // private EditText direccionEditText;
     private Button registrar_usuario;
     private EditText fecha_nacimientoEditText;
     private Button tomarFotoButton;
@@ -129,8 +129,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         contraseñaCuentaEditText = view_permanente.findViewById(R.id.contraseñaCuentaEditTextRegistrarUsuario);
         verificarContraseñaCuentaEditText = view_permanente.findViewById(R.id.verificarContraseñaCuentaEditTextRegistrarUsuario);
         registrar_usuario = view_permanente.findViewById(R.id.registrarmeButtonRegistrarUsuario);
-        direccionEditText = view_permanente.findViewById(R.id.direccionEditText);
-        telefonoEditText = view_permanente.findViewById(R.id.telefonoEditText);
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadEditText);
         tomarFotoButton = view_permanente.findViewById(R.id.tomarFotoButton);
         subirFotoButton = view_permanente.findViewById(R.id.subirFotoButton);
@@ -169,20 +167,13 @@ public class RegistrarUsuarioFragment extends Fragment {
                 fotoPerfilCircleImageView.setImageBitmap(null);
             }
         });
-        /*fecha_nacimientoEditText.setFocusable(false);
-        fecha_nacimientoEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });*/
         fecha_nacimientoEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 fecha_nacimientoEditText.setText(fecha_nacimientoEditText.getText().toString().trim());
                 if(new Calculo().validarFecha(fecha_nacimientoEditText.getText().toString()))
                 {
-                    Toast.makeText(getActivity().getBaseContext(), "Fecha de nacimineto valida", Toast.LENGTH_SHORT).show();
+                    fecha_nacimientoEditText.setTextColor(getResources().getColor(R.color.Black));
                 }
                 else
                 {
@@ -198,64 +189,6 @@ public class RegistrarUsuarioFragment extends Fragment {
             }
         });
         return view_permanente;
-    }
-
-    public static boolean validarFecha(String fecha) {
-        try {
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-            formatoFecha.setLenient(false);
-            formatoFecha.parse(fecha);
-        } catch (ParseException e) {
-            return false;
-        }
-        return true;
-    }
-
-
-    public void setProgressDialog()
-    {
-        int llPadding = 30;
-        LinearLayout ll = new LinearLayout(view_permanente.getContext());
-        ll.setOrientation(LinearLayout.HORIZONTAL);
-        ll.setPadding(llPadding, llPadding, llPadding, llPadding);
-        ll.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams llParam = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        llParam.gravity = Gravity.CENTER;
-        ll.setLayoutParams(llParam);
-
-        ProgressBar progressBar = new ProgressBar(view_permanente.getContext());
-        progressBar.setIndeterminate(true);
-        progressBar.setPadding(0, 0, llPadding, 0);
-        progressBar.setLayoutParams(llParam);
-
-        llParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        llParam.gravity = Gravity.CENTER;
-        TextView tvText = new TextView(view_permanente.getContext());
-        tvText.setText("Loading ...");
-        tvText.setTextColor(Color.parseColor("#000000"));
-        tvText.setTextSize(20);
-        tvText.setLayoutParams(llParam);
-
-        ll.addView(progressBar);
-        ll.addView(tvText);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(view_permanente.getContext());
-        builder.setCancelable(true);
-        builder.setView(ll);
-
-        alertDialog = builder.create();
-        alertDialog.show();
-        Window window = alertDialog.getWindow();
-        if (window != null) {
-            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-            layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
-            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
-            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-            alertDialog.getWindow().setAttributes(layoutParams);
-        }
     }
 
     private void existeNombreCuenta()
@@ -297,8 +230,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, errorListener);
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
-
-
 
     private void validar_nombre_cuenta()
     {
@@ -393,8 +324,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
         usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
-        usuario.telefono_usuario = telefonoEditText.getText().toString();
-        usuario.direccion_usuario = direccionEditText.getText().toString();
         if(masculinoRadioButton.isChecked())
         {
             usuario.sexo_usuario = 0;
@@ -431,6 +360,7 @@ public class RegistrarUsuarioFragment extends Fragment {
                         SharedPreferences.Editor myEditor = prefs.edit();
                         myEditor.putString("USER", Gestion_usuario.getUsuario_online().nombre_cuenta_usuario);
                         myEditor.putString("PASS", Gestion_usuario.getUsuario_online().contrasena_usuario);
+                        limpiar();
                         myEditor.commit();
                         getActivity().finish();
                     }
@@ -457,22 +387,24 @@ public class RegistrarUsuarioFragment extends Fragment {
         MySocialMediaSingleton.getInstance(view_permanente.getContext()).addToRequestQueue(stringRequest);
     }
 
-    private void limpiarDatos()
+    private void openGallery(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    private void limpiar()
     {
         nombreUsuarioEditText.setText("");
         apellidoEditText.setText("");
         fecha_nacimientoEditText.setText("");
-        telefonoEditText.setText("");
-        direccionEditText.setText("");
+        fecha_nacimientoEditText.setTextColor(getResources().getColor(R.color.Black));
         nombreCuentaEditText.setText("");
         contraseñaCuentaEditText.setText("");
-        fotoPerfilCircleImageView.setImageDrawable(getResources().getDrawable(R.drawable.perfil2));
+        verificarContraseñaCuentaEditText.setText("");
+        imagen_eliminada = false;
+        imagen_modificada = false;
         bitmap = null;
-    }
-
-    private void openGallery(){
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
+        fotoPerfilCircleImageView.setImageBitmap(null);
     }
 
     public void tomarFoto() {

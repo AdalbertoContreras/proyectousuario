@@ -14,4 +14,6 @@ public class Alerta_temprana
     public int estado_atendido;
     public int atendido_por;
     public String asunto;
+    public String direccion_alerta_temprana;
+    public String numero_telefono_alerta_temprana;
 }

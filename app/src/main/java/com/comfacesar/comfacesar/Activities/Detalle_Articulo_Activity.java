@@ -3,6 +3,7 @@ package com.comfacesar.comfacesar.Activities;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -88,18 +89,22 @@ public class Detalle_Articulo_Activity extends AppCompatActivity {
         {
             case 1:
                 categoriaNoticiaTextView.setBackgroundResource(R.color.colorPrimaryDark);
+                tituto_textview.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimaryDark));
                 categoriaNoticiaTextView.setText("SEXUALIDAD");
                 break;
             case 2:
                 categoriaNoticiaTextView.setBackgroundResource(R.color.tipo_one);
+                tituto_textview.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.tipo_one));
                 categoriaNoticiaTextView.setText("EMBARAZO");
                 break;
             case 3:
                 categoriaNoticiaTextView.setBackgroundResource(R.color.colorPrimaryDark);
+                tituto_textview.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimaryDark));
                 categoriaNoticiaTextView.setText("MALTRATO");
                 break;
             case 4:
                 categoriaNoticiaTextView.setBackgroundResource(R.color.Gris);
+                tituto_textview.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.Gris));
                 categoriaNoticiaTextView.setText("IDENTIDAD");
                 break;
         }

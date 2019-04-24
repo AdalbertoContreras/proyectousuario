@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.comfacesar.comfacesar.Dialog.DatosAuxiliaresAlertaDialog;
 import com.comfacesar.comfacesar.Dialog.MensajeInicioSesionDialog;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
@@ -117,7 +118,16 @@ public class AlertTempranaFragment extends Fragment {
     {
         if(alerta_temprana != null)
         {
-            Gestion_alerta_temprana gestion_alerta_temprana = new Gestion_alerta_temprana();
+            DatosAuxiliaresAlertaDialog datosAuxiliaresAlertaDialog = DatosAuxiliaresAlertaDialog.newInstancia(alerta_temprana, new DatosAuxiliaresAlertaDialog.AlertaTempranaRegistrada() {
+                @Override
+                public void alertaTempranaRegistrada(DatosAuxiliaresAlertaDialog datosAuxiliaresAlertaDialog) {
+                    abusoRadioButton.setChecked(true);
+                    descripcionTextView.setText("");
+                    datosAuxiliaresAlertaDialog.dismiss();
+                }
+            });
+            datosAuxiliaresAlertaDialog.show(getFragmentManager(), "missiles");
+            /*Gestion_alerta_temprana gestion_alerta_temprana = new Gestion_alerta_temprana();
             HashMap<String, String> hashMap = gestion_alerta_temprana.registrar_alerta_temprana(alerta_temprana);
             Response.Listener<String> stringListener = new Response.Listener<String>()
             {
@@ -135,7 +145,7 @@ public class AlertTempranaFragment extends Fragment {
                 }
             };
             StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, MySocialMediaSingleton.errorListener());
-            MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
+            MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);*/
         }
     }
 
