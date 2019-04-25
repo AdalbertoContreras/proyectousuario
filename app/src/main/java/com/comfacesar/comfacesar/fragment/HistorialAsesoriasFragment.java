@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Adaptador.AdapterListaAsesoresPorEspecialidad;
 import com.comfacesar.comfacesar.Adaptador.Adapter_historia_chat_asesoria;
+import com.comfacesar.comfacesar.ContainerActivity;
 import com.comfacesar.comfacesar.R;
 import com.example.extra.MySocialMediaSingleton;
 import com.example.extra.WebService;
@@ -47,7 +48,16 @@ public class HistorialAsesoriasFragment extends Fragment {
     private String mParam2;
     private RecyclerView recyclerView;
     private View view;
+    public static boolean estoyAbierto = false;
     private OnFragmentInteractionListener mListener;
+
+    /*
+        recibe la lista de chat
+     */
+    public interface listaChatCambiado
+    {
+        void actualizarListaChat();
+    }
 
     public HistorialAsesoriasFragment() {
         // Required empty public constructor
@@ -98,6 +108,12 @@ public class HistorialAsesoriasFragment extends Fragment {
                 generar_consulta("");
             }
         };
+        ContainerActivity.actualizarLista = new ContainerActivity.ActualizarLista() {
+            @Override
+            public void actualizar() {
+                generar_consulta("");
+            }
+        };
         return view;
     }
 
@@ -106,6 +122,13 @@ public class HistorialAsesoriasFragment extends Fragment {
         super.onResume();
         //consultar_chats();
         generar_consulta("");
+        estoyAbierto = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        estoyAbierto = false;
     }
 
     private void generar_consulta(final String response)

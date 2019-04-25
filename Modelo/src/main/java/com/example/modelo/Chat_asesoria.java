@@ -26,6 +26,7 @@ public class Chat_asesoria implements Serializable {
     public String ultimo_mensaje_chat_asesoria;
     public String ultima_fecha_chat_asesoria;
     public String ultima_hora_chat_asesoria;
+    public int visto_estado_chat_Asesoria;
     public String usuario;
     public String administrador;
     public String especialidad;
