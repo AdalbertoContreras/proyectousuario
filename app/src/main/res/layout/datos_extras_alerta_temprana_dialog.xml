@@ -41,20 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/cancelarButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancelar"
-            tools:ignore="MissingConstraints"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:theme="@style/Button_Alerta"
-            android:textSize="14sp"
-            android:layout_marginVertical="10dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="10dp"
-            />
+
         <Button
             android:id="@+id/enviarButton"
             android:layout_width="match_parent"

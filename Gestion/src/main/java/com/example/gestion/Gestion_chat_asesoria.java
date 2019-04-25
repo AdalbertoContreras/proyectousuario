@@ -46,7 +46,7 @@ public class Gestion_chat_asesoria {
     private final String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
     private final String ULTIMA_FECHA_CHAT_ASESORIA = "V";
     private final String ULTIMA_HORA_CHAT_ASESORIA = "X";
-    private final String VISTO_ESTADO_CHAT_ASESORIA = "Y";
+    private final String USUARIO_RESPONDIO_CHAT_ASESORIA = "Y";
     //############################################################################################\\
     //###############################PROPIEDADES RELACIONES#######################################\\
     private final String USUARIO = "usuario";
@@ -186,7 +186,7 @@ public class Gestion_chat_asesoria {
                 estado_cerrado = jsonObject.get(ESTADO_CERRADO).getAsInt();
                 tiempo_sesion_chat_asesoria = jsonObject.get(TIEMPO_SESION_CHAT_ASESORIA).getAsString();
                 especializacion_chat_asesoria = jsonObject.get(ESPECIALIZACION_CHAT_ASESORIA).getAsInt();
-                visto_estado_chat_Asesoria = jsonObject.get(VISTO_ESTADO_CHAT_ASESORIA).getAsInt();
+                usuario_respondio_chat_asesoria = jsonObject.get(USUARIO_RESPONDIO_CHAT_ASESORIA).getAsInt();
                 if(!jsonObject.get(ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
                 {
                     ultima_fecha_administrador_chat_asesoria = jsonObject.get(ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
@@ -386,6 +386,10 @@ public class Gestion_chat_asesoria {
             calendar.set (ano, mes, dia, hora, min, seg);
             return calendar;
         }
+
+        public static int getNumChatNoVisto() {
+            return numChatNoVisto;
+        }
     }
 
     public static void setChat_asesorias(ArrayList<Chat_asesoria> chat_asesorias_aux, boolean historialChatAbierto)
@@ -400,37 +404,18 @@ public class Gestion_chat_asesoria {
                     Chat_asesoria chat_asesoria = buscarChatAsesoria(item.id_chat_asesoria);
                     if(chat_asesoria != null)
                     {
-                        try
+                        String fecha1 = chat_asesoria.ultima_fecha_chat_asesoria + chat_asesoria.ultima_hora_chat_asesoria;
+                        String fecha2 = item.ultima_fecha_chat_asesoria + item.ultima_hora_chat_asesoria;
+                        //llego un nuevo mensaje
+                        if(!fecha1.equals(fecha2))
                         {
-                            Calendar fechaVistoCalendar = listaChatNoVisto.String_a_Date(item.ultima_fecha_vista_usuario_chat_asesoria, item.ultima_hora_vista_usuario_chat_asesoria);
-                            Calendar fechaMensajeCalendar = listaChatNoVisto.String_a_Date(item.ultima_fecha_chat_asesoria, item.ultima_hora_chat_asesoria);
-                            if(fechaMensajeCalendar.compareTo(fechaVistoCalendar) == 1)
-                            {
-                                //la vista de historial de chat esta abierto
-                                if(historialChatAbierto)
-                                {
-                                    //quito la notificacion de este chat
-                                    /*if(chatAbierto != null)
-                                    {
-                                        chatAbierto.abierto(item.id_chat_asesoria);
-                                    }*/
-                                    if(cambiarEstadoChat != null)
-                                    {
-                                        cambiarEstadoChat.chatCambiarEstado(item);
-                                    }
-                                    listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
-                                }
-                                else
-                                {
-                                    listaChatNoVisto.agregarChatNoVisto(chat_asesoria);
-                                }
-                                cambio = true;
-                            }
-                            else
+                            String fechaUsuarioAnterior = chat_asesoria.ultima_fecha_vista_usuario_chat_asesoria + chat_asesoria.ultima_hora_vista_usuario_chat_asesoria;
+                            String fechaUsuarioNueva = item.ultima_fecha_vista_usuario_chat_asesoria + item.ultima_hora_vista_usuario_chat_asesoria;
+                            if(!fechaUsuarioAnterior.equals(fechaUsuarioNueva) && !historialChatAbierto)
                             {
                                 if(chatAbierto != null)
                                 {
-                                    chatAbierto.abierto(item.id_chat_asesoria);
+                                    //chatAbierto.abierto(item.id_chat_asesoria);
                                 }
                                 if(cambiarEstadoChat != null)
                                 {
@@ -438,10 +423,43 @@ public class Gestion_chat_asesoria {
                                 }
                                 listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
                             }
-                        }
-                        catch(NullPointerException exc)
-                        {
-
+                            else
+                            {
+                                if(item.usuario_respondio_chat_asesoria == 0)
+                                {
+                                    if(cambiarEstadoChat != null)
+                                    {
+                                        cambiarEstadoChat.chatCambiarEstado(item);
+                                    }
+                                    //la vista de historial de chat esta abierto
+                                    if(historialChatAbierto)
+                                    {
+                                        //quito la notificacion de este chat
+                                /*if(chatAbierto != null)
+                                {
+                                    chatAbierto.abierto(item.id_chat_asesoria);
+                                }*/
+                                        listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
+                                    }
+                                    else
+                                    {
+                                        listaChatNoVisto.agregarChatNoVisto(chat_asesoria);
+                                    }
+                                    cambio = true;
+                                }
+                                else
+                                {
+                                    if(chatAbierto != null)
+                                    {
+                                        //chatAbierto.abierto(item.id_chat_asesoria);
+                                    }
+                                    if(cambiarEstadoChat != null)
+                                    {
+                                        cambiarEstadoChat.chatCambiarEstado(item);
+                                    }
+                                    listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
+                                }
+                            }
                         }
                     }
                 }
@@ -460,7 +478,7 @@ public class Gestion_chat_asesoria {
             }
             if(cambiarEstadoChat != null)
             {
-                cambiarEstadoChat.barridoCambioEstadoTerminado(cambio);
+                cambiarEstadoChat.barridoCambioEstadoTerminado(true);
             }
         }
         else

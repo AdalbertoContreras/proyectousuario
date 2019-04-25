@@ -98,11 +98,11 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
             {
                 tipo_asesoriaTextView.setText(especialidades.get(0).nombre_especialidad);
             }
-            if(new Calculo().String_a_Date(chat_asesoria.ultima_fecha_administrador_chat_asesoria, chat_asesoria.ultima_hora_administrador_chat_asesoria).compareTo(new Calculo().String_a_Date(chat_asesoria.ultima_fecha_vista_usuario_chat_asesoria, chat_asesoria.ultima_hora_vista_usuario_chat_asesoria)) == 1)
+            if(chat_asesoria.usuario_respondio_chat_asesoria == 0)
             {
                 ultimo_mensajeTextView.setTextColor(view.getResources().getColor(R.color.verde));
             }
-            else
+            else if(chat_asesoria.usuario_respondio_chat_asesoria == 1)
             {
                 ultimo_mensajeTextView.setTextColor(view.getResources().getColor(R.color.Gris));
             }

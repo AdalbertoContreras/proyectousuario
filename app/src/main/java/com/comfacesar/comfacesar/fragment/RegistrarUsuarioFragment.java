@@ -323,7 +323,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         final Usuario usuario = new Usuario();
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
-        usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
+        usuario.fecha_nacimiento = new Calculo().fechaCambiarAtras(fecha_nacimientoEditText.getText().toString());
         if(masculinoRadioButton.isChecked())
         {
             usuario.sexo_usuario = 0;
