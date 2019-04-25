@@ -257,7 +257,7 @@
                             android:id="@+id/enviarButtonRegistrarAlertatemprana"
                             android:layout_width="350dp"
                             android:layout_height="90dp"
-                            android:text="OK"
+                            android:text="Enviar Alerta"
                             tools:ignore="MissingConstraints"
                             android:gravity="center"
                             android:layout_gravity="center"

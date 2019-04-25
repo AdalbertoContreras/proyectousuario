@@ -145,37 +145,42 @@
                         </RadioGroup>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:weightSum="1"
-                    >
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/fotoPerfilImageView"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:src="@drawable/perfil"
-                        android:elevation="5dp"
-                        android:layout_margin="15dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.20"
-                        />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1"
+                android:background="@color/Gris3"
+                android:paddingVertical="5dp"
+                >
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/fotoPerfilImageView"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:layout_weight="0.20"
+                    android:elevation="5dp"
+                    android:src="@drawable/perfil2" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="0.80"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    >
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.80"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                       >
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp">
 
                         <Button
                             android:id="@+id/tomarFotoButton"
@@ -185,45 +190,42 @@
                             android:layout_weight="1"
                             android:background="@drawable/ic_camara"
                             android:layout_margin="5dp"
-                             />
-                        </LinearLayout>
+                            />
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp">
 
-                            <Button
-                                android:id="@+id/subirFotoButton"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginHorizontal="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/ic_galeria"
-                                android:layout_margin="5dp"
-                                />
-                        </LinearLayout>
+                        <Button
+                            android:id="@+id/subirFotoButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ic_galeria"
+                            android:layout_margin="5dp"
+                            />
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
 
-                            <Button
-                                android:id="@+id/eliminar_imagenButton"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_marginHorizontal="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/ic_eliminar2"
-                                android:layout_margin="5dp"
-                                />
-                        </LinearLayout>
+                        <Button
+                            android:id="@+id/eliminar_imagenButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ic_eliminar2"
+                            android:layout_margin="5dp"
+                            />
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
