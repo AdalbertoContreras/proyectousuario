@@ -253,17 +253,17 @@
                         android:gravity="center"
 
                         >
-
                         <Button
                             android:id="@+id/enviarButtonRegistrarAlertatemprana"
                             android:layout_width="350dp"
                             android:layout_height="90dp"
-                            android:layout_gravity="center"
+                            android:text="Enviar Alerta"
+                            tools:ignore="MissingConstraints"
                             android:gravity="center"
-                            android:text="ENVIAR"
-                            android:textSize="16sp"
+                            android:layout_gravity="center"
                             android:theme="@style/Button_Alerta"
-                            tools:ignore="MissingConstraints" />
+                            android:textSize="16sp"
+                            />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 

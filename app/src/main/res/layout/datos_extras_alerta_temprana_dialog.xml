@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_marginHorizontal="20dp">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="10dp">
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +27,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp">
+        android:layout_marginTop="10dp">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
@@ -28,14 +35,18 @@
             android:hint="Direccion"
             android:id="@+id/direccionEditText"/>
     </android.support.design.widget.TextInputLayout>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ingrese estos datos para comunicarnos con usted"
         android:gravity="center"
-        android:textSize="20dp"
-        android:textColor="@color/rojo"
+        android:textSize="14sp"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/Gris"
         android:fontFamily="sans-serif-medium"
+        android:layout_marginVertical="5dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +57,7 @@
             android:id="@+id/enviarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviar Alerta"
+            android:text="Enviar"
             tools:ignore="MissingConstraints"
             android:gravity="center"
             android:layout_gravity="center"
@@ -57,5 +68,5 @@
             android:layout_marginHorizontal="10dp"
             />
     </LinearLayout>
-
+    </LinearLayout>
 </LinearLayout>
