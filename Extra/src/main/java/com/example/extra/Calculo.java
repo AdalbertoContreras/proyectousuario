@@ -25,6 +25,15 @@ public class Calculo {
         return calendar;
     }
 
+    public String fechaCambiarAtras(String date)
+    {
+        String[] vectorFecha = date.split ("-");
+        int año = Integer.parseInt (vectorFecha[2]);
+        int mes = Integer.parseInt (vectorFecha[1]);
+        int dia = Integer.parseInt (vectorFecha[0]);
+        return año + "-" + mes + "-" + dia;
+    }
+
     public String fechaFormatoHace(Calendar fechaInicio, Calendar fechaFin, Calendar c)
     {
         c.setTimeInMillis(fechaInicio.getTime().getTime() - fechaFin.getTime().getTime());
@@ -223,13 +232,13 @@ public class Calculo {
 
     public boolean validarFecha(String fecha) {
         try {
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
             formatoFecha.setLenient(true);
             formatoFecha.parse(fecha);
             String[] array = fecha.split("-");
             try
             {
-                Fecha fecha1 = new Fecha(Integer.parseInt(array[0]), Integer.parseInt(array[1]), Integer.parseInt(array[2]));
+                Fecha fecha1 = new Fecha(Integer.parseInt(array[2]), Integer.parseInt(array[1]), Integer.parseInt(array[0]));
                 return validarFechaSegundaCapa(fecha1);
             }
             catch (NumberFormatException exc)

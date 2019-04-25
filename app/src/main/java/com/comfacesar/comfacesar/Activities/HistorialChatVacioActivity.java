@@ -13,7 +13,6 @@ public class HistorialChatVacioActivity extends AppCompatActivity {
 
     private Button enviarAlertaButton;
     public static EnviarAsesoria enviarAsesoria;
-    public static boolean estoyActivo;
     public interface EnviarAsesoria
     {
         void enviarAsesoria();
@@ -43,17 +42,5 @@ public class HistorialChatVacioActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Tittle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
         CollapsingToolbarLayout collapsing=  findViewById(R.id.collapsin_id);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        estoyActivo = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        estoyActivo = false;
     }
 }

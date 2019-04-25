@@ -8,6 +8,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class Gestion_chat_asesoria {
@@ -44,6 +46,7 @@ public class Gestion_chat_asesoria {
     private final String ULTIMO_MENSAJE_CHAT_ASESORIA = "U";
     private final String ULTIMA_FECHA_CHAT_ASESORIA = "V";
     private final String ULTIMA_HORA_CHAT_ASESORIA = "X";
+    private final String USUARIO_RESPONDIO_CHAT_ASESORIA = "Y";
     //############################################################################################\\
     //###############################PROPIEDADES RELACIONES#######################################\\
     private final String USUARIO = "usuario";
@@ -55,19 +58,39 @@ public class Gestion_chat_asesoria {
     private final String VISTA_POR_USUARIO = "vista_por_usuario";
     private final String CONSULTAR_POR_USUARIO = "consultar_por_usuario";
     private final String NUMERO_POR_USUARIO = "numero_por_usuario";
+    private final String REGISTRAR_VISTA = "registrar_vista";
     private String tipo_consulta;
 
     private static ArrayList<Chat_asesoria> chat_asesorias = null;
     private static Chat_asesoria aux = new Chat_asesoria();
     public static ArrayChatCambiado arrayChatCambiado;
+    private  static ChatAbierto chatAbierto;
+    private static CambiarEstadoChat cambiarEstadoChat;
     public interface ArrayChatCambiado
     {
         void chatCambiado();
     }
-    private  static ChatAbierto chatAbierto;
+    /*
+        this->ContainerActivity
+     */
     public interface ChatAbierto
     {
         void abierto(int id_chat);
+    }
+    /*
+        this->ContainerActivity
+     */
+    public interface CambiarEstadoChat
+    {
+        /*
+        el chat que envio por parametro le cambio la fecha vista por el usuario a la fecha actual
+         */
+        void chatCambiarEstado(Chat_asesoria chat_asesoria);
+        /*
+        este escuchador se llamara cuando se termine de agregar los chat a la lista
+        en la vista de containerActivity
+         */
+        void barridoCambioEstadoTerminado(boolean huboCambio);
     }
 
     public static void chat_abiero(int id_chat)
@@ -75,9 +98,11 @@ public class Gestion_chat_asesoria {
         chatAbierto.abierto(id_chat);
     }
 
-    public static void setChatAbierto(ChatAbierto chatAbierto) {
-        Gestion_chat_asesoria.chatAbierto = chatAbierto;
+    public static void setCambiarEstadoChat(CambiarEstadoChat cambiarEstadoChat) {
+        Gestion_chat_asesoria.cambiarEstadoChat = cambiarEstadoChat;
     }
+
+    public static void setChatAbierto(ChatAbierto chatAbierto) {Gestion_chat_asesoria.chatAbierto =chatAbierto;}
 
     public HashMap<String, String> consultar_chat_asesoria_por_usuario_administrador_y_especialidad(int administrador, int usuario, int especialidad)
     {
@@ -87,6 +112,13 @@ public class Gestion_chat_asesoria {
         tipo_consulta = CONSULTAR_CHAT_ASESORIA_POR_USUARIO_ADMINISTRADOR_Y_ESPECIALIDAD;
         return construir_parametros(aux);
     }
+
+    public HashMap<String, String> registrar_vista(int idChatAsesoria)
+        {
+            aux.id_chat_asesoria = idChatAsesoria;
+            tipo_consulta = REGISTRAR_VISTA;
+            return construir_parametros(aux);
+        }
 
     public HashMap<String, String> vista_por_usuario( int id_chat)
     {
@@ -154,6 +186,7 @@ public class Gestion_chat_asesoria {
                 estado_cerrado = jsonObject.get(ESTADO_CERRADO).getAsInt();
                 tiempo_sesion_chat_asesoria = jsonObject.get(TIEMPO_SESION_CHAT_ASESORIA).getAsString();
                 especializacion_chat_asesoria = jsonObject.get(ESPECIALIZACION_CHAT_ASESORIA).getAsInt();
+                usuario_respondio_chat_asesoria = jsonObject.get(USUARIO_RESPONDIO_CHAT_ASESORIA).getAsInt();
                 if(!jsonObject.get(ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA).isJsonNull())
                 {
                     ultima_fecha_administrador_chat_asesoria = jsonObject.get(ULTIMA_FECHA_ADMINISTRADOR_CHAT_ASESORIA).getAsString();
@@ -338,9 +371,28 @@ public class Gestion_chat_asesoria {
             chat_asesoriasNoVisto = new ArrayList<>();
             numChatNoVisto = 0;
         }
+
+        static Calendar String_a_Date(String date, String time)
+        {
+            String[] vectorFecha = date.split ("-");
+            String[] vectorHora = time.split (":");
+            int ano = Integer.parseInt (vectorFecha[0]);
+            int mes = Integer.parseInt (vectorFecha[1]);
+            int dia = Integer.parseInt (vectorFecha[2]);
+            int hora = Integer.parseInt (vectorHora[0]);
+            int min = Integer.parseInt (vectorHora[1]);
+            int seg = Integer.parseInt (vectorHora[2]);
+            Calendar calendar = new GregorianCalendar();
+            calendar.set (ano, mes, dia, hora, min, seg);
+            return calendar;
+        }
+
+        public static int getNumChatNoVisto() {
+            return numChatNoVisto;
+        }
     }
 
-    public static void setChat_asesorias(ArrayList<Chat_asesoria> chat_asesorias_aux)
+    public static void setChat_asesorias(ArrayList<Chat_asesoria> chat_asesorias_aux, boolean historialChatAbierto)
     {
         boolean cambio = false;
         if(chat_asesorias_aux != null)
@@ -352,17 +404,62 @@ public class Gestion_chat_asesoria {
                     Chat_asesoria chat_asesoria = buscarChatAsesoria(item.id_chat_asesoria);
                     if(chat_asesoria != null)
                     {
-                        try
+                        String fecha1 = chat_asesoria.ultima_fecha_chat_asesoria + chat_asesoria.ultima_hora_chat_asesoria;
+                        String fecha2 = item.ultima_fecha_chat_asesoria + item.ultima_hora_chat_asesoria;
+                        //llego un nuevo mensaje
+                        if(!fecha1.equals(fecha2))
                         {
-                            if(!chat_asesoria.ultima_fecha_chat_asesoria.equals(item.ultima_fecha_chat_asesoria) || !chat_asesoria.ultima_hora_chat_asesoria.equals(item.ultima_hora_chat_asesoria))
+                            String fechaUsuarioAnterior = chat_asesoria.ultima_fecha_vista_usuario_chat_asesoria + chat_asesoria.ultima_hora_vista_usuario_chat_asesoria;
+                            String fechaUsuarioNueva = item.ultima_fecha_vista_usuario_chat_asesoria + item.ultima_hora_vista_usuario_chat_asesoria;
+                            if(!fechaUsuarioAnterior.equals(fechaUsuarioNueva) && !historialChatAbierto)
                             {
-                                cambio = true;
-                                listaChatNoVisto.agregarChatNoVisto(item);
+                                if(chatAbierto != null)
+                                {
+                                    //chatAbierto.abierto(item.id_chat_asesoria);
+                                }
+                                if(cambiarEstadoChat != null)
+                                {
+                                    cambiarEstadoChat.chatCambiarEstado(item);
+                                }
+                                listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
                             }
-                        }
-                        catch(NullPointerException exc)
-                        {
-
+                            else
+                            {
+                                if(item.usuario_respondio_chat_asesoria == 0)
+                                {
+                                    if(cambiarEstadoChat != null)
+                                    {
+                                        cambiarEstadoChat.chatCambiarEstado(item);
+                                    }
+                                    //la vista de historial de chat esta abierto
+                                    if(historialChatAbierto)
+                                    {
+                                        //quito la notificacion de este chat
+                                /*if(chatAbierto != null)
+                                {
+                                    chatAbierto.abierto(item.id_chat_asesoria);
+                                }*/
+                                        listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
+                                    }
+                                    else
+                                    {
+                                        listaChatNoVisto.agregarChatNoVisto(chat_asesoria);
+                                    }
+                                    cambio = true;
+                                }
+                                else
+                                {
+                                    if(chatAbierto != null)
+                                    {
+                                        //chatAbierto.abierto(item.id_chat_asesoria);
+                                    }
+                                    if(cambiarEstadoChat != null)
+                                    {
+                                        cambiarEstadoChat.chatCambiarEstado(item);
+                                    }
+                                    listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
+                                }
+                            }
                         }
                     }
                 }
@@ -378,6 +475,10 @@ public class Gestion_chat_asesoria {
                 {
                     arrayChatCambiado.chatCambiado();
                 }
+            }
+            if(cambiarEstadoChat != null)
+            {
+                cambiarEstadoChat.barridoCambioEstadoTerminado(true);
             }
         }
         else

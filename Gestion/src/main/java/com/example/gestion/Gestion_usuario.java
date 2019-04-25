@@ -164,9 +164,16 @@ public class Gestion_usuario{
                 correo_usuario = jsonObject.get(CORREO_USUARIO).getAsString();
                 nombre_cuenta_usuario = jsonObject.get(NOMBRE_CUENTA_USUARIO).getAsString();
                 foto_perfil_usuario = jsonObject.get(FOTO_PERFIL_USUARIO).getAsString();
-                if(!jsonObject.get(TOKEN).isJsonNull())
+                if(jsonObject.has(TOKEN))
                 {
-                    token = jsonObject.get(TOKEN).getAsString();
+                    if(!jsonObject.get(TOKEN).isJsonNull())
+                    {
+                        token = jsonObject.get(TOKEN).getAsString();
+                    }
+                    else
+                    {
+                        token = null;
+                    }
                 }
                 else
                 {

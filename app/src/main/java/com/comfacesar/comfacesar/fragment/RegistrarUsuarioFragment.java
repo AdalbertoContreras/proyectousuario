@@ -177,7 +177,7 @@ public class RegistrarUsuarioFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getActivity().getBaseContext(), "Fecha de nacimineto no valida", Toast.LENGTH_SHORT).show();
+                    fecha_nacimientoEditText.setTextColor(getResources().getColor(R.color.rojo));
                 }
             }
         });
@@ -323,7 +323,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         final Usuario usuario = new Usuario();
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
-        usuario.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
+        usuario.fecha_nacimiento = new Calculo().fechaCambiarAtras(fecha_nacimientoEditText.getText().toString());
         if(masculinoRadioButton.isChecked())
         {
             usuario.sexo_usuario = 0;
@@ -347,7 +347,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         {
             @Override
             public void onResponse(String response) {
-                int val = 0;
                 try
                 {
                     ArrayList<Usuario> usuarios = new Gestion_usuario().generar_json(response);

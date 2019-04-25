@@ -352,8 +352,6 @@ public class ChatAsesoria extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //Toast.makeText(getBaseContext())
-        /*super.onBackPressed();*/
         if(esNotificacion == 1)
         {
             Intent intent = new Intent(getBaseContext(), ContainerActivity.class);

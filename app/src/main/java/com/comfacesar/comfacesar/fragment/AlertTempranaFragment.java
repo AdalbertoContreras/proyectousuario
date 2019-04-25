@@ -127,25 +127,6 @@ public class AlertTempranaFragment extends Fragment {
                 }
             });
             datosAuxiliaresAlertaDialog.show(getFragmentManager(), "missiles");
-            /*Gestion_alerta_temprana gestion_alerta_temprana = new Gestion_alerta_temprana();
-            HashMap<String, String> hashMap = gestion_alerta_temprana.registrar_alerta_temprana(alerta_temprana);
-            Response.Listener<String> stringListener = new Response.Listener<String>()
-            {
-                @Override
-                public void onResponse(String response) {
-                    if(response.equals("1"))
-                    {
-                        Toast.makeText(view.getContext(), "Alerta enviada correctamente", Toast.LENGTH_LONG).show();
-                        limpiar();
-                    }
-                    else
-                    {
-                        Toast.makeText(view.getContext(), "Error al enviar alerta", Toast.LENGTH_LONG).show();
-                    }
-                }
-            };
-            StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, MySocialMediaSingleton.errorListener());
-            MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);*/
         }
     }
 

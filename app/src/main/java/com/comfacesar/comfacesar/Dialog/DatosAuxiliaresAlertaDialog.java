@@ -57,7 +57,6 @@ public class DatosAuxiliaresAlertaDialog extends DialogFragment {
         direccionTextView.setText(Gestion_usuario.getUsuario_online().direccion_usuario);
         numeroTelefonoTextView.setText(Gestion_usuario.getUsuario_online().telefono_usuario);
         enviarButton = view.findViewById(R.id.enviarButton);
-        cancelarButton = view.findViewById(R.id.cancelarButton);
         enviarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,12 +91,6 @@ public class DatosAuxiliaresAlertaDialog extends DialogFragment {
                 };
                 StringRequest stringRequest = MySocialMediaSingleton.volley_consulta(WebService.getUrl(),hashMap,stringListener, MySocialMediaSingleton.errorListener());
                 MySocialMediaSingleton.getInstance(view.getContext()).addToRequestQueue(stringRequest);
-            }
-        });
-        cancelarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatosAuxiliaresAlertaDialog.this.dismiss();
             }
         });
         builder.setView(view);
