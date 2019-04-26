@@ -7,8 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -108,6 +107,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -129,6 +129,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         });
         TabLayout tabLayout = findViewById(R.id.tabs);
+
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
         if(Gestion_usuario.escuchadorParaActivityPrincipal == null)
         {
@@ -159,6 +160,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             };
         }
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
+
         if(menu != null)
         {
             onCreateOptionsMenu(menu);
@@ -447,10 +450,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANEL_ID);
-        Bitmap icon = BitmapFactory.decodeResource(getBaseContext().getResources(),
-                R.drawable.logo_serviamigo);
-        builder.setLargeIcon(icon);
-        builder.setSmallIcon(R.drawable.logo_serviamigo);
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setContentTitle(titulo);
         builder.setContentText(mensaje);
         builder.setColor(Color.RED);
@@ -499,13 +499,18 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     //actualizo la lista
                     int numChat = Gestion_chat_asesoria.listaChatNoVisto.getNumChatNoVisto();
-                    if(numChat == 0)
+                    floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.logo_chat));
+                    switch (numChat)
                     {
-                        floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok));
-                    }
-                    else
-                    {
-
+                        case 0:
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
+                            break;
+                        case 1:
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
+                            break;
+                        case 2:
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
+                            break;
                     }
                     if(actualizarLista != null && HistorialAsesoriasFragment.estoyAbierto)
                     {

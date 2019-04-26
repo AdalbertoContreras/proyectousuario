@@ -156,8 +156,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_logo_seriamigo_new" />
-                            <entry key="sourceFile" value="C:\Users\usuario\Pictures\LOGO SERIAMIGO new.svg" />
+                            <entry key="outputName" value="ic_chat_new" />
+                            <entry key="sourceFile" value="C:\Users\usuario\Pictures\chat new.svg" />
                           </map>
                         </option>
                       </PersistentState>
