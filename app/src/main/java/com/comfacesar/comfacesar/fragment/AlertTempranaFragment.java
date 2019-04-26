@@ -11,20 +11,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
 import com.comfacesar.comfacesar.Dialog.DatosAuxiliaresAlertaDialog;
 import com.comfacesar.comfacesar.Dialog.MensajeInicioSesionDialog;
 import com.comfacesar.comfacesar.R;
-import com.example.extra.MySocialMediaSingleton;
-import com.example.extra.WebService;
-import com.example.gestion.Gestion_alerta_temprana;
 import com.example.gestion.Gestion_usuario;
 import com.example.modelo.Alerta_temprana;
 import com.example.modelo.Asunto;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -65,7 +59,7 @@ public class AlertTempranaFragment extends Fragment {
                 }
                 else
                 {
-                    MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaUbstancia("Inicie sesion para poder enviar una alerta.");
+                    MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaInstancia("Inicie sesion para poder enviar una alerta.");
                     try {
                         detalleAsesorDialog.show(getActivity().getSupportFragmentManager(), "missiles");
                     } catch (IllegalStateException ignored) {
@@ -128,11 +122,5 @@ public class AlertTempranaFragment extends Fragment {
             });
             datosAuxiliaresAlertaDialog.show(getFragmentManager(), "missiles");
         }
-    }
-
-    private void limpiar()
-    {
-        descripcionTextView.setText("");
-        abusoRadioButton.setChecked(true);
     }
 }

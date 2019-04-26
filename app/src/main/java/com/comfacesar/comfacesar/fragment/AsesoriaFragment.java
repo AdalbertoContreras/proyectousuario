@@ -10,16 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.comfacesar.comfacesar.ContainertwoActivity;
 import com.comfacesar.comfacesar.Dialog.MensajeInicioSesionDialog;
 import com.comfacesar.comfacesar.R;
 import com.example.gestion.Gestion_usuario;
-import com.example.modelo.Administrador;
-import com.example.modelo.Mensaje_chat_asesoria;
-
-import java.util.ArrayList;
 
 
 /**
@@ -150,7 +145,7 @@ public class AsesoriaFragment extends Fragment {
 
     private void mensaje_usuario_no_conectado()
     {
-        MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaUbstancia("Inicie sesion para poder acceder al chat");
+        MensajeInicioSesionDialog detalleAsesorDialog = MensajeInicioSesionDialog.nuevaInstancia("Inicie sesion para poder acceder al chat");
         try {
             detalleAsesorDialog.show(getActivity().getSupportFragmentManager(), "missiles");
         } catch (IllegalStateException ignored) {

@@ -190,6 +190,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         {
             actualizarLista.actualizar();
         }
+        floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.logo_chat));
     }
 
     @Override
@@ -499,18 +500,14 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     //actualizo la lista
                     int numChat = Gestion_chat_asesoria.listaChatNoVisto.getNumChatNoVisto();
-                    floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.logo_chat));
-                    switch (numChat)
+                    if(numChat == 0)
                     {
-                        case 0:
-                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
-                            break;
-                        case 1:
-                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
-                            break;
-                        case 2:
-                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
-                            break;
+                        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
+                    }
+                    else
+                    {
+                        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
+
                     }
                     if(actualizarLista != null && HistorialAsesoriasFragment.estoyAbierto)
                     {
