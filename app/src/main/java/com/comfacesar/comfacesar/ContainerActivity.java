@@ -494,17 +494,13 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     //actualizo la lista
                     int numChat = Gestion_chat_asesoria.listaChatNoVisto.getNumChatNoVisto();
-                    switch (numChat)
+                    if(numChat == 0)
                     {
-                        case 0:
-                            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok));
-                            break;
-                        case 1:
-                            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok_v1));
-                            break;
-                        case 2:
-                            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok_v2));
-                            break;
+                        floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok));
+                    }
+                    else
+                    {
+
                     }
                     if(actualizarLista != null && HistorialAsesoriasFragment.estoyAbierto)
                     {
