@@ -25,13 +25,22 @@ public class Calculo {
         return calendar;
     }
 
-    public String fechaCambiarAtras(String date)
+    public String fechaNormal(String date)
     {
         String[] vectorFecha = date.split ("-");
         int año = Integer.parseInt (vectorFecha[2]);
         int mes = Integer.parseInt (vectorFecha[1]);
         int dia = Integer.parseInt (vectorFecha[0]);
         return año + "-" + mes + "-" + dia;
+    }
+
+    public String fechaAlreves(String date)
+    {
+        String[] vectorFecha = date.split ("-");
+        int año = Integer.parseInt (vectorFecha[0]);
+        int mes = Integer.parseInt (vectorFecha[1]);
+        int dia = Integer.parseInt (vectorFecha[2]);
+        return dia + "-" + mes + "-" + año;
     }
 
     public String fechaFormatoHace(Calendar fechaInicio, Calendar fechaFin, Calendar c)

@@ -5,26 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -40,10 +33,7 @@ import com.example.modelo.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -323,7 +313,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         final Usuario usuario = new Usuario();
         usuario.nombres_usuario = nombreUsuarioEditText.getText().toString();
         usuario.apellidos_usuario = apellidoEditText.getText().toString();
-        usuario.fecha_nacimiento = new Calculo().fechaCambiarAtras(fecha_nacimientoEditText.getText().toString());
+        usuario.fecha_nacimiento = new Calculo().fechaNormal(fecha_nacimientoEditText.getText().toString());
         if(masculinoRadioButton.isChecked())
         {
             usuario.sexo_usuario = 0;

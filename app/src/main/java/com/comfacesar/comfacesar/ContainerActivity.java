@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -445,7 +447,10 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANEL_ID);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        Bitmap icon = BitmapFactory.decodeResource(getBaseContext().getResources(),
+                R.drawable.logo_serviamigo);
+        builder.setLargeIcon(icon);
+        builder.setSmallIcon(R.drawable.logo_serviamigo);
         builder.setContentTitle(titulo);
         builder.setContentText(mensaje);
         builder.setColor(Color.RED);

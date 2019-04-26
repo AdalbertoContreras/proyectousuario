@@ -402,66 +402,51 @@ public class Gestion_chat_asesoria {
                 for(Chat_asesoria item :  chat_asesorias_aux)
                 {
                     Chat_asesoria chat_asesoria = buscarChatAsesoria(item.id_chat_asesoria);
-                    if(chat_asesoria != null)
+                    String fechaUsuario = item.ultima_fecha_vista_usuario_chat_asesoria + item.ultima_hora_vista_usuario_chat_asesoria;
+                    String fechaChat = item.ultima_fecha_chat_asesoria + item.ultima_hora_chat_asesoria;
+                    String fechaChatAnterior = chat_asesoria.ultima_fecha_chat_asesoria + chat_asesoria.ultima_hora_chat_asesoria;
+                    if(historialChatAbierto)
                     {
-                        String fecha1 = chat_asesoria.ultima_fecha_chat_asesoria + chat_asesoria.ultima_hora_chat_asesoria;
-                        String fecha2 = item.ultima_fecha_chat_asesoria + item.ultima_hora_chat_asesoria;
-                        //llego un nuevo mensaje
-                        if(!fecha1.equals(fecha2))
+                        if(listaChatNoVisto.existeChatNoVisto(item) != null)
                         {
-                            String fechaUsuarioAnterior = chat_asesoria.ultima_fecha_vista_usuario_chat_asesoria + chat_asesoria.ultima_hora_vista_usuario_chat_asesoria;
-                            String fechaUsuarioNueva = item.ultima_fecha_vista_usuario_chat_asesoria + item.ultima_hora_vista_usuario_chat_asesoria;
-                            if(!fechaUsuarioAnterior.equals(fechaUsuarioNueva) && !historialChatAbierto)
+                            if(cambiarEstadoChat != null)
                             {
-                                if(chatAbierto != null)
-                                {
-                                    //chatAbierto.abierto(item.id_chat_asesoria);
-                                }
-                                if(cambiarEstadoChat != null)
-                                {
-                                    cambiarEstadoChat.chatCambiarEstado(item);
-                                }
-                                listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
+                                cambiarEstadoChat.chatCambiarEstado(item);
                             }
-                            else
+                            listaChatNoVisto.quitarChatNoVisto(item);
+                            cambio = true;
+                        }
+                    }
+                    else if(chat_asesoria != null)
+                    {
+                        if(!fechaChat.equals(fechaChatAnterior))
+                        {
+                            if(!fechaUsuario.equals(fechaChat) && item.usuario_respondio_chat_asesoria == 0)
                             {
-                                if(item.usuario_respondio_chat_asesoria == 0)
+                                if(listaChatNoVisto.existeChatNoVisto(item) == null)
+                                {
+                                    cambio = true;
+                                    listaChatNoVisto.agregarChatNoVisto(item);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if(item.usuario_respondio_chat_asesoria == 1)
+                            {
+                                if(listaChatNoVisto.existeChatNoVisto(item) != null)
                                 {
                                     if(cambiarEstadoChat != null)
                                     {
                                         cambiarEstadoChat.chatCambiarEstado(item);
-                                    }
-                                    //la vista de historial de chat esta abierto
-                                    if(historialChatAbierto)
-                                    {
-                                        //quito la notificacion de este chat
-                                /*if(chatAbierto != null)
-                                {
-                                    chatAbierto.abierto(item.id_chat_asesoria);
-                                }*/
-                                        listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
-                                    }
-                                    else
-                                    {
-                                        listaChatNoVisto.agregarChatNoVisto(chat_asesoria);
                                     }
                                     cambio = true;
-                                }
-                                else
-                                {
-                                    if(chatAbierto != null)
-                                    {
-                                        //chatAbierto.abierto(item.id_chat_asesoria);
-                                    }
-                                    if(cambiarEstadoChat != null)
-                                    {
-                                        cambiarEstadoChat.chatCambiarEstado(item);
-                                    }
-                                    listaChatNoVisto.quitarChatNoVisto(chat_asesoria);
+                                    listaChatNoVisto.quitarChatNoVisto(item);
                                 }
                             }
                         }
                     }
+
                 }
             }
             chat_asesorias = new ArrayList<>();
