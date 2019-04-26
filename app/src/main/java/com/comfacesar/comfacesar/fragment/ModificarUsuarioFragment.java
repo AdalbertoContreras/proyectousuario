@@ -119,8 +119,6 @@ public class ModificarUsuarioFragment extends Fragment {
         masculinoRadioButton = view_permanente.findViewById(R.id.masculinoUsuarioRadioButton);
         femeninoRadioButton = view_permanente.findViewById(R.id.femeninoUsuarioRadioButton);
         modificar_usuario = view_permanente.findViewById(R.id.modificarUsuarioButton);
-       // direccionEditText = view_permanente.findViewById(R.id.direccionUsuarioEditText);
-       // telefonoEditText = view_permanente.findViewById(R.id.telefonoUsuarioEditText);
         fecha_nacimientoEditText = view_permanente.findViewById(R.id.edadUsuarioEditText);
         correo_electronicoEditText = view_permanente.findViewById(R.id.correoEletronicoUsuarioEditText);
         fotoPerfilImageView = view_permanente.findViewById(R.id.fotoPerfilImageView);
@@ -269,9 +267,7 @@ public class ModificarUsuarioFragment extends Fragment {
             }
             usuario_espejo.nombres_usuario = nombreUsuarioEditText.getText().toString();
             usuario_espejo.apellidos_usuario = apellidoEditText.getText().toString();
-            usuario_espejo.fecha_nacimiento = fecha_nacimientoEditText.getText().toString();
-           // usuario_espejo.telefono_usuario = telefonoEditText.getText().toString();
-          //  usuario_espejo.direccion_usuario = direccionEditText.getText().toString();
+            usuario_espejo.fecha_nacimiento = new Calculo().fechaNormal(fecha_nacimientoEditText.getText().toString());
             usuario_espejo.correo_usuario = correo_electronicoEditText.getText().toString();
             HashMap<String, String> hashMap = new Gestion_usuario().modificar_datos_personales(usuario_espejo);
             Response.Listener<String> stringListener = new Response.Listener<String>()
@@ -333,7 +329,10 @@ public class ModificarUsuarioFragment extends Fragment {
                     {
                         Usuario usuario = usuarios.get(0);
                         Gestion_usuario.getUsuario_online().foto_perfil_usuario = usuario.foto_perfil_usuario;
-                        Picasso.with(getContext()).load(usuario.foto_perfil_usuario).into(fotoPerfilImageView);
+                        Picasso.with(getContext())
+                                .load(usuario.foto_perfil_usuario)
+                                .placeholder(R.drawable.ic_iconousuario)
+                                .error(R.drawable.ic_iconousuario).into(fotoPerfilImageView);
                     }
                 }
             }
@@ -351,8 +350,12 @@ public class ModificarUsuarioFragment extends Fragment {
     {
         nombreUsuarioEditText.setText(usuario_espejo.nombres_usuario);
         apellidoEditText.setText(usuario_espejo.apellidos_usuario);
-        fecha_nacimientoEditText.setText(usuario_espejo.fecha_nacimiento);
-        Picasso.with(getContext()).load(usuario_espejo.foto_perfil_usuario).into(fotoPerfilImageView);
+        fecha_nacimientoEditText.setText(new Calculo().fechaAlreves(usuario_espejo.fecha_nacimiento));
+        Picasso.with(getContext())
+                .load(usuario_espejo.foto_perfil_usuario)
+                .placeholder(R.drawable.ic_iconousuario)
+                .error(R.drawable.ic_iconousuario)
+                .into(fotoPerfilImageView);
         if(usuario_espejo.sexo_usuario == 0)
         {
             masculinoRadioButton.setChecked(true);
