@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -106,6 +107,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
         myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getBaseContext());
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(myPagerAdapter);
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -127,6 +129,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             }
         });
         TabLayout tabLayout = findViewById(R.id.tabs);
+
         floatingActionButton = findViewById(R.id.misChatsFloatingActionButton);
         if(Gestion_usuario.escuchadorParaActivityPrincipal == null)
         {
@@ -157,6 +160,8 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
             };
         }
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
+
         if(menu != null)
         {
             onCreateOptionsMenu(menu);
@@ -494,16 +499,17 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                 {
                     //actualizo la lista
                     int numChat = Gestion_chat_asesoria.listaChatNoVisto.getNumChatNoVisto();
+                    floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.logo_chat));
                     switch (numChat)
                     {
                         case 0:
-                            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok));
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
                             break;
                         case 1:
-                            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok_v1));
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
                             break;
                         case 2:
-                            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(ContainerActivity.this, R.drawable.ic_icono_chat_ok_v2));
+                            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.verde)));
                             break;
                     }
                     if(actualizarLista != null && HistorialAsesoriasFragment.estoyAbierto)
