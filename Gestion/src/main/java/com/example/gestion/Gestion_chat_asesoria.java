@@ -76,6 +76,7 @@ public class Gestion_chat_asesoria {
     public interface ChatAbierto
     {
         void abierto(int id_chat);
+        void cerrado();
     }
     /*
         this->ContainerActivity
@@ -96,6 +97,11 @@ public class Gestion_chat_asesoria {
     public static void chat_abiero(int id_chat)
     {
         chatAbierto.abierto(id_chat);
+    }
+
+    public static void chat_cerrado()
+    {
+        chatAbierto.cerrado();
     }
 
     public static void setCambiarEstadoChat(CambiarEstadoChat cambiarEstadoChat) {

@@ -190,6 +190,7 @@ public class ChatAsesoria extends AppCompatActivity {
         {
             cambioEstado.cambio(false, this);
         }
+        Gestion_chat_asesoria.chat_cerrado();
     }
 
     @Override
@@ -222,7 +223,7 @@ public class ChatAsesoria extends AppCompatActivity {
                         });
                     }
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(600);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -340,11 +341,8 @@ public class ChatAsesoria extends AppCompatActivity {
             ultima_hora = mensaje_chat_asesorias_aux.get(mensaje_chat_asesorias_aux.size() - 1).hora_envio_mensaje_asesoria;
             mensaje_chat_asesorias.addAll(mensaje_chat_asesorias_aux);
             adapter_mensajes_chat_asesoria.notifyItemInserted(mensaje_chat_asesorias.size() - 1 );
-            if(mensaje_enviado)
-            {
-                recyclerView_chat_asesoria.smoothScrollToPosition(mensaje_chat_asesorias.size() - 1);
-                mensaje_enviado = false;
-            }
+            recyclerView_chat_asesoria.smoothScrollToPosition(mensaje_chat_asesorias.size() - 1);
+            mensaje_enviado = false;
         }
         consultando = false;
     }

@@ -76,6 +76,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
     private Gestion_chat_asesoria.CambiarEstadoChat cambiarEstadoChat;
     //este id contara las veces que se le ha advertido al usuario cuando se halla perdio la conexion
     private int contador_perdida_conexion = 0;
+    private int chatEnSesion = 0;
 
     public static ActualizarLista actualizarLista;
     public interface ActualizarLista
@@ -183,6 +184,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
                  */
                 notificationManagerCompat = NotificationManagerCompat.from(ContainerActivity.this);
                 notificationManagerCompat.cancel(id_chat);
+                chatEnSesion = id_chat;
+            }
+
+            @Override
+            public void cerrado() {
+                chatEnSesion = -1;
             }
         });
         iniciar_hilo_aviso_conexion();
@@ -377,34 +384,12 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 
     private void aux(Chat_asesoria item, String titulo)
     {
-        boolean valido = false;
         if(!item.ultima_fecha_administrador_chat_asesoria.equals("-1"))
         {
-            agregar_notificacion(item, titulo);
-            /*if(!item.ultima_fecha_vista_usuario_chat_asesoria.equals("-1"))
-            {
-                valido = true;
-            }
-            if(!valido)
+            if(chatEnSesion != item.id_chat_asesoria)
             {
                 agregar_notificacion(item, titulo);
             }
-            else
-            {
-                String date1 = item.ultima_fecha_administrador_chat_asesoria;
-                String time1 = item.ultima_hora_administrador_chat_asesoria;
-                String date2 = item.ultima_fecha_vista_usuario_chat_asesoria;
-                String time2 = item.ultima_hora_vista_usuario_chat_asesoria;
-                Calendar calendar = new Calculo().String_a_Date( date1, time1);
-                Calendar calendar2 = new Calculo().String_a_Date(date2, time2);
-                if(!(date1 + time1).equals(date2+time2))
-                {
-                    if(Calculo.compararCalendar(calendar,calendar2) == 1)
-                    {
-                        agregar_notificacion(item, titulo);
-                    }
-                }
-            }*/
         }
     }
 
