@@ -436,7 +436,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANEL_ID);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setSmallIcon(R.drawable.logo_serviamigo);
         builder.setContentTitle(titulo);
         builder.setContentText(mensaje);
         builder.setColor(Color.RED);

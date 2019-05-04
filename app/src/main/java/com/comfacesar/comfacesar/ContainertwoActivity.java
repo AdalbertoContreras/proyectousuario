@@ -15,7 +15,6 @@ import com.comfacesar.comfacesar.fragment.InicioSesionFragment;
 import com.comfacesar.comfacesar.fragment.ModificarDatosCuentaUsuarioFragment;
 import com.comfacesar.comfacesar.fragment.RegistrarUsuarioFragment;
 import com.comfacesar.comfacesar.fragment.ModificarUsuarioFragment;
-import com.google.firebase.FirebaseApp;
 
 public class ContainertwoActivity extends AppCompatActivity implements HistorialAsesoriasFragment.OnFragmentInteractionListener, HistorialAlertasFragment.OnFragmentInteractionListener, InicioSesionFragment.OnFragmentInteractionListener, RegistrarUsuarioFragment.OnFragmentInteractionListener, AcercaDeFragment.OnFragmentInteractionListener, AsesoriaFragment.OnFragmentInteractionListener, ChatActivosFragment.OnFragmentInteractionListener, ModificarUsuarioFragment.OnFragmentInteractionListener, ModificarDatosCuentaUsuarioFragment.OnFragmentInteractionListener {
 
@@ -28,9 +27,6 @@ public class ContainertwoActivity extends AppCompatActivity implements Historial
         bundle = savedInstanceState;
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundResource(R.color.Gris3);
-
-
-        FirebaseApp.initializeApp(ContainertwoActivity.this);
         setSupportActionBar(toolbar);
 
         int cadena = getIntent().getExtras().getInt("id");
