@@ -19,4 +19,5 @@
     <color name="item_enviado">#FAE6BE</color>
     <color name="color_fecha_chat">#CFCECE</color>
     <color name="verde">#008f4c</color>
+    <color name="Transparent">#00000000</color>
 </resources>
