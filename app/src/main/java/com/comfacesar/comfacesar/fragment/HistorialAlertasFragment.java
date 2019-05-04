@@ -99,10 +99,7 @@ public class HistorialAlertasFragment extends Fragment {
         alerta_tempranaArrayList = new ArrayList<>();
         generando_consulta = false;
         cont_m = 0;
-        if(view_permanente == null)
-        {
-            view_permanente =  inflater.inflate(R.layout.fragment_historial_alertas, container, false);
-        }
+        view_permanente =  inflater.inflate(R.layout.fragment_historial_alertas, container, false);
         return view_permanente;
     }
 
@@ -150,7 +147,7 @@ public class HistorialAlertasFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         seguir = true;
         cont_m = 10000;
-        comparar_num_alertas();
+        consultar_alertas_tempranas();
     }
 
     @Override

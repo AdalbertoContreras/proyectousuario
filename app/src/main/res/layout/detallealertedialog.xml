@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="120dp"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="12dp">
@@ -23,14 +24,49 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/colorPrimaryDark"/>
     <TextView
-        android:id="@+id/descripcionTextViewAlertaTempranaDialog"
+        android:id="@+id/descripcionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text=" 10/08/09"
+        android:text=""
         android:layout_marginBottom="10dp"
         android:paddingLeft="5dp"
         android:gravity="left"/>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text=" Numero de telefono :"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimaryDark"/>
+            <TextView
+                android:id="@+id/numeroTelefonoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text=""
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="5dp"
+                android:gravity="left"/>
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text=" Direccion :"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"/>
+            <TextView
+                android:id="@+id/direccionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text=""
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="5dp"
+                android:gravity="left"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

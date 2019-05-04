@@ -65,11 +65,6 @@ public class DatosAuxiliaresAlertaDialog extends DialogFragment {
                     Toast.makeText(v.getContext(), "Ingrese el numero de telefono, donde quiere que nos comuniquemos", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(direccionTextView.getText().toString().isEmpty())
-                {
-                    Toast.makeText(v.getContext(), "Ingrese una direccion donde ubicar el lugar de la alerta", Toast.LENGTH_LONG).show();
-                    return;
-                }
                 alerta_temprana.direccion_alerta_temprana = direccionTextView.getText().toString();
                 alerta_temprana.numero_telefono_alerta_temprana = numeroTelefonoTextView.getText().toString();
                 Gestion_alerta_temprana gestion_alerta_temprana = new Gestion_alerta_temprana();

@@ -17,8 +17,9 @@ import com.comfacesar.comfacesar.R;
 
 public class MensajeInicioSesionDialog extends DialogFragment {
     public String mensaje;
-    public FragmentManager fragmentManager;
-    public static MensajeInicioSesionDialog nuevaUbstancia(String mensaje)
+
+
+    public static MensajeInicioSesionDialog nuevaInstancia(String mensaje)
     {
         MensajeInicioSesionDialog mensajeInicioSesionDialog = new MensajeInicioSesionDialog();
         mensajeInicioSesionDialog.mensaje = mensaje;
