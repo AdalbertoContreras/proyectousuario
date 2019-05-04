@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -437,7 +436,7 @@ public class ContainerActivity extends AppCompatActivity implements AsesoriaFrag
 // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANEL_ID);
-        builder.setSmallIcon(R.drawable.ic_logoserviamgonotificacion);
+        builder.setSmallIcon(R.drawable.logo_serviamigo);
         builder.setContentTitle(titulo);
         builder.setContentText(mensaje);
         builder.setColor(Color.RED);
