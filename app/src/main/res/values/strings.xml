@@ -40,4 +40,11 @@ total confidencialidad”</string>
     <string name="Lorem">Lorem Ipsum es simplemente un texto de relleno de la industria de impresión y tipografía. Lorem Ipsum ha sido el texto ficticio estándar de la industria desde la década de 1500, cuando una impresora desconocida tomó una galera de tipos y la revolvió para hacer un libro de muestras tipo. Ha sobrevivido no solo cinco siglos, sino también el salto a la composición electrónica, permaneciendo esencialmente sin cambios. Se popularizó en la década de 1960 con el lanzamiento de las hojas de Letraset que contenían pasajes de Lorem Ipsum y, más recientemente, con un software de edición de escritorio como Aldus PageMaker, que incluye versiones de Lorem Ipsum.</string>
     <string name="transicion_imagen">transicion_imagen</string>
     <string name="iniciar_sesion">INICIE SESIÓN  PARA ACCEDER AL CHAT</string>
+
+    <string name="texto_bienvenido">Hemos preparado una breve introducción a tu nueva APP ServiAmigo. ¡Te invitamos a disfrutarla!</string>
+    <string name="texto_deslizar"><![CDATA[Desliza para comenzar  <<]]></string>
+    <string name="texto_intro_noticia">Información confiable y actualizada  sobre temáticas relacionadas con la Salud sexual y reproductiva</string>
+    <string name="texto_intro_asesor">Que mejor manera de recibir un consejo,  que a través de personas especializadas  en tus temas de interés, aquí tendrás una  comunicación segura y un consejo a  tiempo.</string>
+    <string name="texto_intro_alerta">Ante cualquier amenaza contra tus  derechos, una alerta temprana es la  solución</string>
+    <string name="texto_intro_sedes">Permitenos atenderte conoce nuestra  sedes y visitanos...</string>
 </resources>

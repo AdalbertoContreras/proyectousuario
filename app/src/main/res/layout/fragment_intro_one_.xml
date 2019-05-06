@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.comfacesar.comfacesar.fragment.Intro_one_Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="420dp"
+        android:background="@drawable/fondo"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:background="@drawable/servicios"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/iniciativas"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:background="@drawable/minisalud"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@drawable/serviamigo"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BIENVENIDO"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="20sp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/texto_bienvenido"
+                android:gravity="center"
+                android:layout_marginHorizontal="40sp"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/texto_deslizar"
+                android:gravity="center"
+                android:layout_marginHorizontal="40sp"
+                android:textSize="20sp"
+                android:layout_marginTop="80dp"
+                android:textStyle="bold"
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
+
+</FrameLayout>

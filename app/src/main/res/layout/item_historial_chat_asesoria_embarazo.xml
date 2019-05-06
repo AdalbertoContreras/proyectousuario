@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+    <LinearLayout
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="5dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginRight="5dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imagen_asesorImageView"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+        <LinearLayout
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:textColor="@color/tipo_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adalberto Contreras Ospino"
+                android:textSize="12sp"
+                android:gravity="left"
+                android:id="@+id/nombre_asesorTextView"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.9"/>
+            <TextView
+                android:textColor="@color/White"
+                android:id="@+id/tipo_especialidadTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                android:text="Embarazo"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:background="@color/tipo_one"
+                android:layout_weight="0.1"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:background="@color/Gris3"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/ultimo_mensajeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:text="Ultimo mensaje"
+                android:textColor="@color/GrisOscuro"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/GrisOscuro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1992-09-12"
+                    android:gravity="right|bottom"
+                    android:layout_weight="1"
+                    android:textSize="9sp"
+                    android:paddingRight="10dp"
+                    android:id="@+id/fecha_ultimo_mensajeTextView"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Gris3"
+        android:layout_marginTop="10dp"
+        >
+
+    </LinearLayout>
+
+</LinearLayout>

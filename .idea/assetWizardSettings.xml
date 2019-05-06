@@ -156,8 +156,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_logoserviamgonotificacion" />
-                            <entry key="sourceFile" value="C:\Users\usuario\Pictures\logoServiamgoNotificacion.svg" />
+                            <entry key="outputName" value="ic_puntos" />
+                            <entry key="sourceFile" value="C:\Users\usuario\Pictures\INTRO APP COMFACESAR\puntos.svg" />
                           </map>
                         </option>
                       </PersistentState>

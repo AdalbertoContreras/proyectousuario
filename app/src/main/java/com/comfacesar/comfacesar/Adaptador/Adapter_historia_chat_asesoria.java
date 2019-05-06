@@ -13,16 +13,13 @@ import com.comfacesar.comfacesar.Activities.ChatAsesoria;
 import com.comfacesar.comfacesar.R;
 import com.comfacesar.comfacesar.fragment.ChatActivosFragment;
 import com.comfacesar.comfacesar.fragment.HistorialAsesoriasFragment;
-import com.example.extra.Calculo;
 import com.example.gestion.Gestion_administrador;
-import com.example.gestion.Gestion_chat_asesoria;
 import com.example.gestion.Gestion_especialidad;
 import com.example.modelo.Administrador;
 import com.example.modelo.Chat_asesoria;
 import com.example.modelo.Especialidad;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,7 +46,7 @@ public class Adapter_historia_chat_asesoria extends RecyclerView.Adapter<Adapter
     @Override
     public Adapter_historia_chat_asesoria.ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             view = LayoutInflater.from(viewGroup.getContext())
-            .inflate(R.layout.item_historial_chat_asesoria, null, false);
+            .inflate(R.layout.item_historial_chat_asesoria_maltrato, null, false);
             return new Adapter_historia_chat_asesoria.ViewHolderDatos(view);
             }
 

@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    <TextView
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+       >
+
+
+        <TextView
         android:id="@+id/fechatextViewItem_mensaje"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="right"
         android:text="Hace mas de un dia"
         android:textColor="@color/Gris2"
-        android:layout_gravity="right"
+        android:layout_gravity="left"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="70dp"
         android:layout_marginTop="5dp"
         android:textSize="9sp"
         />
 
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:weightSum="1"
+       >
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="MissingConstraints"
-        android:weightSum="1">
+        android:layout_weight="0.01"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoPerfilImageView"
@@ -36,47 +48,50 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
-            android:layout_weight="0.01"
+
             android:elevation="5dp"
             android:src="@drawable/sede" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardUseCompatPadding="true"
-            android:layout_marginRight="30dp"
-            android:layout_gravity="center"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/White">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    >
-
-                    <TextView
-                        android:id="@+id/contenidotextView_itemMensaje"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="7dp"
-                        android:textSize="13dp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-
-        </android.support.v7.widget.CardView>
-
-
-
-
     </LinearLayout>
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginRight="30dp">
+
+           <android.support.v7.widget.CardView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:cardCornerRadius="10dp"
+               app:cardUseCompatPadding="true"
+               android:layout_gravity="center"
+               android:layout_marginRight="60dp"
+               >
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:background="@color/White"
+                   android:layout_margin="2dp">
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       >
+
+                       <TextView
+                           android:id="@+id/contenidotextView_itemMensaje"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="7dp"
+                           android:textSize="14sp"
+                           android:layout_marginRight="30dp"/>
+
+                   </LinearLayout>
+               </LinearLayout>
+
+           </android.support.v7.widget.CardView>
+       </LinearLayout>
+   </LinearLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
